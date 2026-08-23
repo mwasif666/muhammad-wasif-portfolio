@@ -31,9 +31,15 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
 }
 
+/*
+ * Above the portrait, not under it. From 901px up the portrait is absolutely
+ * placed on the left and sized off viewport height, so on laptop widths it
+ * grows into the headline column and used to swallow the first word of each
+ * line. Layering the copy on top keeps the composition and the sentence.
+ */
 .headingWrap {
   position: relative;
-  z-index: 5;
+  z-index: 7;
   order: 1;
   width: 100%;
   text-align: center;
@@ -51,12 +57,31 @@
   text-shadow: 0 .8rem 2.7rem rgba(1,34,58,.18);
 }
 
-.heading span { display: block; }
+/*
+ * Two blocks, two roles: the name is the eyebrow, the pitch is the display
+ * line. Sizing the name off the headline's own font-size keeps the pair in
+ * proportion at every clamp step instead of needing its own breakpoints.
+ */
+.heading > span { display: block; }
+
+.headingName {
+  margin-bottom: .55em;
+  color: rgba(233, 247, 255, .72);
+  font-size: .185em;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.headingLine {
+  text-wrap: balance;
+}
 
 @media (min-width: 901px) {
   .kicker {
     position: absolute;
-    z-index: 6;
+    z-index: 7;
     top: calc(var(--rail-top) + .55rem);
     left: var(--rail);
   }
@@ -73,4 +98,9 @@
 
 @media (max-width: 520px) {
   .heading { font-size: 3.2rem; }
+
+  .headingName {
+    font-size: .72rem;
+    letter-spacing: .16em;
+  }
 }
