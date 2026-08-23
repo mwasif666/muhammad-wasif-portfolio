@@ -126,8 +126,14 @@
 </script>
 </head>
 <body>
+<!-- Crawlable profile copy for anything that reads the HTML without running
+     it. It stays in the source rather than inside <noscript> so a crawler that
+     only parses markup still finds it, but it is hidden by default: React
+     replaces this subtree on mount, and until it does the visitor was staring
+     at a plain blue page on every load. The <noscript> block below brings it
+     back for browsers with scripting off, who have nothing else to show. -->
 <div id="root">
-  <main style="min-height:100vh;background:#072b48;color:#f5fbff;padding:clamp(32px,8vw,96px);font-family:Arial,sans-serif;display:grid;align-content:center;gap:18px">
+  <main id="profile-fallback" hidden style="min-height:100vh;background:#072b48;color:#f5fbff;padding:clamp(32px,8vw,96px);font-family:Arial,sans-serif;align-content:center;gap:18px">
     <p style="margin:0;font-size:clamp(14px,2vw,18px);letter-spacing:.08em;text-transform:uppercase">Senior Full-Stack Developer · Karachi, Pakistan</p>
     <h1 style="margin:0;font-size:clamp(46px,9vw,112px);line-height:.95">Muhammad Wasif</h1>
     <p style="max-width:760px;margin:0;font-size:clamp(18px,2.4vw,28px);line-height:1.45">Also known professionally as Wasif Majeed. I build modern, scalable web products using React, Next.js, Node.js, TypeScript, the MERN stack, WordPress and Shopify.</p>
@@ -139,6 +145,7 @@
     </nav>
   </main>
 </div>
+<noscript><style>#profile-fallback{display:grid!important}</style></noscript>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
 <script type="module" src="/src/main.jsx"></script>
