@@ -46,22 +46,17 @@
   z-index: 2;
 }
 
-/* Smooth loader-word crossfade. */
-.preloader__title span {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  filter: blur(0);
-  transition:
-    opacity 340ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 340ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform, filter;
-}
-
-.preloader__title span.is-changing {
-  opacity: 0;
-  transform: translate3d(0, 10%, 0) scale(0.985);
-  filter: blur(4px);
+/*
+ * The title clips its overflow, which is what turns the word swap into a
+ * masked roll. Line-height 0.9 alone leaves no room below the baseline, so
+ * descenders ("Deployment") would be shaved off and the incoming word would
+ * appear mid-air. The padding opens that room and the negative margin puts the
+ * box back where `bottom` had it.
+ */
+.preloader__title {
+  padding-top: 0.16em;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
 }
 
 /*
@@ -87,8 +82,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .preloader__title span {
-    transition-duration: 0.01ms !important;
+  .preloader__word {
+    animation-duration: 0.01ms !important;
   }
 }
 

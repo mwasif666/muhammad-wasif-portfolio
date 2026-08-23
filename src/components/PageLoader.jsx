@@ -19,17 +19,24 @@ const COUNTER_DURATION = 2350;
 const HOLD_DURATION = 140;
 const EXIT_DURATION = 1200;
 const WORD_INTERVAL = 900;
-const WORD_FADE_DURATION = 340;
+// How long a swap takes. The outgoing and incoming words run this together, so
+// one is always on screen — the word never blinks out to nothing in between.
+const WORD_TRANSITION = 620;
 
 const easeOutQuart = (value) => 1 - Math.pow(1 - value, 4);
 
 export default function PageLoader({ onDone }) {
   const { stopScroll, startScroll } = useScroll();
   const [progress, setProgress] = useState(0);
-  const [wordIndex, setWordIndex] = useState(() =>
-    Math.floor(Math.random() * WORDS.length),
-  );
-  const [wordChanging, setWordChanging] = useState(false);
+  /*
+   * The words on screen, oldest first. Normally one entry; during a swap it
+   * holds two, and the extra one is dropped once its exit animation is done.
+   * `id` has to be separate from `index` so React remounts the incoming span
+   * (and replays its entry animation) even when a word repeats.
+   */
+  const [words, setWords] = useState(() => [
+    { id: 0, index: Math.floor(Math.random() * WORDS.length) },
+  ]);
   const [exit, setExit] = useState(false);
   const [gone, setGone] = useState(false);
   const onDoneRef = useRef(onDone);
@@ -45,11 +52,9 @@ export default function PageLoader({ onDone }) {
       "(prefers-reduced-motion: reduce)",
     ).matches;
     const timeouts = [];
-    const animationFrames = [];
     let counterFrame;
     let wordTimer;
     let finished = false;
-    let changingWord = false;
 
     const finish = () => {
       if (finished) return;
@@ -65,29 +70,21 @@ export default function PageLoader({ onDone }) {
       return id;
     };
 
-    const scheduleFrame = (callback) => {
-      const id = window.requestAnimationFrame(callback);
-      animationFrames.push(id);
-      return id;
-    };
-
     const rotateWord = () => {
-      if (changingWord) return;
-      changingWord = true;
-      setWordChanging(true);
+      setWords((current) => {
+        const latest = current[current.length - 1];
+
+        // Keep only the word being replaced, so a slow frame can never stack up
+        // more than the two the animation shows.
+        return [
+          latest,
+          { id: latest.id + 1, index: (latest.index + 1) % WORDS.length },
+        ];
+      });
 
       schedule(() => {
-        setWordIndex((current) => (current + 1) % WORDS.length);
-
-        // Give the browser one painted frame with the new word still hidden,
-        // then smoothly fade it back in instead of swapping it abruptly.
-        scheduleFrame(() => {
-          scheduleFrame(() => {
-            setWordChanging(false);
-            changingWord = false;
-          });
-        });
-      }, WORD_FADE_DURATION);
+        setWords((current) => current.slice(-1));
+      }, WORD_TRANSITION);
     };
 
     if (reduceMotion) {
@@ -118,7 +115,6 @@ export default function PageLoader({ onDone }) {
 
     return () => {
       cancelAnimationFrame(counterFrame);
-      animationFrames.forEach(cancelAnimationFrame);
       window.clearInterval(wordTimer);
       timeouts.forEach(window.clearTimeout);
       if (!finished) startScroll();
@@ -155,8 +151,17 @@ export default function PageLoader({ onDone }) {
         </div>
 
         <div className="preloader__title">
-          <span className={wordChanging ? "is-changing" : ""}>
-            {WORDS[wordIndex]}
+          <span className="preloader__words">
+            {words.map((word, position) => (
+              <span
+                key={word.id}
+                className={`preloader__word ${
+                  position === words.length - 1 ? "is-current" : "is-outgoing"
+                }`}
+              >
+                {WORDS[word.index]}
+              </span>
+            ))}
           </span>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FlowButton } from "@/components/ui/flow-button";
+import { SkeletonImage, SkeletonVideo } from "./ui/SkeletonMedia";
 import { useScroll } from "../contexts/ScrollContext";
 import { cldUrl, cldVideoSources } from "../lib/cloudinary";
 import styles from "./ProjectsShowcase.module.css";
@@ -169,8 +170,8 @@ function ProjectVideo({ project }) {
   }, []);
 
   return (
-    <video
-      ref={ref}
+    <SkeletonVideo
+      innerRef={ref}
       className={styles.previewVideo}
       muted
       loop
@@ -182,7 +183,7 @@ function ProjectVideo({ project }) {
       {project.video.map((source) => (
         <source key={source.type} src={source.src} type={source.type} />
       ))}
-    </video>
+    </SkeletonVideo>
   );
 }
 
@@ -193,7 +194,7 @@ function LiveProjectPreview({ project }) {
 
   if (project.image) {
     return (
-      <img
+      <SkeletonImage
         className={styles.previewImage}
         src={project.image}
         alt={buildPreviewAlt(project)}

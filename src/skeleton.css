@@ -1,0 +1,107 @@
+/*
+ * Loading skeletons.
+ *
+ * Deliberately unlayered and last in main.jsx's import list: CSS modules are
+ * unlayered too, so a rule inside `@layer legacy` would lose to any module
+ * class that touches the same property. The `:not(.is-loaded)` in the media
+ * selectors is there for the same reason — it buys enough specificity to win
+ * without needing !important.
+ */
+
+:root {
+  --skeleton-base: rgba(255, 255, 255, 0.055);
+  --skeleton-sheen: rgba(255, 255, 255, 0.1);
+  --skeleton-speed: 1.5s;
+}
+
+@keyframes skeletonSweep {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -150% 0;
+  }
+}
+
+/*
+ * ---- Shimmer paint ----
+ * Sets background and animation only. Kept free of `display` so it can be
+ * added to an element that already has a layout role (a grid, a card) without
+ * flattening it — this file is unlayered and would otherwise beat Tailwind's
+ * `display` utility.
+ */
+.skeleton-tint {
+  background-color: var(--skeleton-base);
+  background-image: linear-gradient(
+    105deg,
+    transparent 32%,
+    var(--skeleton-sheen) 48%,
+    transparent 64%
+  );
+  background-repeat: no-repeat;
+  background-size: 260% 100%;
+  animation: skeletonSweep var(--skeleton-speed) linear infinite;
+}
+
+/* ---- Generic block, for text/box placeholders ---- */
+.skeleton {
+  display: block;
+  border-radius: 0.5rem;
+  background-color: var(--skeleton-base);
+  background-image: linear-gradient(
+    105deg,
+    transparent 32%,
+    var(--skeleton-sheen) 48%,
+    transparent 64%
+  );
+  background-repeat: no-repeat;
+  background-size: 260% 100%;
+  animation: skeletonSweep var(--skeleton-speed) linear infinite;
+}
+
+.skeleton--text {
+  height: 0.75em;
+  border-radius: 999px;
+}
+
+.skeleton--circle {
+  border-radius: 50%;
+}
+
+/*
+ * ---- Media ----
+ * The shimmer is painted as the element's own background rather than as a
+ * wrapper element, so dropping it into an existing layout cannot shift
+ * anything: <img> and <video> keep the exact box their stylesheet gave them.
+ * Once the pixels arrive they cover the background anyway, so the tint is
+ * faded out rather than cut, which keeps transparent artwork from flashing.
+ */
+img.skeleton-media:not(.is-loaded),
+video.skeleton-media:not(.is-loaded) {
+  background-color: var(--skeleton-base);
+  background-image: linear-gradient(
+    105deg,
+    transparent 32%,
+    var(--skeleton-sheen) 48%,
+    transparent 64%
+  );
+  background-repeat: no-repeat;
+  background-size: 260% 100%;
+  animation: skeletonSweep var(--skeleton-speed) linear infinite;
+}
+
+img.skeleton-media.is-loaded,
+video.skeleton-media.is-loaded {
+  background-image: none;
+  background-color: transparent;
+  transition: background-color 420ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-tint,
+  .skeleton,
+  img.skeleton-media:not(.is-loaded),
+  video.skeleton-media:not(.is-loaded) {
+    animation: none;
+  }
+}

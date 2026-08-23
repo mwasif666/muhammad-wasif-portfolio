@@ -333,18 +333,59 @@ img {
   line-height: 0.9;
   white-space: nowrap;
 }
-.preloader__title span {
-  display: inline-block;
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition:
-    opacity 150ms ease,
-    transform 150ms ease;
-  will-change: opacity, transform;
+/*
+ * Word swap. The outgoing and incoming words are stacked and animated at the
+ * same time — one rises out while the next rises in — so the slot is never
+ * empty. The current word is the one in flow; the one leaving is taken out of
+ * flow so the two never push each other sideways as widths change.
+ */
+.preloader__words {
+  --loader-word-duration: 620ms;
+  --loader-word-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --loader-word-travel: 0.34em;
+  position: relative;
+  display: block;
 }
-.preloader__title span.is-changing {
-  opacity: 0;
-  transform: translate3d(0, 28%, 0);
+.preloader__word {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: opacity, transform, filter;
+}
+.preloader__word.is-current {
+  position: relative;
+  animation: loaderWordIn var(--loader-word-duration) var(--loader-word-ease)
+    both;
+}
+.preloader__word.is-outgoing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: loaderWordOut var(--loader-word-duration) var(--loader-word-ease)
+    both;
+}
+@keyframes loaderWordIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--loader-word-travel), 0);
+    filter: blur(0.09em);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+@keyframes loaderWordOut {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, calc(var(--loader-word-travel) * -1), 0);
+    filter: blur(0.09em);
+  }
 }
 .preloader.is-complete {
   pointer-events: none;
@@ -384,9 +425,11 @@ img {
 }
 @media (prefers-reduced-motion: reduce) {
   .preloader__panel,
-  .preloader__content,
-  .preloader__title span {
+  .preloader__content {
     transition-duration: 0.01ms !important;
+  }
+  .preloader__word {
+    animation-duration: 0.01ms !important;
   }
 }
 

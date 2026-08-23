@@ -1,4 +1,5 @@
 import { cldUrl, PORTRAIT_ID } from "../../lib/cloudinary";
+import { SkeletonImage } from "../ui/SkeletonMedia";
 import AboutGlobe from "./AboutGlobe";
 import styles from "./About.module.css";
 import themeStyles from "./AboutBlueTheme.module.css";
@@ -171,7 +172,7 @@ export default function StoktAbout() {
           </div>
 
           <article className={styles.showcaseCard}>
-            <img src={showcaseAsset} alt="" loading="lazy" decoding="async" />
+            <SkeletonImage src={showcaseAsset} alt="" loading="lazy" decoding="async" />
             <div className={styles.showcaseMeta}>
               <strong>Full-Stack Systems</strong>
               <span>
@@ -202,7 +203,7 @@ export default function StoktAbout() {
               className={`${styles.profileGlow} ${themeStyles.blueProfileGlow}`}
               aria-hidden="true"
             />
-            <img
+            <SkeletonImage
               src={PORTRAIT}
               alt="Muhammad Wasif, front-end and full-stack web developer"
               draggable="false"

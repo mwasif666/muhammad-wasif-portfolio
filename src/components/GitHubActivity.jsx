@@ -59,7 +59,9 @@ export default function GitHubActivity({ username }) {
         aria-label={`${windowTotal} contributions in the last 26 weeks`}
         className={clsx(
           "mt-4.5 mb-4 grid auto-cols-fr grid-flow-col gap-1",
-          loading && "opacity-55",
+          // Until the contributions land the graph is a shimmering block: one
+          // animated element behind the dots rather than 182 animated dots.
+          loading && "skeleton-tint rounded-lg opacity-55",
         )}
       >
         {weeks.map((week) => (
