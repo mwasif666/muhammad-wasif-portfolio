@@ -89,6 +89,10 @@
   .headingWrap {
     width: min(55rem, 50vw);
     margin-left: auto;
+    /* Left inside its own column, not centred: ragged-left display type read
+       as accidental against the flush column edge. Mobile keeps centre, where
+       the whole stack — pill, portrait, stats — is centred too. */
+    text-align: left;
   }
 
   .heading {
