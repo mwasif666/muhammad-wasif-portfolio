@@ -9,31 +9,23 @@ const WORDS = [
   "APIs",
   "Databases",
   "Development",
-  "Deployment",
   "Performance",
-  "Scalable",
   "Production",
 ];
 
-const COUNTER_DURATION = 2350;
-const HOLD_DURATION = 140;
-const EXIT_DURATION = 1200;
-const WORD_INTERVAL = 900;
-// How long a swap takes. The outgoing and incoming words run this together, so
-// one is always on screen — the word never blinks out to nothing in between.
-const WORD_TRANSITION = 620;
+// Keep the branded transition, but do not hold the first meaningful paint for
+// several seconds. The whole loader now clears in roughly 1.4 seconds.
+const COUNTER_DURATION = 900;
+const HOLD_DURATION = 50;
+const EXIT_DURATION = 450;
+const WORD_INTERVAL = 650;
+const WORD_TRANSITION = 360;
 
 const easeOutQuart = (value) => 1 - Math.pow(1 - value, 4);
 
 export default function PageLoader({ onDone }) {
   const { stopScroll, startScroll } = useScroll();
   const [progress, setProgress] = useState(0);
-  /*
-   * The words on screen, oldest first. Normally one entry; during a swap it
-   * holds two, and the extra one is dropped once its exit animation is done.
-   * `id` has to be separate from `index` so React remounts the incoming span
-   * (and replays its entry animation) even when a word repeats.
-   */
   const [words, setWords] = useState(() => [
     { id: 0, index: Math.floor(Math.random() * WORDS.length) },
   ]);
@@ -73,9 +65,6 @@ export default function PageLoader({ onDone }) {
     const rotateWord = () => {
       setWords((current) => {
         const latest = current[current.length - 1];
-
-        // Keep only the word being replaced, so a slow frame can never stack up
-        // more than the two the animation shows.
         return [
           latest,
           { id: latest.id + 1, index: (latest.index + 1) % WORDS.length },
@@ -89,7 +78,7 @@ export default function PageLoader({ onDone }) {
 
     if (reduceMotion) {
       setProgress(100);
-      schedule(finish, 80);
+      schedule(finish, 60);
     } else {
       wordTimer = window.setInterval(rotateWord, WORD_INTERVAL);
 

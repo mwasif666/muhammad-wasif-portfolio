@@ -9,112 +9,40 @@ import bioStyles from "./DeveloperBio.module.css";
 const PORTRAIT = cldUrl(PORTRAIT_ID);
 
 const stats = [
-  { value: "4+", label: "Years of experience" },
+  { value: "7+", label: "Years of experience" },
   { value: "30+", label: "Projects delivered" },
   { value: "A–Z", label: "Design to deployment" },
 ];
 
 const tools = [
-  {
-    label: "React",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-  },
-  {
-    label: "JavaScript",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-  },
-  {
-    label: "TypeScript",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
-  },
-  {
-    label: "Node.js",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
-  },
+  { label: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+  { label: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
+  { label: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
+  { label: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
   { label: "Express", logo: "https://cdn.simpleicons.org/express/FFFFFF" },
-  {
-    label: "MongoDB",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg",
-  },
-  {
-    label: "MySQL",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
-  },
-  {
-    label: "PostgreSQL",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
-  },
-  {
-    label: "Firebase",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg",
-  },
-  {
-    label: "WordPress",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg",
-  },
-  {
-    label: "WooCommerce",
-    logo: "https://cdn.simpleicons.org/woocommerce/96588A",
-  },
-  {
-    label: "PHP",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
-  },
-  {
-    label: "HTML5",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
-  },
-  {
-    label: "CSS3",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
-  },
-  {
-    label: "Tailwind CSS",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
-  },
-  {
-    label: "Bootstrap",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg",
-  },
-  {
-    label: "Sass",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sass/sass-original.svg",
-  },
-  {
-    label: "Vite",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg",
-  },
+  { label: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
+  { label: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
+  { label: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+  { label: "Firebase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg" },
+  { label: "WordPress", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg" },
+  { label: "WooCommerce", logo: "https://cdn.simpleicons.org/woocommerce/96588A" },
+  { label: "PHP", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" },
+  { label: "HTML5", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+  { label: "CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
+  { label: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+  { label: "Bootstrap", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" },
+  { label: "Sass", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sass/sass-original.svg" },
+  { label: "Vite", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" },
   { label: "Next.js", logo: "https://cdn.simpleicons.org/nextdotjs/FFFFFF" },
-  {
-    label: "Redux",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redux/redux-original.svg",
-  },
-  {
-    label: "Docker",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
-  },
+  { label: "Redux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redux/redux-original.svg" },
+  { label: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
   { label: "Postman", logo: "https://cdn.simpleicons.org/postman/FF6C37" },
-  {
-    label: "Git",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
-  },
+  { label: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
   { label: "GitHub", logo: "https://cdn.simpleicons.org/github/FFFFFF" },
-  {
-    label: "npm",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/npm/npm-original-wordmark.svg",
-  },
-  {
-    label: "Linux",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg",
-  },
-  {
-    label: "Figma",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
-  },
-  {
-    label: "Nginx",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg",
-  },
+  { label: "npm", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/npm/npm-original-wordmark.svg" },
+  { label: "Linux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
+  { label: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
+  { label: "Nginx", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg" },
 ];
 
 const showcaseAsset =
@@ -152,13 +80,11 @@ export default function StoktAbout() {
       <div className={styles.inner}>
         <div className={styles.eyebrowRow}>
           <span className={styles.eyebrow}>( About me )</span>
-          <span className={styles.arrow} aria-hidden="true">
-            ↓
-          </span>
+          <span className={styles.arrow} aria-hidden="true">↓</span>
         </div>
 
         <h2 id="stokt-about-title" className={styles.srOnly}>
-          About Muhammad Wasif
+          About Muhammad Wasif (Wasif Majeed)
         </h2>
 
         <div className={styles.aboutTop}>
@@ -193,42 +119,32 @@ export default function StoktAbout() {
           </article>
         </div>
 
-        <div
-          className={`${styles.aboutBottom} ${logoStyles.aboutBottomTwoCol}`}
-        >
-          <article
-            className={`${styles.profileCard} ${themeStyles.blueProfile}`}
-          >
+        <div className={`${styles.aboutBottom} ${logoStyles.aboutBottomTwoCol}`}>
+          <article className={`${styles.profileCard} ${themeStyles.blueProfile}`}>
             <div
               className={`${styles.profileGlow} ${themeStyles.blueProfileGlow}`}
               aria-hidden="true"
             />
             <SkeletonImage
               src={PORTRAIT}
-              alt="Muhammad Wasif, front-end and full-stack web developer"
+              alt="Muhammad Wasif (Wasif Majeed), Senior Full-Stack Developer in Karachi, Pakistan"
               draggable="false"
             />
-            <div
-              className={`${styles.profileMeta} ${themeStyles.blueProfileMeta}`}
-            >
+            <div className={`${styles.profileMeta} ${themeStyles.blueProfileMeta}`}>
               <strong>Muhammad Wasif</strong>
-              <span>FULL-STACK WEB DEVELOPER</span>
+              <span>SENIOR FULL-STACK DEVELOPER</span>
             </div>
           </article>
 
-          <article
-            className={`${styles.bioCard} ${logoStyles.bioCompact} ${bioStyles.editorialBio}`}
-          >
-            <div className={bioStyles.codeOrb} aria-hidden="true">
-              &lt;/&gt;
-            </div>
+          <article className={`${styles.bioCard} ${logoStyles.bioCompact} ${bioStyles.editorialBio}`}>
+            <div className={bioStyles.codeOrb} aria-hidden="true">&lt;/&gt;</div>
 
             <p className={bioStyles.editorialStatement}>
-              I turn <strong>business ideas</strong> into complete web products
-              with clear interfaces, dependable backends and{" "}
-              <strong>maintainable code</strong>. My focus is simple: build
-              experiences that are fast, useful and ready for{" "}
-              <strong>real people.</strong>
+              I&apos;m <strong>Muhammad Wasif</strong>, also known professionally as{" "}
+              <strong>Wasif Majeed</strong>. I turn business ideas into complete web
+              products with clear interfaces, dependable backends and{" "}
+              <strong>maintainable code</strong>. My focus is simple: build experiences
+              that are fast, useful and ready for <strong>real people.</strong>
             </p>
 
             <div className={bioStyles.editorialAuthor}>
@@ -237,14 +153,12 @@ export default function StoktAbout() {
               </span>
               <span className={bioStyles.editorialAuthorCopy}>
                 <strong>Muhammad Wasif</strong>
-                <small>Full-Stack Web Developer</small>
+                <small>Senior Full-Stack Developer</small>
               </span>
             </div>
           </article>
 
-          <article
-            className={`${styles.toolboxCard} ${themeStyles.blueToolbox} ${logoStyles.toolboxDockCard} ${logoStyles.toolboxFullRow}`}
-          >
+          <article className={`${styles.toolboxCard} ${themeStyles.blueToolbox} ${logoStyles.toolboxDockCard} ${logoStyles.toolboxFullRow}`}>
             <div className={logoStyles.dockStage}>
               <div className={logoStyles.carousel} aria-label="Everyday tools">
                 <div className={logoStyles.track}>
@@ -255,11 +169,7 @@ export default function StoktAbout() {
                   </div>
                   <div className={logoStyles.group} aria-hidden="true">
                     {tools.map((tool) => (
-                      <ToolLogo
-                        key={`duplicate-${tool.label}`}
-                        tool={tool}
-                        duplicate
-                      />
+                      <ToolLogo key={`duplicate-${tool.label}`} tool={tool} duplicate />
                     ))}
                   </div>
                 </div>
