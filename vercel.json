@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/muhammad-wasif-senior-full-stack-developer-karachi.jpg",
+      "destination": "https://res.cloudinary.com/agymx2xx/image/upload/f_jpg,q_auto/wasif-portfolio/muhammad-wasif-wasif-majeed-senior-full-stack-developer-karachi"
+    },
+    {
+      "source": "/muhammad-wasif-full-stack-developer-og.jpg",
+      "destination": "https://res.cloudinary.com/agymx2xx/image/upload/f_jpg,q_auto,c_fill,w_1200,h_630,g_auto/wasif-portfolio/muhammad-wasif-wasif-majeed-senior-full-stack-developer-karachi"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/muhammad-wasif-senior-full-stack-developer-karachi.jpg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/muhammad-wasif-full-stack-developer-og.jpg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800"
+        }
+      ]
+    }
+  ]
+}
