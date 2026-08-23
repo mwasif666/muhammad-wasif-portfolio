@@ -1,10 +1,9 @@
 import clsx from "clsx";
-import { cldUrl, PORTRAIT_ID } from "../../lib/cloudinary";
 import bannerStyles from "../KontourBanner.module.css";
 import styles from "./HeroPortrait.module.css";
 import { heroReveal } from "./heroMotion";
 
-const PORTRAIT = cldUrl(PORTRAIT_ID);
+const PORTRAIT = "/muhammad-wasif-senior-full-stack-developer-karachi.jpg";
 
 export default function HeroPortrait() {
   return (
