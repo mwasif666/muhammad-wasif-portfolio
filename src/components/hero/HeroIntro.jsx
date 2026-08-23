@@ -11,11 +11,12 @@ export default function HeroIntro() {
       </span>
 
       <div className={clsx(heroReveal("delay-[120ms]"), styles.headingWrap)}>
-        {/* The name stays inside the h1 for search, but at display size it
-            made the headline four lines deep and pushed it under the stats
-            card. It reads as the eyebrow it always was instead. */}
+        {/* The name stays in the h1 — a previous pass put it there for Search
+            Console — but off the screen: at display size it crowded the
+            headline, and the visitor already reads it in the header, the
+            signature band and the about section. */}
         <h1 className={styles.heading}>
-          <span className={styles.headingName}>Muhammad Wasif</span>
+          <span className="sr-only">Muhammad Wasif</span>
           <span className={styles.headingLine}>Web Products Built to Perform</span>
         </h1>
       </div>
