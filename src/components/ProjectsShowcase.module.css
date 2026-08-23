@@ -201,18 +201,18 @@
 
 /* Name at the top of the card, provenance line pinned to the bottom, so the
    left column reads as one column of the card rather than a floating block. */
-/* Centred horizontally in the column, but the text inside it is not:
-   `fit-content` shrinks the group to its widest line and `justify-self` centres
-   that group, so the number and every line of the title share one left edge.
-   Vertically the number stays at the top and only the title centres — see the
-   auto margins on `.name`. */
+/* Flush with the start of its column, not centred in it. Centring a
+   `fit-content` group means every card indents by half its own title width, so
+   stacked rows landed on a different left edge each — "Hope Plants" sat well
+   right of "Badaruddin". Vertically the number stays at the top and only the
+   title centres — see the auto margins on `.name`. */
 .identity {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  justify-self: center;
+  justify-self: start;
   width: fit-content;
   max-width: 100%;
   text-align: left;
@@ -243,12 +243,12 @@
   display: block;
 }
 
-/* Same again: centred as a block on both axes, left-aligned line to line. */
+/* Same again: flush with the column start, vertically centred in the card. */
 .services {
   display: grid;
   gap: .48rem;
   align-self: center;
-  justify-self: center;
+  justify-self: start;
   width: fit-content;
   max-width: 100%;
   color: rgba(190, 201, 207, .65);
