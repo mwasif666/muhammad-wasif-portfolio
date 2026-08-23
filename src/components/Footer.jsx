@@ -1,9 +1,10 @@
 import { useRef } from "react";
 import clsx from "clsx";
-import { ArrowUpRight } from "./Icons";
+import { ArrowUp, ArrowUpRight } from "./Icons";
 import { FlowButton } from "@/components/ui/flow-button";
 import { NAV } from "./Header";
 import NoiseDarkBlueGradientWithSquares from "./ui/noise-dark-blue-gradient-with-squares";
+import { BRAND_MONOGRAM } from "../lib/cloudinary";
 import { CONTACT } from "../lib/contact";
 import { useScroll } from "../contexts/ScrollContext";
 import { useInView } from "../hooks/useInView";
@@ -121,11 +122,11 @@ export default function Footer() {
           <div className={styles.baselineRow}>
             <span className={styles.brand}>
               <img
-                src="/brand/logo-badge.svg"
+                src={BRAND_MONOGRAM}
                 alt=""
                 className={styles.brandBadge}
-                width="100"
-                height="100"
+                width="656"
+                height="400"
                 loading="lazy"
                 decoding="async"
               />
@@ -136,12 +137,14 @@ export default function Footer() {
               © {year} Muhammad Wasif. All rights reserved.
             </p>
 
-            <FlowButton
-              text="Back to top"
-              tone="light"
+            <button
+              type="button"
+              className={styles.toTop}
               onClick={() => scrollToTop(false)}
-              className="min-h-10 px-6 py-2 text-[.82rem]"
-            />
+              aria-label="Back to top"
+            >
+              <ArrowUp className={styles.toTopIcon} />
+            </button>
           </div>
         </div>
       </div>

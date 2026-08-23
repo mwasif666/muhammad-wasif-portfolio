@@ -1,11 +1,11 @@
-import { cldUrl } from "../../lib/cloudinary";
+import { cldUrl, PORTRAIT_ID } from "../../lib/cloudinary";
 import AboutGlobe from "./AboutGlobe";
 import styles from "./About.module.css";
 import themeStyles from "./AboutBlueTheme.module.css";
 import logoStyles from "./ToolLogos.module.css";
 import bioStyles from "./DeveloperBio.module.css";
 
-const PORTRAIT = cldUrl("portrait");
+const PORTRAIT = cldUrl(PORTRAIT_ID);
 
 const stats = [
   { value: "4+", label: "Years of experience" },

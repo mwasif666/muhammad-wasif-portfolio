@@ -8,3 +8,7 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# The brand package lives on Cloudinary (scripts/upload-brand.mjs); the local
+# copy is the upload source, not something the site builds from.
+wasifmajeed-brand-package/

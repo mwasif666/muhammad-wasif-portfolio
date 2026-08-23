@@ -63,11 +63,13 @@
 
 .brand:hover { transform: translateY(-1px); }
 
+/* The WM monogram is a 1.64:1 mark, so it is sized by height and left to find
+   its own width rather than being forced into the old square badge box. */
 .brandBadge {
   display: block;
   flex: none;
-  width: 2rem;
-  height: 2rem;
+  width: auto;
+  height: 1.45rem;
 }
 
 .brandMark {

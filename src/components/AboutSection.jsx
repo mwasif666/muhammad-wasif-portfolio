@@ -1,7 +1,7 @@
 import { Code2 } from "lucide-react";
-import { cldUrl } from "../lib/cloudinary";
+import { cldUrl, PORTRAIT_ID } from "../lib/cloudinary";
 
-const PORTRAIT = cldUrl("portrait");
+const PORTRAIT = cldUrl(PORTRAIT_ID);
 
 // Keep the original code icon while preserving the current About layout alignment.
 export default function AboutSection({ id = "about", className = "" }) {

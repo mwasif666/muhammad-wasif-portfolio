@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { GridIcon } from "./Icons";
 import { FlowButton } from "@/components/ui/flow-button";
+import { BRAND_MONOGRAM } from "../lib/cloudinary";
 import { useScroll } from "../contexts/ScrollContext";
 import { useHeaderMorph } from "../hooks/useHeaderMorph";
 import styles from "./header/Header.module.css";
@@ -76,11 +77,11 @@ export default function Header({ ready, onMenu, onContact }) {
           className={styles.brand}
         >
           <img
-            src="/brand/logo-badge.svg"
+            src={BRAND_MONOGRAM}
             alt=""
             className={styles.brandBadge}
-            width="100"
-            height="100"
+            width="656"
+            height="400"
             decoding="async"
           />
           <span>Wasif Majeed</span>

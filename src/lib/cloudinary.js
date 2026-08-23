@@ -26,10 +26,38 @@ export function cldImage(id) {
   return cld.image(`${FOLDER}/${id}`).format("auto").quality("auto");
 }
 
+/*
+ * The portrait's public id, shared rather than repeated at each call site.
+ * It is SEO copy instead of a short slug, and renaming it in some files but not
+ * others is exactly what left the About section fetching a dead id.
+ */
+export const PORTRAIT_ID =
+  "muhammad-wasif-wasif-majeed-senior-full-stack-developer-karachi";
+
 /** Delivery URL — what every `<img src>` and CSS `url()` here uses. */
 export function cldUrl(id) {
   return cldImage(id).toURL();
 }
+
+/**
+ * Delivery URL for an asset that has to stay vector.
+ *
+ * Deliberately skips `cldImage`, because `f_auto` rasterises an SVG source: the
+ * monogram comes back as a fixed-size WebP that blurs on high-DPR screens and is
+ * larger than the original besides (4.9 KB against 3.1 KB). An untransformed URL
+ * returns the bytes that were uploaded, and at this size there is nothing for
+ * `q_auto` to save anyway.
+ */
+export function cldVector(id) {
+  return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${FOLDER}/${id}.svg`;
+}
+
+/*
+ * The interlocked WM monogram, white for the site's dark surfaces. Shared for
+ * the same reason as PORTRAIT_ID — the header and the footer must not drift
+ * apart when the mark is next replaced.
+ */
+export const BRAND_MONOGRAM = cldVector("brand/logo-svg/wm-monogram-white");
 
 /**
  * The résumé PDF, opened in its own tab from the hero.
