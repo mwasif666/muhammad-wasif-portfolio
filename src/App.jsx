@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import KontourBanner from "./components/KontourBanner";
 import StoktSections from "./components/stokt/StoktSections";
 import ProjectsSection from "./components/ProjectsSection";
+import CaseStudiesSection from "./components/CaseStudiesSection";
 import WhySection from "./components/why/WhySection";
 import JourneySection from "./components/journey/JourneySection";
 import DeveloperSystemsSection from "./components/developerSystems/DeveloperSystemsSection";
@@ -44,6 +45,7 @@ export default function App() {
         <KontourBanner id="home" theme="blue" />
         <StoktSections onContact={openContact} />
         <ProjectsSection />
+        <CaseStudiesSection />
         <WhySection />
         <JourneySection />
         <DeveloperSystemsSection />
