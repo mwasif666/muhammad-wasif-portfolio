@@ -121,71 +121,74 @@ const P = {
 
 export const PAGES = [
   {
-    slug: "full-stack-developer-karachi",
-    navLabel: "Full Stack Developer in Karachi",
-    breadcrumb: "Full Stack Developer in Karachi",
-    title: "Full Stack Developer in Karachi | Muhammad Wasif",
+    slug: "front-end-developer-karachi",
+    navLabel: "Front-End Developer in Karachi",
+    breadcrumb: "Front-End Developer in Karachi",
+    title: "Senior Front-End Developer in Karachi | Muhammad Wasif",
     description:
-      "Full stack developer in Karachi with 4+ years experience. React, Next.js, Node.js, Laravel and MySQL — front end, backend and deployment from one developer.",
+      "Senior front-end developer in Karachi with 4+ years in React, Next.js, TypeScript, HTML and CSS. Interfaces built to stay fast, accessible and maintainable.",
     keywords:
-      "full stack developer in Karachi, full stack developer Karachi, best developer in Karachi, hire full stack developer Pakistan, freelance web developer Karachi, React Node Laravel developer",
-    serviceName: "Full stack web development",
-    serviceType: "Full stack web development",
-    h1: "Full stack developer in <em>Karachi</em>",
+      "senior front end developer Karachi, front end developer Karachi, frontend developer Pakistan, react developer Karachi, html css javascript developer, hire front end developer, UI developer Karachi",
+    serviceName: "Front-end web development",
+    serviceType: "Front-end web development",
+    h1: "Senior <em>front-end</em> developer in Karachi",
     lede:
-      "I am <strong>Muhammad Wasif</strong> (also known as Wasif Majeed) — a full stack web developer based in Karachi with <strong>4+ years</strong> of professional experience and <strong>30+ delivered projects</strong>. I write the interface, the API, the database layer and the deploy script, which means one person is answerable when something breaks.",
-    chips: ["4+ years experience", "30+ projects delivered", "Karachi · remote worldwide", "React · Node · Laravel"],
+      "I am <strong>Muhammad Wasif</strong>, also known as Wasif Majeed. Four-plus years and 30+ delivered projects, and nearly all of that depth sits in one place: <strong>the interface</strong>. HTML, CSS, JavaScript and TypeScript, built into React and Next.js components that stay fast on a mid-range phone and readable a year after launch.",
+    chips: ["4+ years front end", "React · Next.js · TypeScript", "HTML5 · CSS3 · JavaScript", "Accessibility", "Core Web Vitals"],
     sections: [
       {
-        h2: "What full stack actually means here",
-        body: `<p>The phrase gets used loosely, so here is the honest version of what I take responsibility for on a project:</p>
+        h2: "What senior actually means here",
+        body: `<p>Anyone can put a design on screen once. The difference shows up six months later, when someone has to change it. What I am paid for:</p>
   <ul class="bullets">
-    <li><strong>Front end</strong> — semantic HTML, modern CSS, JavaScript and TypeScript, built in React or Next.js with components you can reuse rather than a pile of one-off pages.</li>
-    <li><strong>Backend</strong> — Node.js and Express, or Laravel and PHP when a project wants a batteries-included framework. REST APIs, authentication, roles and permissions.</li>
-    <li><strong>Data</strong> — MongoDB for document-shaped data, MySQL or PostgreSQL when relations and reporting matter. Schema designed before the first endpoint, not after.</li>
-    <li><strong>Integrations</strong> — payments, email, CRMs, Google Tag Manager and analytics, third-party APIs, plus the error handling that keeps them from taking the site down with them.</li>
-    <li><strong>Ship</strong> — build pipeline, hosting, domain and SSL, caching, and the Core Web Vitals pass that decides whether Google likes the result.</li>
+    <li><strong>Components with one job.</strong> A card renders a card. It does not also fetch, sort and decide what a card is.</li>
+    <li><strong>Layouts that hold under real content.</strong> Designs are tested with the long product name and the three-line heading, not the tidy placeholder.</li>
+    <li><strong>Loading, empty and error states built with the happy path</strong> — the three screens most projects discover only after a client does.</li>
+    <li><strong>State kept where it is used.</strong> Global stores are for genuinely global things, not for whatever was inconvenient to pass down.</li>
+    <li><strong>Semantic HTML.</strong> Real buttons, real headings, real labels. The same work that makes a page accessible is what makes it legible to search engines.</li>
   </ul>`,
       },
       {
-        h2: "Why one developer instead of three",
-        body: `<p>The usual way a business site gets built in Karachi: a designer hands over a file, a front-end person turns it into pages, and someone else is called in when a form has to save to a database. Every handover is a place where scope goes missing and nobody owns the bug.</p>
-  <p>Because I work across the stack, the API is designed around what the interface actually needs, the database is shaped by the features that were agreed, and the person who wrote the front end is the person who fixes the server response. Smaller projects finish faster. Larger ones stay coherent.</p>`,
+        h2: "The stack I work in daily",
+        body: `<p><strong>React</strong> is where the most hours are. <strong>Next.js</strong> when pages need to be server-rendered so they load fast and can actually be crawled. <strong>TypeScript</strong> where the data is complex enough to earn the build step — and plain JavaScript where it is not, because a five-page marketing site does not need a type system.</p>
+  <p>Styling in <strong>Tailwind</strong>, <strong>CSS Modules</strong>, <strong>Sass</strong> or hand-written CSS, depending on what the team maintaining it will be comfortable with. <strong>Bootstrap</strong> when a project wants a dependable grid and nothing exotic. GSAP and scroll-driven motion when the design calls for it — this portfolio is that, and it still holds its Core Web Vitals.</p>`,
       },
       {
-        h2: "How a project runs",
-        body: `<p><strong>1. Scope.</strong> A call or a WhatsApp thread where we list the pages, the features and what the site has to achieve. You get a written quote and a timeline before anything is built.</p>
-  <p><strong>2. Structure.</strong> Sitemap, content model and the stack decision — React or Next.js, Node or Laravel, WordPress if the priority is a team editing content daily.</p>
-  <p><strong>3. Build.</strong> Work goes up on a staging URL from the first week, so you are reviewing something real rather than waiting for a reveal at the end.</p>
-  <p><strong>4. Launch.</strong> Deployment, analytics, search console, sitemap, speed pass. Then a support window while the site meets real traffic.</p>`,
+        h2: "Speed and accessibility are the work, not extras",
+        body: `<p>Most of your visitors arrive on a phone, on a connection that is not yours, holding it one-handed. So the same checklist runs on every build: image formats and sizing, font loading strategy, what is genuinely in the JavaScript bundle, layout shift from anything that arrives late, and how long the main thread is busy before the page responds to a tap.</p>
+  <p>Accessibility gets the same treatment: focus that goes where you expect, contrast that survives sunlight, controls reachable by keyboard, and headings that describe the page instead of just being large. It is not a compliance chore — it is the same discipline that makes an interface feel solid.</p>`,
+      },
+      {
+        h2: "Where I stop and say so",
+        body: `<p>Front end is the senior craft. On the backend I have shipped production work — Laravel with MySQL behind Offplan DXB and Hope Plants Dubai, a Node, Express and MongoDB stack behind Inner Beast — and I keep building depth there. But I am not going to sell you senior-level backend experience I do not yet have.</p>
+  <p>In practice that means: for most business sites, stores and marketing platforms, I can take the whole thing end to end. For something with heavy data modelling, serious scale or security exposure, I will tell you it needs a backend specialist and either bring one in or hand that piece over. You will hear that at the quote stage, not three weeks in.</p>`,
       },
     ],
-    proof: [P.innerBeast, P.offplan, P.hierys, P.mindreach, P.vampire, P.abet],
+    proof: [P.hierys, P.abet, P.peco, P.bridge, P.frontineers],
     faqs: [
       {
-        q: "How much does a full stack developer cost in Karachi?",
-        a: "It depends entirely on scope — a five-page marketing site and a booking platform with logins, payments and an admin panel are not the same job. Send the pages and features you have in mind and you get a fixed written quote before any work starts, so there is no billing surprise later.",
+        q: "What does a front-end developer do?",
+        a: "Builds everything the visitor sees and interacts with — layout, typography, navigation, forms, animation, responsive behaviour — and makes it work across browsers, screen sizes and input methods. On a modern project that also means component architecture, performance budgets and accessibility, not just turning a design into HTML.",
       },
       {
-        q: "Do you work solo or with a team?",
-        a: "Solo on most builds, which is why the range across the stack matters. For larger scopes I bring in trusted designers or a second developer, and you still deal with one point of contact.",
+        q: "Can you build from a Figma design?",
+        a: "Yes. Figma, XD, a PDF, or a live site you want rebuilt. I will also flag anything in the design that will not survive real content or a 360px screen before building it, which is cheaper than finding out afterwards.",
       },
       {
-        q: "Which stack will you use for my project?",
-        a: "Whichever suits the problem. Content-led business site with a team editing it: WordPress. Marketing site that must rank and load fast: Next.js. Application with accounts, roles and reporting: React with Laravel or Node. I explain the trade-off before the decision is made rather than defaulting to one tool.",
+        q: "Do you use React for every project?",
+        a: "No, and that matters. React and Next.js earn their complexity on component-heavy or content-driven products. A brochure site is often better as clean HTML, CSS and JavaScript — it loads faster and costs less to build and host. Picking the lightest tool that does the job is part of the work.",
       },
       {
-        q: "Can you take over a project another developer started?",
-        a: "Yes, provided the code is available and the stack is one I work in. I read what is there, tell you honestly whether it is worth continuing or rebuilding, and give you the reasoning rather than just the verdict.",
+        q: "Can you make my existing site faster?",
+        a: "Usually, and often significantly. An audit covers bundle size, image handling, font loading, layout shift and third-party scripts, and comes back with specific fixes ranked by what will actually move — not a Lighthouse screenshot with no plan attached.",
       },
       {
-        q: "Do you provide support after launch?",
-        a: "Yes. Every project includes a support window after launch for fixes and small changes, and ongoing monthly maintenance is available if you want updates, backups and monitoring handled.",
+        q: "Do you handle the backend too?",
+        a: "I ship it, and I am honest about the level. Laravel with MySQL and Node with MongoDB are both in production on delivered projects. Front end is where the seniority is; for a demanding backend I will say so upfront and we bring in a specialist rather than me learning on your budget.",
       },
     ],
-    closerTitle: "Tell me what you are building",
+    closerTitle: "Need an interface built properly?",
     closerBody:
-      "Send the pages, the features and the deadline. You get an honest answer about scope and a fixed quote — including the answer that a simpler build would serve you better.",
+      "Send the design, the repository, or just the idea. You get a straight read on scope, the right approach and a fixed quote — including when a simpler build would serve you better.",
   },
 ];
 
@@ -600,4 +603,73 @@ PAGES.push({
   closerTitle: "Ready for a website that does its job?",
   closerBody:
     "Tell me about your business and the pages you need. You get a fixed quote, a realistic timeline and a straight answer about what will actually bring you enquiries.",
+});
+
+/* Deliberately last. The keyword is worth having, but the honest position is
+   "senior on the front end, shipping on the back", and this page says that
+   plainly rather than claiming the whole stack at the same level. */
+PAGES.push({
+  slug: "full-stack-developer-karachi",
+  navLabel: "Full Stack Delivery",
+  breadcrumb: "Full Stack Delivery",
+  title: "Full Stack Web Development in Karachi | Muhammad Wasif",
+  description:
+    "Full stack web development in Karachi: senior front end in React and Next.js, with backend in Laravel or Node shipped end to end. An honest read on both.",
+  keywords:
+    "full stack developer Karachi, full stack web development Karachi, hire full stack developer Pakistan, React Node Laravel developer, freelance web developer Karachi",
+  serviceName: "Full stack web development",
+  serviceType: "Full stack web development",
+  h1: "<em>Full stack</em> web development in Karachi",
+  lede:
+    "One developer from the first pixel to the live URL. Worth being precise about what that means here: <strong>front end is where my four-plus years of depth sit</strong>, and the backend is work I ship in production while still building depth. For most business sites, stores and marketing platforms that is exactly enough. For some projects it is not, and I will tell you which one yours is.",
+  chips: ["Senior on the front end", "Laravel · MySQL shipped", "Node · MongoDB shipped", "Deployment & analytics", "Honest scoping"],
+  sections: [
+    {
+      h2: "The honest version, before you read further",
+      body: `<p>Plenty of freelancers put "full stack" on a profile because it widens the net. Here is the actual split, so you can decide with real information:</p>
+  <ul class="bullets">
+    <li><strong>Front end — senior.</strong> React, Next.js, TypeScript, HTML, CSS, responsive and accessible builds, Core Web Vitals. This is the craft, and it is where four-plus years of daily practice went.</li>
+    <li><strong>CMS and commerce — strong, proven.</strong> WordPress and WooCommerce, Shopify theme and Liquid work. Five live stores you can open.</li>
+    <li><strong>Backend — shipping, still growing.</strong> Laravel with MySQL and Node with Express and MongoDB are both running in production on delivered projects. I am competent and careful there; I am not going to call it senior.</li>
+    <li><strong>Deployment, APIs, analytics — routine.</strong> Build pipelines, hosting, SSL, third-party integrations, Google Tag Manager and Search Console.</li>
+  </ul>`,
+    },
+    {
+      h2: "What the backend work has actually been",
+      body: `<p>Not theory from a course. <a href="https://offplandxb.ae/" target="_blank" rel="noopener noreferrer">Offplan DXB</a> is a Dubai property portal on Laravel and MySQL — listings, filtering and lead capture against a real database. <a href="https://hopeplantsdubai.com/" target="_blank" rel="noopener noreferrer">Hope Plants Dubai</a> is a Laravel application with catalogue content managed from an admin side. <a href="https://mindreach.us/" target="_blank" rel="noopener noreferrer">MindReach</a> pairs a React front end with a Laravel backend.</p>
+  <p>On the JavaScript side, <a href="https://innerbeast.co.uk/" target="_blank" rel="noopener noreferrer">Inner Beast</a> runs Next.js over a Node, Express and MongoDB stack. Those are the receipts. What they do not yet include is heavy data modelling at scale, or a system where a security mistake is expensive — which is exactly why I flag those rather than take them alone.</p>`,
+    },
+    {
+      h2: "When one developer is the right call",
+      body: `<p><strong>Good fit:</strong> a business site with a CMS your team edits; a WooCommerce or Shopify store; a marketing platform with forms, integrations and analytics; a React or Next.js front end over an existing backend; an admin panel with roles and reporting on Laravel.</p>
+  <p><strong>Bring in a specialist:</strong> financial or health data, complex multi-tenant permissions, real-time systems at scale, anything where a breach or a wrong number costs real money. In those cases I still do the front end at full strength — I just do not pretend the server side is a solo job.</p>
+  <p>Every handover between vendors is a place where scope goes missing and nobody owns the bug. Removing that gap is the real value of hiring one person. Pretending the gap does not exist when it does is not.</p>`,
+    },
+  ],
+  proof: [P.mindreach, P.offplan, P.innerBeast, P.hopePlants, P.bridge, P.hierys],
+  faqs: [
+    {
+      q: "Are you a full stack developer or a front-end developer?",
+      a: "Senior front-end developer who also ships full stack work. Front end is where the depth is; Laravel with MySQL and Node with MongoDB are in production on delivered projects but I am still building depth there. I would rather you hear that now than discover it mid-project.",
+    },
+    {
+      q: "So can you build my whole project end to end?",
+      a: "For most business sites, CMS builds, stores and marketing platforms, yes — front end, backend, database, deployment and analytics. For heavy data modelling, real-time systems at scale or security-sensitive work, I will say so at the quote stage and either bring in a backend specialist or take the front end only.",
+    },
+    {
+      q: "How much does a full stack project cost in Karachi?",
+      a: "It depends entirely on scope. A five-page marketing site and a booking platform with logins, payments and an admin panel are not the same job. Send the pages and features you have in mind and you get a fixed written quote before any work starts.",
+    },
+    {
+      q: "Which stack will you use?",
+      a: "Whichever suits the problem. Content-led site your team edits: WordPress. Marketing site that must rank and load fast: Next.js. Application with accounts, roles and reporting: React with Laravel. I explain the trade-off before the decision rather than defaulting to one tool.",
+    },
+    {
+      q: "Can you take over a project another developer started?",
+      a: "Yes, if the code is available and the stack is one I work in. I read what is there, tell you honestly whether it is worth continuing or rebuilding, and give you the reasoning rather than just the verdict.",
+    },
+  ],
+  closerTitle: "Tell me what you are building",
+  closerBody:
+    "Send the pages, the features and the deadline. You get an honest answer about scope — including the answer that part of it should go to someone else.",
 });

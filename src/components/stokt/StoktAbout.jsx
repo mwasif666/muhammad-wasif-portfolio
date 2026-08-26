@@ -100,9 +100,9 @@ export default function StoktAbout() {
           <article className={styles.showcaseCard}>
             <SkeletonImage src={showcaseAsset} alt="" loading="lazy" decoding="async" />
             <div className={styles.showcaseMeta}>
-              <strong>Full-Stack Systems</strong>
+              <strong>Front-End Systems</strong>
               <span>
-                Frontend, backend and production delivery{" "}
+                Interfaces, CMS builds and production delivery{" "}
                 <b aria-hidden="true">→</b>
               </span>
             </div>
@@ -127,12 +127,12 @@ export default function StoktAbout() {
             />
             <SkeletonImage
               src={PORTRAIT}
-              alt="Muhammad Wasif (Wasif Majeed) — full stack developer in Karachi, Pakistan, working in React, Next.js, the MERN stack and Laravel"
+              alt="Muhammad Wasif (Wasif Majeed) — senior front-end developer in Karachi, Pakistan, working in React, Next.js and TypeScript"
               draggable="false"
             />
             <div className={`${styles.profileMeta} ${themeStyles.blueProfileMeta}`}>
               <strong>Muhammad Wasif</strong>
-              <span>FULL STACK DEVELOPER · KARACHI</span>
+              <span>SENIOR FRONT-END DEVELOPER · KARACHI</span>
             </div>
           </article>
 
@@ -141,10 +141,11 @@ export default function StoktAbout() {
 
             <p className={bioStyles.editorialStatement}>
               I&apos;m <strong>Muhammad Wasif</strong>, also known professionally as{" "}
-              <strong>Wasif Majeed</strong>. I turn business ideas into complete web
-              products with clear interfaces, dependable backends and{" "}
-              <strong>maintainable code</strong>. My focus is simple: build experiences
-              that are fast, useful and ready for <strong>real people.</strong>
+              <strong>Wasif Majeed</strong>. Front end is where I&apos;m strongest —
+              React, Next.js and TypeScript interfaces built to stay fast and{" "}
+              <strong>maintainable</strong>. I also handle the CMS, commerce and
+              backend side, and carry the work all the way to{" "}
+              <strong>production.</strong>
             </p>
 
             <div className={bioStyles.editorialAuthor}>
@@ -153,7 +154,7 @@ export default function StoktAbout() {
               </span>
               <span className={bioStyles.editorialAuthorCopy}>
                 <strong>Muhammad Wasif</strong>
-                <small>Full Stack Developer · Karachi</small>
+                <small>Senior Front-End Developer · Karachi</small>
               </span>
             </div>
           </article>

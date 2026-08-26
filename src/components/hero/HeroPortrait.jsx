@@ -25,7 +25,7 @@ export default function HeroPortrait() {
       <div className={styles.rim} aria-hidden="true" />
       <img
         src={src}
-        alt="Muhammad Wasif (Wasif Majeed) — full stack developer in Karachi, Pakistan, working in React, Next.js, the MERN stack and Laravel"
+        alt="Muhammad Wasif (Wasif Majeed) — senior front-end developer in Karachi, Pakistan, working in React, Next.js and TypeScript"
         draggable="false"
         decoding="async"
         fetchPriority="high"

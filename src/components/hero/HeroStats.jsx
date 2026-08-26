@@ -5,7 +5,7 @@ import styles from "./HeroStats.module.css";
 const stats = [
   { value: "30+", label: "Projects delivered" },
   { value: "4+", label: "Years building" },
-  { value: "100%", label: "Full-stack delivery" },
+  { value: "100%", label: "Responsive builds" },
 ];
 
 export default function HeroStats() {

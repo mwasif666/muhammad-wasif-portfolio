@@ -8,9 +8,9 @@ export default function HeroPitch() {
   return (
     <div className={clsx(heroReveal("delay-[380ms]"), styles.root)}>
       <p className={styles.copy}>
-        I build fast, responsive websites and full-stack platforms for real
-        businesses—from polished frontends and CMS builds to APIs, integrations
-        and production deployment.
+        Front end is what I do best—React, Next.js and TypeScript interfaces
+        that stay fast on real devices. I also build the CMS, commerce and
+        backend side, and take the work through to production.
       </p>
 
       <div className={styles.actions}>

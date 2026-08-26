@@ -6,14 +6,9 @@ import styles from "./LocalSeoSection.module.css";
    which is how they get crawled at all. */
 const services = [
   {
-    href: "/full-stack-developer-karachi",
-    title: "Full Stack Development",
-    copy: "Front end, backend, database and deployment handled by one developer, so nothing falls between two vendors.",
-  },
-  {
-    href: "/mern-stack-developer-karachi",
-    title: "MERN Stack Development",
-    copy: "MongoDB, Express.js, React and Node.js for dashboards, admin panels and products with real user accounts.",
+    href: "/front-end-developer-karachi",
+    title: "Front-End Development",
+    copy: "The craft I am senior in: React, Next.js and TypeScript interfaces that stay fast, accessible and maintainable.",
   },
   {
     href: "/react-nextjs-developer-karachi",
@@ -21,9 +16,9 @@ const services = [
     copy: "Component-driven interfaces and server-rendered Next.js sites that load fast and rank because of it.",
   },
   {
-    href: "/laravel-php-developer-karachi",
-    title: "Laravel & PHP",
-    copy: "Laravel with MySQL for applications that need roles, an admin panel, reporting and a database behind them.",
+    href: "/website-design-development-karachi",
+    title: "Website Design & Development",
+    copy: "Business websites designed and built from scratch: responsive layouts, clean HTML, CSS and JavaScript.",
   },
   {
     href: "/wordpress-developer-karachi",
@@ -36,9 +31,19 @@ const services = [
     copy: "Live stores on customised Dawn and Horizon themes — Liquid, Shopify Markets and storefront speed.",
   },
   {
-    href: "/website-design-development-karachi",
-    title: "Website Design & Development",
-    copy: "Business websites designed and built from scratch: responsive layouts, clean HTML, CSS and JavaScript.",
+    href: "/laravel-php-developer-karachi",
+    title: "Laravel & PHP",
+    copy: "Backend work I have shipped: Laravel with MySQL behind admin panels, listings and reporting.",
+  },
+  {
+    href: "/mern-stack-developer-karachi",
+    title: "MERN Stack",
+    copy: "MongoDB, Express.js, React and Node.js — the JavaScript backend I am building depth in.",
+  },
+  {
+    href: "/full-stack-developer-karachi",
+    title: "Full Stack Delivery",
+    copy: "Front end at senior level, backend and deployment handled too, with an honest read on where each sits.",
   },
 ];
 
@@ -50,49 +55,47 @@ const faqs = [
     q: "Who is Muhammad Wasif?",
     a: (
       <>
-        Muhammad Wasif, also known professionally as Wasif Majeed, is a full stack
-        developer based in Karachi, Pakistan. He has 4+ years of professional
-        experience and has delivered 30+ websites and web applications in React,
-        Next.js, the MERN stack, Laravel, PHP, WordPress, WooCommerce and
-        Shopify.
+        Muhammad Wasif, also known professionally as Wasif Majeed, is a senior
+        front-end developer based in Karachi, Pakistan. He has 4+ years of
+        professional experience and 30+ delivered projects, working mainly in
+        React, Next.js, TypeScript, HTML, CSS and JavaScript, alongside
+        WordPress, WooCommerce and Shopify builds.
       </>
     ),
   },
   {
-    q: "What does a full stack developer in Karachi actually build?",
+    q: "What does a senior front-end developer actually build?",
     a: (
       <>
-        Everything from the interface a visitor sees to the server behind it:
-        responsive front ends in HTML, CSS, JavaScript, React and Next.js;
-        backends and REST APIs in Node.js, Express or Laravel; databases in
-        MongoDB and MySQL; plus CMS and commerce builds on WordPress, WooCommerce
-        and Shopify, then deployment, analytics and performance tuning.
+        Everything a visitor sees and touches, built to survive real conditions:
+        responsive layouts in semantic HTML and modern CSS, React and Next.js
+        components that stay readable a year later, TypeScript where the data
+        earns it, keyboard and screen-reader access, and the Core Web Vitals
+        work that decides whether the page feels fast on a mid-range phone.
       </>
     ),
   },
   {
-    q: "Do you work with the MERN stack?",
+    q: "Do you do backend work as well, or only front end?",
     a: (
       <>
-        Yes. MongoDB, Express.js, React and Node.js is a core stack here, used for
-        dashboards, admin panels, authentication flows and content-driven
-        products.{" "}
-        <a href="https://innerbeast.co.uk/" target="_blank" rel="noreferrer noopener">
-          Inner Beast
-        </a>{" "}
-        is a live example built on Next.js with a MongoDB, Express.js and Node.js
-        backend.
+        Both, with an honest split. Front end is where the 4+ years of depth
+        are. On the backend I have shipped production work — Laravel with
+        MySQL behind Offplan DXB and Hope Plants Dubai, and a Node, Express and
+        MongoDB stack behind Inner Beast — but I am still building depth
+        there, and I would rather tell you that than oversell it. For a
+        demanding backend I will say so and we bring in a specialist.
       </>
     ),
   },
   {
-    q: "Can you build with Laravel and PHP as well as JavaScript?",
+    q: "Do you build WordPress and Shopify sites?",
     a: (
       <>
-        Yes. Laravel with MySQL powers several production projects, including
-        Offplan DXB, Hope Plants Dubai and the backend behind MindReach. Laravel
-        pairs well with a React front end when a project needs a proper admin
-        panel, roles and reporting.
+        Yes, and this is proven work rather than a line on a list. WordPress and
+        WooCommerce on Bridge Precision Tools, Vampire Tools and Econetix;
+        Shopify on Frontineers and Hunza Dry Fruits Basket, across customised
+        Horizon and Dawn themes. All five are live and you can open them.
       </>
     ),
   },
@@ -100,15 +103,15 @@ const faqs = [
     q: "How much does a website cost in Karachi?",
     a: (
       <>
-        It depends on scope. A polished marketing site is a different budget from
-        a WooCommerce store or a custom application with logins, dashboards and
-        payments. Share the pages, features and deadline over WhatsApp at{" "}
+        It depends on scope. A polished marketing site is a different budget
+        from a WooCommerce store or an app with logins and dashboards. Share the
+        pages, features and deadline over WhatsApp at{" "}
         <a href={CONTACT.whatsappUrl} target="_blank" rel="noreferrer noopener">
           {CONTACT.phoneDisplay}
         </a>{" "}
         or by email at{" "}
-        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> and you get a fixed
-        written quote before anything starts.
+        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> and you get a
+        fixed written quote before anything starts.
       </>
     ),
   },
@@ -124,6 +127,7 @@ const faqs = [
   },
 ];
 
+
 export default function LocalSeoSection() {
   return (
     <section
@@ -138,26 +142,33 @@ export default function LocalSeoSection() {
         </p>
 
         <h2 id="local-seo-title" className={styles.title}>
-          Full stack developer in <em>Karachi</em>, available for your project
+          Senior front-end developer in <em>Karachi</em>, available for your
+          project
         </h2>
 
         <p className={styles.lead}>
           I&apos;m <strong>Muhammad Wasif</strong>, also known as{" "}
-          <strong>Wasif Majeed</strong> — a full stack web developer based in
-          Karachi with <strong>4+ years</strong> of professional experience and{" "}
-          <strong>30+ delivered projects</strong>. I build the whole thing: the
-          interface in HTML, CSS, JavaScript, React and Next.js, the backend in
-          Node.js, Express or Laravel, the database in MongoDB or MySQL, and the
-          deployment that puts it in front of real users.
+          <strong>Wasif Majeed</strong> — a <strong>senior front-end
+          developer</strong> based in Karachi with <strong>4+ years</strong> of
+          professional experience and <strong>30+ delivered projects</strong>.
+          The interface is my craft: semantic HTML, modern CSS, JavaScript and
+          TypeScript, built into React and Next.js components that stay fast on
+          a mid-range phone and readable a year after launch.
         </p>
 
         <p className={styles.lead}>
-          That range is the point. A business site on WordPress, a WooCommerce
-          store, a MERN dashboard with logins and roles, a Laravel admin panel
-          behind a React front end — these usually mean hiring three different
-          people. Work with me and there is one person answerable for the code,
-          the content system and the day it goes live. Clients so far are in
-          Karachi and across Pakistan, plus Dubai, the UK and the US.
+          That extends past the browser. I build and ship WordPress,
+          WooCommerce and Shopify stores, wire up APIs, analytics and payments,
+          and handle deployment. I have also shipped backends — Laravel with
+          MySQL, and Node with MongoDB — though that is the side I am still
+          growing into, and I will tell you plainly when a project needs a
+          backend specialist rather than take it on regardless.
+        </p>
+
+        <p className={styles.lead}>
+          Clients so far are in Karachi and across Pakistan, plus Dubai, the UK
+          and the US. Every project starts with a fixed written quote and a real
+          answer about what will actually move the needle for you.
         </p>
 
         <h3 className={styles.gridTitle}>What I build</h3>

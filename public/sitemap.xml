@@ -4,57 +4,60 @@
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.wasifmajeed.com/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://www.wasifmajeed.com/muhammad-wasif-senior-full-stack-developer-karachi.jpg</image:loc>
-      <image:title>Muhammad Wasif (Wasif Majeed), full stack developer in Karachi</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/agymx2xx/image/upload/f_jpg,q_auto/v1787218446/me.png</image:loc>
+      <image:title>Muhammad Wasif (Wasif Majeed), senior front-end developer in Karachi</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.wasifmajeed.com/full-stack-developer-karachi</loc>
-    <lastmod>2026-08-25</lastmod>
+    <loc>https://www.wasifmajeed.com/front-end-developer-karachi</loc>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.wasifmajeed.com/mern-stack-developer-karachi</loc>
-    <lastmod>2026-08-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.wasifmajeed.com/react-nextjs-developer-karachi</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.wasifmajeed.com/laravel-php-developer-karachi</loc>
-    <lastmod>2026-08-25</lastmod>
+    <loc>https://www.wasifmajeed.com/website-design-development-karachi</loc>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wasifmajeed.com/wordpress-developer-karachi</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wasifmajeed.com/shopify-developer-karachi</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.wasifmajeed.com/website-design-development-karachi</loc>
-    <lastmod>2026-08-25</lastmod>
+    <loc>https://www.wasifmajeed.com/laravel-php-developer-karachi</loc>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wasifmajeed.com/mern-stack-developer-karachi</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wasifmajeed.com/full-stack-developer-karachi</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

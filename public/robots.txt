@@ -1,12 +1,14 @@
 # https://www.wasifmajeed.com/
-# Muhammad Wasif (Wasif Majeed) — full stack developer in Karachi, Pakistan.
+# Muhammad Wasif (Wasif Majeed) — senior front-end developer in Karachi, Pakistan.
 #
-# Nothing is disallowed on purpose. The homepage is a React app, so Googlebot
+# Nothing is disallowed on purpose. The homepage is a React app, so a crawler
 # has to fetch /assets/*.js and *.css to render it at all — blocking those
-# would leave the crawler looking at an empty div.
+# would leave it looking at an empty div.
 
 User-agent: *
 Allow: /
+
+# ---------------------------------------------------------------- search --
 
 User-agent: Googlebot
 Allow: /
@@ -15,6 +17,60 @@ User-agent: Googlebot-Image
 Allow: /
 
 User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# ------------------------------------------------------- AI assistants --
+# The crawlers behind ChatGPT, Claude, Perplexity, Gemini and Copilot answers.
+# Most of them do not execute JavaScript, which is exactly why the service
+# pages live in /public as static HTML instead of React routes — that is the
+# version an AI crawler can actually read and quote.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://www.wasifmajeed.com/sitemap.xml
