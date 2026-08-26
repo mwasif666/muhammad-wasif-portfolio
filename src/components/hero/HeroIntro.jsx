@@ -6,7 +6,7 @@ export default function HeroIntro() {
   return (
     <>
       <span className={clsx(heroReveal("delay-[80ms]"), styles.kicker)}>
-        <span className={styles.kickerMark}>Senior Full-Stack</span>
+        <span className={styles.kickerMark}>Full Stack</span>
         Developer · Karachi
       </span>
 
@@ -16,7 +16,7 @@ export default function HeroIntro() {
             headline, and the visitor already reads it in the header, the
             signature band and the about section. */}
         <h1 className={styles.heading}>
-          <span className="sr-only">Muhammad Wasif</span>
+          <span className="sr-only">Muhammad Wasif — Full Stack Developer in Karachi. </span>
           <span className={styles.headingLine}>Web Products Built to Perform</span>
         </h1>
       </div>

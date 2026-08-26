@@ -80,12 +80,32 @@ export const RESUME_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload
  * `width` caps the transcode — the raw screen recordings dwarf the slot they
  * play in (the first one is 37 MB untouched, 1.2 MB at w_1000), and an
  * autoplaying preview has to be cheap or it is worse than no preview at all.
+ *
+ * `folder` exists because not every recording lands in FOLDER: a clip uploaded
+ * straight from the Cloudinary dashboard sits at the cloud root, and prefixing
+ * it would resolve to a public id that does not exist. Pass `folder: ""` for
+ * those rather than re-uploading them.
  */
-export function cldVideoSources(id, { width = 1000 } = {}) {
+export function cldVideoSources(id, { width = 1000, folder = FOLDER } = {}) {
   const base = `https://res.cloudinary.com/${CLOUD_NAME}/video/upload`;
+  const publicId = folder ? `${folder}/${id}` : id;
 
   return [
-    { type: "video/webm", src: `${base}/f_webm,vc_vp9,q_auto,w_${width}/${FOLDER}/${id}.webm` },
-    { type: "video/mp4", src: `${base}/f_mp4,q_auto,w_${width}/${FOLDER}/${id}.mp4` },
+    { type: "video/webm", src: `${base}/f_webm,vc_vp9,q_auto,w_${width}/${publicId}.webm` },
+    { type: "video/mp4", src: `${base}/f_mp4,q_auto,w_${width}/${publicId}.mp4` },
   ];
+}
+
+/**
+ * Delivery URL for a still that was uploaded to the cloud root instead of
+ * FOLDER, with the same `f_auto,q_auto` pass `cldImage` applies.
+ *
+ * Worth using over the bare upload URL every time: the Frontineers capture is
+ * a 10.1 MB PNG as uploaded and 697 KB as WebP at w_1000, for a preview that
+ * never renders wider than a card.
+ */
+export function cldRootUrl(id, { width = 1000, version } = {}) {
+  const base = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload`;
+
+  return `${base}/f_auto,q_auto,w_${width}/${version ? `${version}/` : ""}${id}`;
 }

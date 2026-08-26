@@ -1,4 +1,20 @@
+# https://www.wasifmajeed.com/
+# Muhammad Wasif (Wasif Majeed) — full stack developer in Karachi, Pakistan.
+#
+# Nothing is disallowed on purpose. The homepage is a React app, so Googlebot
+# has to fetch /assets/*.js and *.css to render it at all — blocking those
+# would leave the crawler looking at an empty div.
+
 User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
 Allow: /
 
 Sitemap: https://www.wasifmajeed.com/sitemap.xml

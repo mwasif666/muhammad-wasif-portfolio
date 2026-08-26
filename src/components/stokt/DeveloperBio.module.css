@@ -44,12 +44,21 @@
 }
 
 .editorialBio {
+  /* Shared so the orb can be centred on the statement's first line by maths
+     rather than by a magic `top` that drifts at every breakpoint — both sides
+     of that sum scale with the viewport. */
+  --bio-pad: clamp(2rem, 2.6vw, 2.8rem);
+  --bio-statement-gap: clamp(2rem, 3vw, 3rem);
+  --bio-statement-size: clamp(2rem, 2.7vw, 3.15rem);
+  --bio-statement-leading: 1.17;
+  --bio-orb-size: clamp(3.65rem, 4.4vw, 4.7rem);
+
   position: relative;
   isolation: isolate;
   justify-content: flex-start !important;
   min-height: clamp(31rem, 35vw, 37rem) !important;
   overflow: hidden !important;
-  padding: clamp(2rem, 2.6vw, 2.8rem) !important;
+  padding: var(--bio-pad) !important;
   /* The blue bloom that used to sit under the foot of this card is gone; the
      faint off-centre wash stays so the panel is not flat. */
   background:
@@ -91,10 +100,16 @@
 .codeOrb {
   position: absolute;
   z-index: 3;
-  top: clamp(2rem, 2.8vw, 2.7rem);
+  /* padding + the statement's own top margin lands on the first line box;
+     half a line down, half an orb back up, and the two centres meet. */
+  top: calc(
+    var(--bio-pad) + var(--bio-statement-gap)
+    + (var(--bio-statement-size) * var(--bio-statement-leading) / 2)
+    - (var(--bio-orb-size) / 2)
+  );
   left: clamp(1.8rem, 2.8vw, 2.7rem);
   display: grid;
-  width: clamp(3.65rem, 4.4vw, 4.7rem);
+  width: var(--bio-orb-size);
   aspect-ratio: 1;
   place-items: center;
   border: 1px solid rgba(255,255,255,.09);
@@ -120,11 +135,11 @@
   z-index: 2;
   width: auto;
   max-width: none !important;
-  margin: clamp(2rem, 3vw, 3rem) clamp(.25rem, 1vw, 1rem) 0 clamp(5.3rem, 7.2vw, 7.6rem) !important;
+  margin: var(--bio-statement-gap) clamp(.25rem, 1vw, 1rem) 0 clamp(5.3rem, 7.2vw, 7.6rem) !important;
   color: rgba(174, 182, 190, .58) !important;
-  font-size: clamp(2rem, 2.7vw, 3.15rem) !important;
+  font-size: var(--bio-statement-size) !important;
   font-weight: 620;
-  line-height: 1.17 !important;
+  line-height: var(--bio-statement-leading) !important;
   letter-spacing: -.045em !important;
   text-wrap: balance;
 }

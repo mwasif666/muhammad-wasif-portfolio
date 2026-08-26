@@ -1,0 +1,213 @@
+/*
+ * The page's plain-text section. Everything above it is motion and imagery,
+ * which reads well to a person and tells a crawler almost nothing — this is
+ * where the actual words live: what is built, in which stack, for which city,
+ * plus the links that let the service pages be discovered from the homepage.
+ * Backdrop matches the footer's #00020f so the two read as one closing band.
+ */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #00020f;
+  color: #eaf4ff;
+  font-family: "Onest", "DM Sans", system-ui, sans-serif;
+  padding-block: clamp(4.5rem, 12vh, 9rem);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 18% 0%, rgba(0, 152, 241, .16), transparent 58%),
+    radial-gradient(ellipse at 88% 92%, rgba(37, 99, 235, .12), transparent 62%);
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 140rem);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5.5vw, 7.5rem);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  margin: 0 0 clamp(1rem, 2.5vh, 1.6rem);
+  font-size: .8125rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #7fb6e8;
+}
+
+.eyebrow i {
+  width: .4rem;
+  height: .4rem;
+  border-radius: 50%;
+  background: #48c2f2;
+  box-shadow: 0 0 0 .3rem rgba(72, 194, 242, .18);
+}
+
+.title {
+  margin: 0 0 clamp(1.1rem, 3vh, 1.8rem);
+  max-width: 22ch;
+  font-size: clamp(2.1rem, 5.4vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -.02em;
+  font-weight: 600;
+}
+
+.title em {
+  font-style: normal;
+  color: #48c2f2;
+}
+
+.lead {
+  max-width: 70ch;
+  margin: 0 0 1.1rem;
+  font-size: clamp(1rem, 1.35vw, 1.15rem);
+  line-height: 1.7;
+  color: rgba(234, 244, 255, .78);
+}
+
+.lead strong {
+  color: #eaf4ff;
+  font-weight: 600;
+}
+
+.lead a {
+  color: #48c2f2;
+  text-underline-offset: .22em;
+}
+
+/* ------------------------------------------------------------ services -- */
+
+.gridTitle,
+.faqTitle {
+  margin: clamp(2.8rem, 7vh, 4.5rem) 0 clamp(1.2rem, 3vh, 1.8rem);
+  font-size: clamp(1.15rem, 1.9vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.grid {
+  display: grid;
+  gap: clamp(.75rem, 1.6vw, 1rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  height: 100%;
+  padding: clamp(1.1rem, 2vw, 1.5rem);
+  border: 1px solid rgba(234, 244, 255, .1);
+  border-radius: 1.25rem;
+  background: rgba(234, 244, 255, .025);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 260ms ease, background-color 260ms ease, transform 260ms ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: rgba(72, 194, 242, .45);
+  background: rgba(0, 152, 241, .07);
+  transform: translateY(-3px);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .75rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cardTitle span[aria-hidden] {
+  color: #48c2f2;
+}
+
+.cardCopy {
+  margin: 0;
+  font-size: .9rem;
+  line-height: 1.6;
+  color: rgba(234, 244, 255, .64);
+}
+
+/* ----------------------------------------------------------------- faq -- */
+
+.faq {
+  max-width: 78ch;
+  border-top: 1px solid rgba(234, 244, 255, .12);
+}
+
+.item {
+  border-bottom: 1px solid rgba(234, 244, 255, .12);
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding-block: clamp(1rem, 2.4vh, 1.35rem);
+  cursor: pointer;
+  list-style: none;
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.question::-webkit-details-marker {
+  display: none;
+}
+
+.question::after {
+  content: "+";
+  flex: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: #48c2f2;
+  transition: transform 220ms ease;
+}
+
+.item[open] .question::after {
+  transform: rotate(45deg);
+}
+
+.answer {
+  margin: 0 0 clamp(1rem, 2.4vh, 1.35rem);
+  max-width: 68ch;
+  font-size: .95rem;
+  line-height: 1.7;
+  color: rgba(234, 244, 255, .7);
+}
+
+.answer a {
+  color: #48c2f2;
+  text-underline-offset: .22em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .question::after {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:focus-visible {
+    transform: none;
+  }
+}

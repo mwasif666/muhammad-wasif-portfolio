@@ -9,7 +9,7 @@ import bioStyles from "./DeveloperBio.module.css";
 const PORTRAIT = cldUrl(PORTRAIT_ID);
 
 const stats = [
-  { value: "7+", label: "Years of experience" },
+  { value: "4+", label: "Years of experience" },
   { value: "30+", label: "Projects delivered" },
   { value: "A–Z", label: "Design to deployment" },
 ];
@@ -127,12 +127,12 @@ export default function StoktAbout() {
             />
             <SkeletonImage
               src={PORTRAIT}
-              alt="Muhammad Wasif (Wasif Majeed), Senior Full-Stack Developer in Karachi, Pakistan"
+              alt="Muhammad Wasif (Wasif Majeed) — full stack developer in Karachi, Pakistan, working in React, Next.js, the MERN stack and Laravel"
               draggable="false"
             />
             <div className={`${styles.profileMeta} ${themeStyles.blueProfileMeta}`}>
               <strong>Muhammad Wasif</strong>
-              <span>SENIOR FULL-STACK DEVELOPER</span>
+              <span>FULL STACK DEVELOPER · KARACHI</span>
             </div>
           </article>
 
@@ -153,7 +153,7 @@ export default function StoktAbout() {
               </span>
               <span className={bioStyles.editorialAuthorCopy}>
                 <strong>Muhammad Wasif</strong>
-                <small>Senior Full-Stack Developer</small>
+                <small>Full Stack Developer · Karachi</small>
               </span>
             </div>
           </article>

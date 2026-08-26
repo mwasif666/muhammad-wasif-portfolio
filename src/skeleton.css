@@ -90,18 +90,35 @@ video.skeleton-media:not(.is-loaded) {
   animation: skeletonSweep var(--skeleton-speed) linear infinite;
 }
 
+/*
+ * The settle is an animation, not a transition, and that is load-bearing.
+ * These selectors are (0,2,1) — higher than any single module class — so a
+ * `transition` shorthand here silently replaces the whole transition list of
+ * whatever it lands on. That is what killed the project cards' 8s
+ * `object-position` pan: the moment a screenshot finished decoding it picked
+ * up `.is-loaded`, its transition became `background-color` alone, and the
+ * hover pan started jumping straight to the bottom instead of travelling.
+ * An animation does the same one-shot fade without touching `transition`.
+ */
 img.skeleton-media.is-loaded,
 video.skeleton-media.is-loaded {
   background-image: none;
   background-color: transparent;
-  transition: background-color 420ms ease;
+  animation: skeletonSettle 420ms ease both;
+}
+
+@keyframes skeletonSettle {
+  from { background-color: var(--skeleton-base); }
+  to { background-color: transparent; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .skeleton-tint,
   .skeleton,
   img.skeleton-media:not(.is-loaded),
-  video.skeleton-media:not(.is-loaded) {
+  video.skeleton-media:not(.is-loaded),
+  img.skeleton-media.is-loaded,
+  video.skeleton-media.is-loaded {
     animation: none;
   }
 }

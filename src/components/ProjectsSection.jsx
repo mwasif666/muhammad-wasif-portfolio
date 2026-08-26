@@ -2,7 +2,7 @@ import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FlowButton } from "@/components/ui/flow-button";
 import { SkeletonImage, SkeletonVideo } from "./ui/SkeletonMedia";
 import { useScroll } from "../contexts/ScrollContext";
-import { cldUrl, cldVideoSources } from "../lib/cloudinary";
+import { cldRootUrl, cldUrl, cldVideoSources } from "../lib/cloudinary";
 import styles from "./ProjectsShowcase.module.css";
 
 // Screen recordings play at this rate — the capture is a slow scroll-through
@@ -17,6 +17,16 @@ const projects = [
     // Verified from the site's production bundle: React/Vite, Tailwind,
     // GSAP ScrollTrigger and react-router are all present.
     services: ["React", "Vite", "Tailwind CSS", "GSAP ScrollTrigger", "React Router"],
+  },
+  {
+    name: "Bridge Precision Tools",
+    url: "https://bridgeprecisiontools.com/",
+    // 3.0 MB as uploaded, 168 KB as WebP at the width the card renders.
+    image: cldRootUrl("08c35040-9896-4390-9456-8a5edd94b73c.png", { version: "v1787685847" }),
+    // Read off the live page: generator tags for WordPress and WooCommerce
+    // 11.0.1, Elementor with pro-elements loaded, and the Hello Elementor
+    // parent theme. Google Tag Manager arrives via duracelltomi.
+    services: ["WordPress", "WooCommerce", "Elementor Pro", "Hello Elementor", "Google Tag Manager"],
   },
   {
     name: "Econetix",
@@ -61,6 +71,30 @@ const projects = [
     // WooCommerce is verified through the live commerce UI and a detected
     // WooCommerce-specific WPC Frequently Bought Together installation.
     services: ["WordPress", "WooCommerce", "WPC Frequently Bought Together", "Google Tag Manager"],
+  },
+  {
+    name: "Frontineers",
+    url: "https://frontineers.com/",
+    // The upload is a 10.1 MB PNG; f_auto,q_auto at the width the card
+    // actually renders brings it back under 700 KB as WebP.
+    image: cldRootUrl("frontineers.png", { version: "v1787683376" }),
+    // Verified from the live response: a `powered-by: Shopify` header, and
+    // Shopify.theme reporting schema_name "Horizon" under a working copy
+    // ("latest-copy-17may") rather than a stock install. Judge.me and gtag are
+    // both present, and the EN/DE hreflang pair with an EUR active currency is
+    // Shopify Markets doing the localisation.
+    services: ["Shopify", "Liquid", "Horizon Theme", "Shopify Markets", "Judge.me"],
+  },
+  {
+    name: "Hunza Dry Fruits Basket",
+    url: "https://hunzadryfruitsbasket.com/",
+    // Recording was uploaded to the Cloudinary root, hence folder: "".
+    video: cldVideoSources("Screen_Recording_2026-08-25_235152", { folder: "" }),
+    // Verified the same way as Frontineers: `powered-by: Shopify`, with
+    // Shopify.theme reporting Dawn 15.4.0 under a development copy. Judge.me
+    // handles reviews and the storefront carries a WhatsApp order route,
+    // which is how most of its customers actually check out.
+    services: ["Shopify", "Liquid", "Dawn Theme", "Judge.me", "WhatsApp Ordering"],
   },
   {
     name: "ReactDeploy",
@@ -109,6 +143,11 @@ const projects = [
 ];
 
 const INITIAL_PROJECT_COUNT = 6;
+
+/* How many rows each press of the toggle adds. The list pages in rather than
+   opening in one jump: sixteen cards at once is a wall of screenshots, and
+   every one of them is a video or a multi-megabyte still to fetch. */
+const PROJECT_PAGE_SIZE = 5;
 
 /* Names the project and the stack it was built on rather than saying "website
    preview" twelve times — that pairing is what someone searching for a given
@@ -257,18 +296,26 @@ function ProjectRow({ project, index, revealed }) {
 }
 
 export default function ProjectsSection() {
-  const [open, setOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_PROJECT_COUNT);
   const { scrollToY } = useScroll();
   const toggleRef = useRef(null);
   const anchorTopRef = useRef(null);
-  const visibleProjects = open ? projects : projects.slice(0, INITIAL_PROJECT_COUNT);
+  const visibleProjects = projects.slice(0, visibleCount);
   const hasMore = projects.length > INITIAL_PROJECT_COUNT;
+  const allShown = visibleCount >= projects.length;
 
   const handleToggle = () => {
-    anchorTopRef.current = open
+    // Only collapsing needs the scroll anchor. Adding rows appends them below
+    // the button, so nothing the reader is looking at moves; collapsing pulls
+    // the button up the page and would otherwise leave them mid-nowhere.
+    anchorTopRef.current = allShown
       ? toggleRef.current?.getBoundingClientRect().top ?? null
       : null;
-    setOpen((value) => !value);
+    setVisibleCount((count) =>
+      count >= projects.length
+        ? INITIAL_PROJECT_COUNT
+        : Math.min(count + PROJECT_PAGE_SIZE, projects.length),
+    );
   };
 
   useLayoutEffect(() => {
@@ -279,7 +326,7 @@ export default function ProjectsSection() {
     const after = toggleRef.current?.getBoundingClientRect().top;
     if (after === undefined || after === before) return;
     scrollToY(window.scrollY + (after - before));
-  }, [open, scrollToY]);
+  }, [visibleCount, scrollToY]);
 
   return (
     <section className={styles.section} id="projects" aria-labelledby="projects-title">
@@ -315,10 +362,10 @@ export default function ProjectsSection() {
           <div className={styles.moreToggleRow}>
             <FlowButton
               ref={toggleRef}
-              text={open ? "Show fewer projects" : "View more projects"}
+              text={allShown ? "Show fewer projects" : "View more projects"}
               tone="light"
               type="button"
-              aria-expanded={open}
+              aria-expanded={allShown}
               aria-controls="projects-list"
               onClick={handleToggle}
               className="min-w-[13rem] max-[420px]:w-full"

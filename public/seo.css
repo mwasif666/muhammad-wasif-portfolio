@@ -1,0 +1,301 @@
+/*
+ * Shared shell for the static service pages in /public. These are plain HTML
+ * on purpose: the React app is one route, and a single route cannot rank for
+ * seven different searches. Each page ships its own copy, title and schema and
+ * links back into the app, so the same styles are loaded once and cached.
+ */
+
+:root {
+  --ink: #eaf4ff;
+  --ink-soft: rgba(234, 244, 255, .72);
+  --ink-faint: rgba(234, 244, 255, .55);
+  --bg: #00020f;
+  --bg-raised: rgba(234, 244, 255, .03);
+  --line: rgba(234, 244, 255, .12);
+  --accent: #48c2f2;
+  --accent-deep: #0098f1;
+  --shell: 72rem;
+  --pad: clamp(1.25rem, 5vw, 3rem);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 12% -10%, rgba(0, 152, 241, .18), transparent 55%),
+    radial-gradient(ellipse at 92% 8%, rgba(37, 99, 235, .12), transparent 55%);
+}
+
+.shell {
+  width: min(100%, var(--shell));
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+a { color: var(--accent); text-underline-offset: .22em; }
+a:hover { color: #8ad8ff; }
+
+.skip {
+  position: absolute;
+  left: -999px;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 9;
+  padding: .6rem 1rem;
+  border-radius: .6rem;
+  background: var(--accent);
+  color: #001523;
+}
+
+/* -------------------------------------------------------------- header -- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: blur(14px);
+  background: rgba(0, 2, 15, .78);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbarRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: .9rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .5rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+.brand small {
+  font-size: .75rem;
+  font-weight: 400;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .6rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: rgba(0, 152, 241, .12);
+  color: var(--ink);
+  font-size: .9rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 220ms ease, transform 220ms ease;
+}
+.cta:hover {
+  background: rgba(0, 152, 241, .26);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.cta--solid {
+  background: var(--accent);
+  color: #001523;
+  font-weight: 600;
+}
+.cta--solid:hover { background: #8ad8ff; color: #001523; }
+
+/* ---------------------------------------------------------- typography -- */
+
+main { padding-block: clamp(2.5rem, 7vh, 4.5rem) clamp(3rem, 9vh, 6rem); }
+
+.crumbs {
+  margin: 0 0 clamp(1.4rem, 4vh, 2.2rem);
+  font-size: .85rem;
+  color: var(--ink-faint);
+}
+.crumbs a { color: var(--ink-faint); }
+.crumbs a:hover { color: var(--accent); }
+
+h1 {
+  margin: 0 0 1.1rem;
+  max-width: 20ch;
+  font-size: clamp(2.15rem, 6vw, 3.9rem);
+  line-height: 1.03;
+  letter-spacing: -.025em;
+  font-weight: 600;
+}
+h1 em { font-style: normal; color: var(--accent); }
+
+h2 {
+  margin: clamp(2.6rem, 7vh, 4rem) 0 1rem;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -.015em;
+  font-weight: 600;
+}
+
+h3 {
+  margin: 1.9rem 0 .6rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-weight: 600;
+}
+
+p, li { color: var(--ink-soft); }
+p { max-width: 72ch; margin: 0 0 1rem; }
+strong { color: var(--ink); font-weight: 600; }
+
+.lede {
+  max-width: 68ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  color: var(--ink-soft);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: 0 0 clamp(1.6rem, 4vh, 2.4rem);
+  padding: 0;
+  list-style: none;
+}
+.meta li {
+  padding: .3rem .8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: .8rem;
+  color: var(--ink-faint);
+}
+
+ul.bullets { max-width: 72ch; padding-left: 1.15rem; }
+ul.bullets li { margin-bottom: .5rem; }
+
+/* --------------------------------------------------------------- cards -- */
+
+.cards {
+  display: grid;
+  gap: .9rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  margin: 1.4rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: block;
+  height: 100%;
+  padding: clamp(1.1rem, 2vw, 1.4rem);
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  background: var(--bg-raised);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 240ms ease, background-color 240ms ease, transform 240ms ease;
+}
+a.card:hover {
+  border-color: rgba(72, 194, 242, .45);
+  background: rgba(0, 152, 241, .07);
+  transform: translateY(-3px);
+}
+.card strong { display: block; margin-bottom: .35rem; font-size: 1rem; }
+.card span { display: block; font-size: .88rem; line-height: 1.6; color: var(--ink-faint); }
+.card .stack {
+  margin-top: .6rem;
+  font-size: .78rem;
+  letter-spacing: .04em;
+  color: var(--accent);
+}
+
+/* ----------------------------------------------------------------- faq -- */
+
+.faq { max-width: 78ch; border-top: 1px solid var(--line); margin-top: 1.2rem; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding-block: 1.05rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  flex: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform 200ms ease;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p { margin: 0 0 1.05rem; font-size: .95rem; }
+
+/* -------------------------------------------------------------- footer -- */
+
+.closer {
+  margin-top: clamp(3rem, 8vh, 5rem);
+  padding: clamp(1.6rem, 4vw, 2.6rem);
+  border: 1px solid var(--line);
+  border-radius: 1.4rem;
+  background: linear-gradient(140deg, rgba(0, 152, 241, .14), rgba(234, 244, 255, .02));
+}
+.closer h2 { margin-top: 0; }
+.closerActions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.3rem; }
+
+.siteFooter {
+  border-top: 1px solid var(--line);
+  padding-block: clamp(2rem, 5vh, 3rem);
+  font-size: .88rem;
+  color: var(--ink-faint);
+}
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.25rem;
+  margin: 0 0 1.4rem;
+  padding: 0;
+  list-style: none;
+}
+.footerLinks a { color: var(--ink-soft); text-decoration: none; }
+.footerLinks a:hover { color: var(--accent); }
+
+/* The brand lockup wraps into two cramped lines on a phone; the role is
+   already in the H1 of every page, so drop it below 560px. */
+@media (max-width: 560px) {
+  .brand small { display: none; }
+  .cta { padding: .5rem .9rem; font-size: .85rem; }
+}

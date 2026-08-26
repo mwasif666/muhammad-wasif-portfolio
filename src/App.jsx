@@ -9,6 +9,7 @@ import ProjectsSection from "./components/ProjectsSection";
 import WhySection from "./components/why/WhySection";
 import JourneySection from "./components/journey/JourneySection";
 import DeveloperSystemsSection from "./components/developerSystems/DeveloperSystemsSection";
+import LocalSeoSection from "./components/seo/LocalSeoSection";
 import NavMenu from "./components/NavMenu";
 import Footer from "./components/Footer";
 import { CONTACT } from "./lib/contact";
@@ -49,6 +50,7 @@ export default function App() {
         <WhySection />
         <JourneySection />
         <DeveloperSystemsSection />
+        <LocalSeoSection />
       </main>
 
       <Footer />
