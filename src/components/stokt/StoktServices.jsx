@@ -7,9 +7,9 @@ import styles from "./Services.module.css";
 const services = [
   {
     key: "design",
-    title: "Design & Frontend",
+    title: "Front-End Development",
     description:
-      "I design and build clear, responsive interfaces with reusable components, consistent styling and interactions that feel right on every screen.",
+      "Front-end development in React, Next.js and TypeScript: responsive, accessible interfaces with reusable components and Core Web Vitals that hold up, as on Hierys and PECO Engineering.",
     art: {
       type: "video",
       src: "https://stokt.b-cdn.net/KEYCAPS-loop-01-.webm",
@@ -22,7 +22,7 @@ const services = [
     key: "apps",
     title: "Web Applications",
     description:
-      "Dashboards, admin panels and internal tools built around real data, user roles and workflows that make everyday work simpler.",
+      "Dashboards, admin panels and listing platforms built around real data, user roles and workflows, such as the Offplan DXB property portal and the MindReach platform.",
     art: {
       type: "lottie",
       src: "https://cdn.prod.website-files.com/667a7576e7e7ef3ba89b3f2a/667a7576e7e7ef3ba89b3f87_Platform.json",
@@ -34,7 +34,7 @@ const services = [
     key: "mobile",
     title: "Mobile-First Builds",
     description:
-      "Layouts planned for smaller screens first, with accessible touch targets, sensible loading states and a polished experience at every breakpoint.",
+      "Responsive websites planned for a mid-range phone first: accessible touch targets, sensible loading states and fast pages at every breakpoint, as on the Hunza Dry Fruits Basket store.",
     art: {
       type: "video",
       src: "https://res.cloudinary.com/agymx2xx/video/upload/v1787151950/taxi-app-transparent-browser.webm",
@@ -45,7 +45,7 @@ const services = [
     key: "fullstack",
     title: "Full-Stack Systems",
     description:
-      "Frontend, APIs, databases, authentication and deployment designed as one system so the finished product stays reliable in production.",
+      "Front end, APIs, databases, authentication and deployment as one system: Laravel with MySQL on Hope Plants Dubai, Next.js with Node, Express and MongoDB on Inner Beast.",
     art: {
       type: "video",
       src: "https://stokt.b-cdn.net/robot-hand-v1-%203-alpha%20(1).webm",
@@ -56,9 +56,9 @@ const services = [
   },
   {
     key: "commerce",
-    title: "WordPress Builds",
+    title: "WordPress & Shopify",
     description:
-      "Custom WordPress and WooCommerce builds that give teams easy content control and customers a smooth path from browsing to checkout.",
+      "WordPress and WooCommerce stores your team can actually edit, like Bridge Precision Tools, Vampire Tools and Econetix, plus Shopify storefronts on Dawn and Horizon themes such as Frontineers.",
     art: {
       type: "lottie",
       src: "https://cdn.prod.website-files.com/667a7576e7e7ef3ba89b3f2a/667a7576e7e7ef3ba89b3f85_Webst.json",
@@ -70,7 +70,7 @@ const services = [
     key: "integrations",
     title: "APIs & Integrations",
     description:
-      "Payments, third-party services and existing systems connected cleanly, with thoughtful error handling that keeps live products dependable.",
+      "Payments, analytics and third-party services wired in cleanly: Google Tag Manager, Judge.me reviews and WhatsApp ordering, with error handling that keeps live sites dependable.",
     art: {
       type: "lottie",
       src: "https://cdn.prod.website-files.com/667a7576e7e7ef3ba89b3f2a/66ab8b10eaf1ec4297b4c7e2_Developmnt22.json",
@@ -233,7 +233,7 @@ function ServiceCard({ service, index }) {
   );
 }
 
-const QUOTE = `A successful website is more than a polished screen. It should load quickly, guide people clearly and support a real business goal. I work backwards from that goal, choose the right solution and deliver it end to end.`;
+const QUOTE = `A successful website is more than a polished screen. It should load fast, guide people clearly and move a real business goal. Across 60+ websites I work backwards from that goal, choose the right stack, whether that is React, Next.js, WordPress or Shopify, and deliver it end to end.`;
 
 export default function StoktServices({ onContact }) {
   const sectionRef = useRef(null);
@@ -291,10 +291,14 @@ export default function StoktServices({ onContact }) {
 
       <div className={styles.viewport} data-services-viewport>
         <div ref={heroRef} className={styles.hero} data-services-hero>
+          <p className={styles.heroEyebrow}>
+            Front-End Development &middot; Karachi &amp; remote worldwide
+          </p>
           <h2 id="outcrowd-services-title">What I Do</h2>
           <p>
-            Whether you need a complete product, a better website or focused
-            development support, I can take the work from plan to launch.
+            60+ websites built and shipped: React and Next.js front ends,
+            WordPress and Shopify stores, plus the APIs and deployment behind
+            them, taken from plan to launch.
           </p>
           <FlowButton
             text="Discuss your project"

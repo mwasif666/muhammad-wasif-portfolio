@@ -10,8 +10,8 @@ const PORTRAIT = cldUrl(PORTRAIT_ID);
 
 const stats = [
   { value: "4+", label: "Years of experience" },
-  { value: "30+", label: "Projects delivered" },
-  { value: "A–Z", label: "Design to deployment" },
+  { value: "60+", label: "Websites delivered" },
+  { value: "A to Z", label: "Design to deployment" },
 ];
 
 const tools = [
@@ -20,6 +20,7 @@ const tools = [
   { label: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
   { label: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
   { label: "Express", logo: "https://cdn.simpleicons.org/express/FFFFFF" },
+  { label: "Socket.IO", logo: "https://cdn.simpleicons.org/socketdotio/FFFFFF" },
   { label: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
   { label: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
   { label: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
@@ -100,9 +101,9 @@ export default function StoktAbout() {
           <article className={styles.showcaseCard}>
             <SkeletonImage src={showcaseAsset} alt="" loading="lazy" decoding="async" />
             <div className={styles.showcaseMeta}>
-              <strong>Front-End Systems</strong>
+              <strong>Front-End Development</strong>
               <span>
-                Interfaces, CMS builds and production delivery{" "}
+                React &amp; Next.js interfaces, WordPress and Shopify builds{" "}
                 <b aria-hidden="true">→</b>
               </span>
             </div>
@@ -127,7 +128,7 @@ export default function StoktAbout() {
             />
             <SkeletonImage
               src={PORTRAIT}
-              alt="Muhammad Wasif (Wasif Majeed) — senior front-end developer in Karachi, Pakistan, working in React, Next.js and TypeScript"
+              alt="Muhammad Wasif (Wasif Majeed), senior front-end developer in Karachi, Pakistan, working in React, Next.js and TypeScript"
               draggable="false"
             />
             <div className={`${styles.profileMeta} ${themeStyles.blueProfileMeta}`}>
@@ -141,11 +142,13 @@ export default function StoktAbout() {
 
             <p className={bioStyles.editorialStatement}>
               I&apos;m <strong>Muhammad Wasif</strong>, also known professionally as{" "}
-              <strong>Wasif Majeed</strong>. Front end is where I&apos;m strongest —
-              React, Next.js and TypeScript interfaces built to stay fast and{" "}
-              <strong>maintainable</strong>. I also handle the CMS, commerce and
-              backend side, and carry the work all the way to{" "}
-              <strong>production.</strong>
+              <strong>Wasif Majeed</strong>. I am a{" "}
+              <strong>senior front-end developer in Karachi</strong> with{" "}
+              <strong>60+ websites</strong> delivered. Front end is where
+              I&apos;m strongest: React, Next.js and TypeScript interfaces built
+              to stay fast and <strong>maintainable</strong>. I also handle the
+              WordPress, Shopify and backend side, and carry the work all the
+              way to <strong>production.</strong>
             </p>
 
             <div className={bioStyles.editorialAuthor}>

@@ -60,12 +60,25 @@
 }
 
 .hero p {
-  max-width: 34ch;
+  max-width: 38ch;
   margin: clamp(1.6rem, 3.4vw, 3rem) 0 0;
   color: rgba(240, 238, 235, 0.56);
   font-size: clamp(1rem, 1.5vw, 1.45rem);
   font-weight: 500;
   line-height: 1.42;
+}
+
+/* Sits above the display heading: "What I Do" reads as the brand line, this
+   is the line that says which service and which city. */
+.hero p.heroEyebrow {
+  max-width: none;
+  margin: 0 0 clamp(1rem, 2.2vw, 1.75rem);
+  color: rgba(240, 238, 235, 0.42);
+  font-size: clamp(0.72rem, 1vw, 0.875rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .tag {
@@ -277,14 +290,16 @@
 .cardCopy h3 {
   margin: 0 0 2cqw;
   color: #f6f4f1;
-  font-size: 7.3cqw;
+  font-size: 6.9cqw;
   font-weight: 450;
-  line-height: 1;
+  /* Titles now run to two words plus a hyphen ("Front-End Development"), so
+     the leading has to survive a wrap instead of assuming one line. */
+  line-height: 1.06;
   letter-spacing: -0.05em;
 }
 
 .cardCopy p {
-  max-width: 72cqw;
+  max-width: 78cqw;
   margin: 0 auto;
   color: rgba(239, 236, 232, 0.49);
   font-size: 3.26cqw;

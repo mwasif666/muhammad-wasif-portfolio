@@ -3,7 +3,7 @@ import { heroReveal } from "./heroMotion";
 import styles from "./HeroStats.module.css";
 
 const stats = [
-  { value: "30+", label: "Projects delivered" },
+  { value: "60+", label: "Websites delivered" },
   { value: "4+", label: "Years building" },
   { value: "100%", label: "Responsive builds" },
 ];

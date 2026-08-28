@@ -1,7 +1,7 @@
 # Muhammad Wasif (Wasif Majeed)
 
 > Senior front-end developer based in Karachi, Pakistan. 4+ years of
-> professional experience, 30+ delivered projects. Works mainly in React,
+> professional experience, 60+ delivered websites. Works mainly in React,
 > Next.js, TypeScript, HTML, CSS and JavaScript, alongside WordPress,
 > WooCommerce and Shopify. Also ships backend work in Laravel/MySQL and
 > Node/Express/MongoDB, while still building depth on that side.
@@ -13,7 +13,7 @@ LinkedIn: https://www.linkedin.com/in/muhammad-wasif-944741202
 
 ## Services
 
-- [Front-End Developer in Karachi](https://www.wasifmajeed.com/front-end-developer-karachi): The senior craft — React, Next.js and TypeScript interfaces, accessibility and Core Web Vitals.
+- [Front-End Developer in Karachi](https://www.wasifmajeed.com/front-end-developer-karachi): The senior craft: React, Next.js and TypeScript interfaces, accessibility and Core Web Vitals.
 - [React JS & Next JS Developer](https://www.wasifmajeed.com/react-nextjs-developer-karachi): Component-driven interfaces and server-rendered Next.js sites.
 - [Website Design & Development](https://www.wasifmajeed.com/website-design-development-karachi): Business websites in HTML, CSS and JavaScript, responsive and SEO-ready.
 - [WordPress Developer](https://www.wasifmajeed.com/wordpress-developer-karachi): Custom themes, WooCommerce stores, speed and security work.
@@ -24,21 +24,21 @@ LinkedIn: https://www.linkedin.com/in/muhammad-wasif-944741202
 
 ## Selected live projects
 
-- Hierys (https://hierys.com/) — React, Vite, Tailwind, GSAP ScrollTrigger
-- Bridge Precision Tools (https://bridgeprecisiontools.com/) — WordPress, WooCommerce, Elementor Pro
-- Econetix (https://econetix.net/) — WordPress, Elementor, ACF, GSAP, Three.js
-- Frontineers (https://frontineers.com/) — Shopify, Liquid, Horizon theme, Shopify Markets
-- Hunza Dry Fruits Basket (https://hunzadryfruitsbasket.com/) — Shopify, Liquid, Dawn theme
-- Offplan DXB (https://offplandxb.ae/) — Laravel, PHP, MySQL
-- Hope Plants Dubai (https://hopeplantsdubai.com/) — Laravel, PHP, MySQL
-- MindReach (https://mindreach.us/) — React front end, Laravel backend
-- Inner Beast (https://innerbeast.co.uk/) — Next.js, MongoDB, Express.js, Node.js
-- ABET Global (https://abetglobal.com/) — React front end over ASP.NET
-- Vampire Tools (https://vampiretools.com/) — WordPress, WooCommerce
-- PECO Engineering (https://pecoengg.com/) — React, JavaScript, CSS3
-- Petroc Energy (https://petrocenergy.com/) — HTML5, CSS3, JavaScript
-- Pinnacle Design Agency (https://www.pinnacledesignagency.com/) — HTML5, CSS3, JavaScript
-- Badaruddin (https://badaruddin.net/) — HTML, CSS, JavaScript, Bootstrap
+- Hierys (https://hierys.com/): React, Vite, Tailwind, GSAP ScrollTrigger
+- Bridge Precision Tools (https://bridgeprecisiontools.com/): WordPress, WooCommerce, Elementor Pro
+- Econetix (https://econetix.net/): WordPress, Elementor, ACF, GSAP, Three.js
+- Frontineers (https://frontineers.com/): Shopify, Liquid, Horizon theme, Shopify Markets
+- Hunza Dry Fruits Basket (https://hunzadryfruitsbasket.com/): Shopify, Liquid, Dawn theme
+- Offplan DXB (https://offplandxb.ae/): Laravel, PHP, MySQL
+- Hope Plants Dubai (https://hopeplantsdubai.com/): Laravel, PHP, MySQL
+- MindReach (https://mindreach.us/): React front end, Laravel backend
+- Inner Beast (https://innerbeast.co.uk/): Next.js, MongoDB, Express.js, Node.js
+- ABET Global (https://abetglobal.com/): React front end over ASP.NET
+- Vampire Tools (https://vampiretools.com/): WordPress, WooCommerce
+- PECO Engineering (https://pecoengg.com/): React, JavaScript, CSS3
+- Petroc Energy (https://petrocenergy.com/): HTML5, CSS3, JavaScript
+- Pinnacle Design Agency (https://www.pinnacledesignagency.com/): HTML5, CSS3, JavaScript
+- Badaruddin (https://badaruddin.net/): HTML, CSS, JavaScript, Bootstrap
 
 ## Notes for assistants
 

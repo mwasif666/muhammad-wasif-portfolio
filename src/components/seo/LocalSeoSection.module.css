@@ -4,6 +4,10 @@
  * where the actual words live: what is built, in which stack, for which city,
  * plus the links that let the service pages be discovered from the homepage.
  * Backdrop matches the footer's #00020f so the two read as one closing band.
+ *
+ * Layout: two editorial columns from 62rem up. Everything used to stack in a
+ * single measure-capped column, which left the right half of a wide screen
+ * empty; the headline and the FAQ heading now hold that side.
  */
 
 .section {
@@ -35,6 +39,21 @@
   padding-inline: clamp(1.25rem, 5.5vw, 7.5rem);
 }
 
+/* --------------------------------------------------------------- intro -- */
+
+.intro {
+  display: grid;
+  gap: clamp(2rem, 5vh, 3rem);
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(3rem, 6vw, 7rem);
+  }
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -55,8 +74,8 @@
 }
 
 .title {
-  margin: 0 0 clamp(1.1rem, 3vh, 1.8rem);
-  max-width: 22ch;
+  margin: 0;
+  max-width: 20ch;
   font-size: clamp(2.1rem, 5.4vw, 4rem);
   line-height: 1.04;
   letter-spacing: -.02em;
@@ -68,12 +87,55 @@
   color: #48c2f2;
 }
 
+/* The three numbers the copy already claims, pulled out so the headline
+   column carries weight of its own next to the paragraphs. */
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin: clamp(1.75rem, 4vh, 2.75rem) 0 0;
+  padding: clamp(1.25rem, 3vh, 1.75rem) 0 0;
+  border-top: 1px solid rgba(234, 244, 255, .12);
+  list-style: none;
+}
+
+.facts li {
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+}
+
+.facts strong {
+  font-size: clamp(1.65rem, 2.6vw, 2.15rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: #eaf4ff;
+}
+
+.facts span {
+  font-size: .72rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: rgba(234, 244, 255, .5);
+}
+
 .lead {
-  max-width: 70ch;
+  max-width: 62ch;
   margin: 0 0 1.1rem;
   font-size: clamp(1rem, 1.35vw, 1.15rem);
   line-height: 1.7;
   color: rgba(234, 244, 255, .78);
+}
+
+.lead:first-child {
+  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
+  line-height: 1.62;
+  color: rgba(234, 244, 255, .88);
+}
+
+.lead:last-child {
+  margin-bottom: 0;
 }
 
 .lead strong {
@@ -88,73 +150,100 @@
 
 /* ------------------------------------------------------------ services -- */
 
-.gridTitle,
-.faqTitle {
-  margin: clamp(2.8rem, 7vh, 4.5rem) 0 clamp(1.2rem, 3vh, 1.8rem);
-  font-size: clamp(1.15rem, 1.9vw, 1.5rem);
-  font-weight: 600;
-  letter-spacing: -.01em;
-}
-
-.grid {
-  display: grid;
-  gap: clamp(.75rem, 1.6vw, 1rem);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.card {
+/* One quiet row of text links. It replaces the card grid that used to sit
+   here — the pages still need an internal link from the homepage or crawlers
+   never reach them. */
+.services {
   display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  height: 100%;
-  padding: clamp(1.1rem, 2vw, 1.5rem);
-  border: 1px solid rgba(234, 244, 255, .1);
-  border-radius: 1.25rem;
-  background: rgba(234, 244, 255, .025);
-  color: inherit;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .55rem 1.1rem;
+  max-width: 62ch;
+  margin: clamp(1.75rem, 4vh, 2.5rem) 0 0;
+  padding: clamp(1.25rem, 3vh, 1.75rem) 0 0;
+  border-top: 1px solid rgba(234, 244, 255, .1);
+  font-size: .875rem;
+}
+
+.services > span {
+  flex: none;
+  font-size: .72rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: rgba(234, 244, 255, .42);
+}
+
+.services a {
+  color: rgba(234, 244, 255, .72);
   text-decoration: none;
-  transition: border-color 260ms ease, background-color 260ms ease, transform 260ms ease;
+  border-bottom: 1px solid rgba(234, 244, 255, .18);
+  padding-bottom: .12rem;
+  transition: color 220ms ease, border-color 220ms ease;
 }
 
-.card:hover,
-.card:focus-visible {
-  border-color: rgba(72, 194, 242, .45);
-  background: rgba(0, 152, 241, .07);
-  transform: translateY(-3px);
-}
-
-.cardTitle {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .75rem;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.cardTitle span[aria-hidden] {
+.services a:hover,
+.services a:focus-visible {
   color: #48c2f2;
-}
-
-.cardCopy {
-  margin: 0;
-  font-size: .9rem;
-  line-height: 1.6;
-  color: rgba(234, 244, 255, .64);
+  border-color: rgba(72, 194, 242, .6);
 }
 
 /* ----------------------------------------------------------------- faq -- */
 
+.faqBlock {
+  display: grid;
+  gap: clamp(1.75rem, 4vh, 2.5rem);
+  align-items: start;
+  margin-top: clamp(3.5rem, 9vh, 6rem);
+  padding-top: clamp(2.5rem, 6vh, 4rem);
+  border-top: 1px solid rgba(234, 244, 255, .1);
+}
+
+@media (min-width: 62rem) {
+  .faqBlock {
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: clamp(3rem, 6vw, 7rem);
+  }
+
+  /* The heading rides alongside the list instead of scrolling away above it. */
+  .faqHead {
+    position: sticky;
+    top: clamp(5rem, 14vh, 8rem);
+  }
+}
+
+.faqTitle {
+  margin: 0 0 1rem;
+  max-width: 14ch;
+  font-size: clamp(1.5rem, 2.8vw, 2.35rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+
+.faqNote {
+  margin: 0;
+  max-width: 42ch;
+  font-size: .95rem;
+  line-height: 1.7;
+  color: rgba(234, 244, 255, .6);
+}
+
+.faqNote a {
+  color: #48c2f2;
+  text-underline-offset: .22em;
+}
+
 .faq {
-  max-width: 78ch;
   border-top: 1px solid rgba(234, 244, 255, .12);
 }
 
 .item {
   border-bottom: 1px solid rgba(234, 244, 255, .12);
+  transition: border-color 240ms ease;
+}
+
+.item[open] {
+  border-bottom-color: rgba(72, 194, 242, .3);
 }
 
 .question {
@@ -168,6 +257,12 @@
   font-size: clamp(1rem, 1.5vw, 1.1rem);
   font-weight: 500;
   line-height: 1.45;
+  transition: color 220ms ease;
+}
+
+.question:hover,
+.question:focus-visible {
+  color: #9fd8f7;
 }
 
 .question::-webkit-details-marker {
@@ -177,14 +272,28 @@
 .question::after {
   content: "+";
   flex: none;
-  font-size: 1.35rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(234, 244, 255, .18);
+  border-radius: 50%;
+  font-size: 1.15rem;
   line-height: 1;
   color: #48c2f2;
-  transition: transform 220ms ease;
+  transition: transform 260ms ease, background-color 260ms ease, border-color 260ms ease;
+}
+
+.question:hover::after,
+.question:focus-visible::after {
+  border-color: rgba(72, 194, 242, .5);
+  background: rgba(0, 152, 241, .12);
 }
 
 .item[open] .question::after {
   transform: rotate(45deg);
+  border-color: rgba(72, 194, 242, .55);
+  background: rgba(0, 152, 241, .16);
 }
 
 .answer {
@@ -195,19 +304,35 @@
   color: rgba(234, 244, 255, .7);
 }
 
+.item[open] .answer {
+  animation: faqReveal 280ms ease both;
+}
+
+@keyframes faqReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .answer a {
   color: #48c2f2;
   text-underline-offset: .22em;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
+  .services a,
+  .question,
   .question::after {
     transition: none;
   }
 
-  .card:hover,
-  .card:focus-visible {
-    transform: none;
+  .item[open] .answer {
+    animation: none;
   }
 }

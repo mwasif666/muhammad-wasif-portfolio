@@ -48,7 +48,7 @@ export default function Hero({ ready, onContact }) {
         revealTintOpacity={0.16}
         revealGridColor="rgba(220, 103, 33, 0.08)"
         positionY="top"
-        alt="Muhammad Wasif (Wasif Majeed) — senior front-end developer in Karachi, Pakistan, working in React, Next.js and TypeScript"
+        alt="Muhammad Wasif (Wasif Majeed), senior front-end developer in Karachi, Pakistan, working in React, Next.js and TypeScript"
         priority
       />
       <BackgroundGradient />
@@ -77,7 +77,7 @@ export default function Hero({ ready, onContact }) {
           />
 
           <Reveal as="p" className="reference-intro" gate ready={ready} delay={540}>
-            From intuitive interfaces to scalable backend systems —<br />
+            From intuitive interfaces to scalable backend systems,<br />
             I turn complex ideas into fast, reliable web experiences.
           </Reveal>
 

@@ -16,7 +16,7 @@ export default function HeroIntro() {
             headline, and the visitor already reads it in the header, the
             signature band and the about section. */}
         <h1 className={styles.heading}>
-          <span className="sr-only">Muhammad Wasif — Senior Front-End Developer in Karachi. </span>
+          <span className="sr-only">Muhammad Wasif, Senior Front-End Developer in Karachi. </span>
           <span className={styles.headingLine}>Web Products Built to Perform</span>
         </h1>
       </div>

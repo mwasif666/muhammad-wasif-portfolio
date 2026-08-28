@@ -155,7 +155,7 @@ export default function CaseStudiesSection() {
           </div>
 
           <p className={styles.headerCopy}>
-            Three projects, viewed beyond the final screen — the challenge,
+            Three projects, viewed beyond the final screen: the challenge,
             build focus and technology behind each experience.
           </p>
         </header>

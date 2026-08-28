@@ -75,7 +75,7 @@ export default function Header({ ready, onMenu, onContact }) {
           type="button"
           onClick={() => scrollToId("home")}
           className={styles.brand}
-          aria-label="Muhammad Wasif — home"
+          aria-label="Muhammad Wasif, home"
         >
           <img
             src={BRAND_MONOGRAM}

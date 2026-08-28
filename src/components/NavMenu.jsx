@@ -63,7 +63,7 @@ export default function NavMenu({ open, onClose, onContact }) {
       </nav>
 
       <div className="shell nm-bot">
-        <span>Local time — {time}</span>
+        <span>Local time: {time}</span>
         <FlowButton
           text="Let's connect"
           tone="light"
