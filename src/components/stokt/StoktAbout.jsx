@@ -1,6 +1,7 @@
 import { cldUrl, PORTRAIT_ID } from "../../lib/cloudinary";
 import { SkeletonImage } from "../ui/SkeletonMedia";
 import AboutGlobe from "./AboutGlobe";
+import { freelanceCountries } from "../../lib/freelanceCountries";
 import styles from "./About.module.css";
 import themeStyles from "./AboutBlueTheme.module.css";
 import logoStyles from "./ToolLogos.module.css";
@@ -11,7 +12,7 @@ const PORTRAIT = cldUrl(PORTRAIT_ID);
 const stats = [
   { value: "4+", label: "Years of experience" },
   { value: "60+", label: "Websites delivered" },
-  { value: "A to Z", label: "Design to deployment" },
+  { value: "Full Stack", label: "Frontend to backend", text: true },
 ];
 
 const tools = [
@@ -46,8 +47,28 @@ const tools = [
   { label: "Nginx", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg" },
 ];
 
-const showcaseAsset =
-  "https://framerusercontent.com/images/9MGIf21V2NJoMgEdygDwEv9OvRQ.png?width=2048&height=2080";
+const experience = [
+  {
+    role: "Senior Web Developer — MERN Stack & CMS",
+    company: "Roots BMD Pvt. Ltd.",
+    dates: "Mar 2023 – Present",
+  },
+  {
+    role: "Frontend & WordPress Developer",
+    company: "S&J Global Services",
+    dates: "Aug 2022 – Oct 2025",
+  },
+  {
+    role: "Frontend Developer",
+    company: "Renexus Resource Group",
+    dates: "Dec 2022 – Jul 2023",
+  },
+  {
+    role: "Frontend Developer & Instructor",
+    company: "Techzone",
+    dates: "Oct 2022 – Dec 2022",
+  },
+];
 
 function ToolLogo({ tool, duplicate = false }) {
   return (
@@ -92,28 +113,41 @@ export default function StoktAbout() {
           <div className={styles.stats} aria-label="Professional highlights">
             {stats.map((stat) => (
               <article className={styles.statCard} key={stat.label}>
-                <strong>{stat.value}</strong>
+                <strong className={stat.text ? styles.statText : undefined}>{stat.value}</strong>
                 <span>{stat.label}</span>
               </article>
             ))}
           </div>
 
-          <article className={styles.showcaseCard}>
-            <SkeletonImage src={showcaseAsset} alt="" loading="lazy" decoding="async" />
-            <div className={styles.showcaseMeta}>
-              <strong>Front-End Development</strong>
-              <span>
-                React &amp; Next.js interfaces, WordPress and Shopify builds{" "}
-                <b aria-hidden="true">→</b>
-              </span>
-            </div>
+          <article className={styles.experienceCard} aria-labelledby="work-experience-title">
+            <h3 id="work-experience-title" className={styles.experienceHeading}>
+              Work experience
+            </h3>
+            <ol className={styles.experienceList} role="list">
+              {experience.map((job) => (
+                <li className={styles.experienceItem} key={job.company}>
+                  <h4>{job.role}</h4>
+                  <p>{job.company}</p>
+                  <span className={styles.experienceDates}>{job.dates}</span>
+                </li>
+              ))}
+            </ol>
           </article>
 
-          <article className={styles.locationCard}>
+          <article className={styles.locationCard} aria-labelledby="freelance-worldwide-title">
             <div className={styles.locationCopy}>
-              <h3>Working remotely, worldwide</h3>
-              <span className={styles.status}>
-                <i aria-hidden="true" /> AVAILABLE WORLDWIDE
+              <h3 id="freelance-worldwide-title">Freelance work across 9 countries</h3>
+              <p className={styles.locationDescription}>
+                I&apos;ve delivered freelance web projects for clients across
+                these countries, building both frontend and backend.
+              </p>
+              <ul className={styles.countryList} aria-label="Countries where I have worked with freelance clients" role="list">
+                {freelanceCountries.map((country) => (
+                  <li key={country.code}>{country.name}</li>
+                ))}
+              </ul>
+              <span className={styles.countryLegend}>
+                <i aria-hidden="true" /> Countries I&apos;ve worked with
               </span>
             </div>
             <AboutGlobe />

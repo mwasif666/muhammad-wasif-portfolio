@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./AboutGlobe.module.css";
+import freelanceMap from "../../assets/freelance-countries.json";
 
 const D3_SRC = "https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js";
 const LAND_SRC =
@@ -150,13 +151,13 @@ export default function AboutGlobe() {
       if (!context) return;
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      baseRadius = Math.min(width * 0.48, height * 0.76);
+      baseRadius = Math.min(width * 0.46, height * 0.46);
 
       if (d3) {
         projection = d3
           .geoOrthographic()
           .scale(baseRadius * zoom)
-          .translate([width / 2, height * 0.55])
+          .translate([width / 2, height * 0.5])
           .clipAngle(90)
           .precision(0.25)
           .rotate(rotation);
@@ -206,6 +207,18 @@ export default function AboutGlobe() {
         context.beginPath();
         context.arc(projected[0], projected[1], dotRadius, 0, Math.PI * 2);
         context.fill();
+      });
+
+      // Local Natural Earth boundaries keep the nine client countries filled
+      // as the globe rotates; the projection clips the far side of the sphere.
+      freelanceMap.features.forEach((feature) => {
+        context.beginPath();
+        path(feature);
+        context.fillStyle = "rgba(50, 167, 221, .55)";
+        context.fill();
+        context.strokeStyle = "#75d2f7";
+        context.lineWidth = Math.max(0.8, 1.15 * scaleFactor);
+        context.stroke();
       });
 
       context.restore();
@@ -319,8 +332,13 @@ export default function AboutGlobe() {
   }, []);
 
   return (
-    <div ref={stageRef} className={styles.stage} aria-label="Interactive rotating world globe">
-      <canvas ref={canvasRef} className={styles.canvas} />
+    <div ref={stageRef} className={styles.stage}>
+      <canvas
+        ref={canvasRef}
+        className={styles.canvas}
+        role="img"
+        aria-label="Rotating globe highlighting freelance client countries: Pakistan, USA, UK, Australia, Canada, Spain, India, Bangladesh and Turkey."
+      />
       {state === "loading" && <span className={styles.loading}>Loading globe</span>}
       {state === "error" && <span className={styles.error}>Globe unavailable</span>}
       {state === "ready" && <span className={styles.hint}>Drag to rotate · Scroll to zoom</span>}

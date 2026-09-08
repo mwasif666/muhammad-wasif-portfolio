@@ -96,6 +96,17 @@
   text-transform: capitalize;
 }
 
+.sectionDescription {
+  max-width: 64ch;
+  margin: 1rem auto 0;
+  padding-inline: .5rem;
+  color: var(--muted);
+  font-family: "Onest", sans-serif;
+  font-size: clamp(.9rem, 1.1vw, 1.05rem);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
 .subTitle::before,
 .subTitle::after {
   content: "";

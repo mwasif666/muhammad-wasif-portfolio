@@ -76,7 +76,7 @@
 }
 
 .statCard,
-.showcaseCard,
+.experienceCard,
 .locationCard,
 .profileCard,
 .bioCard,
@@ -115,54 +115,89 @@
   line-height: 1.2;
 }
 
-.showcaseCard {
+.statCard .statText {
+  font-size: clamp(1.1rem, 2.3vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -.045em;
+}
+
+.experienceCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   min-height: 100%;
+  padding: clamp(1.25rem, 2vw, 2.25rem);
   background:
     radial-gradient(circle at 50% 38%, rgba(255,255,255,.025), transparent 40%),
     #080808;
 }
 
-.showcaseCard img {
-  position: absolute;
-  top: 7%;
-  left: 50%;
-  width: min(84%, 26rem);
-  height: 72%;
-  object-fit: contain;
-  transform: translateX(-50%);
-  filter: grayscale(1) contrast(1.05) brightness(.82);
+.experienceHeading {
+  margin: 0 0 1.5rem;
+  color: #f4f4f2;
+  font-size: clamp(1.3rem, 1.6vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: -.035em;
 }
 
-.showcaseMeta {
-  position: absolute;
-  right: clamp(1.25rem, 2vw, 2.25rem);
-  bottom: clamp(1.4rem, 2vw, 2.35rem);
-  left: clamp(1.25rem, 2vw, 2.25rem);
+.experienceList {
   display: grid;
-  gap: .32rem;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.showcaseMeta strong,
+.experienceItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.15rem 0;
+  border-top: 1px solid #262626;
+}
+
+.experienceItem:last-child {
+  padding-bottom: 0;
+}
+
+.experienceItem h4 {
+  margin: 0;
+  color: #f4f4f2;
+  font-size: clamp(.95rem, 1.05vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -.02em;
+}
+
+.experienceItem p {
+  margin: .4rem 0;
+  color: #c0c0bd;
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
+.experienceDates {
+  color: #a2a2a2;
+  font-size: .75rem;
+  line-height: 1.5;
+}
+
 .expertMeta strong {
   color: #f4f4f2;
   font-size: .88rem;
   font-weight: 500;
 }
 
-.showcaseMeta span,
 .expertMeta span {
   color: #a2a2a2;
   font-size: .78rem;
   line-height: 1.35;
 }
 
-.showcaseMeta b {
-  margin-left: .35rem;
-  color: #777;
-  font-weight: 500;
-}
-
 .locationCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   min-height: 100%;
   background:
     radial-gradient(circle at 50% 76%, rgba(255,255,255,.018), transparent 42%),
@@ -175,7 +210,7 @@
   display: grid;
   justify-items: center;
   gap: .6rem;
-  padding: clamp(2.4rem, 4vw, 4rem) 2rem 0;
+  padding: clamp(1.6rem, 2.6vw, 2.6rem) clamp(1.2rem, 2.4vw, 2.5rem) 0;
   text-align: center;
 }
 
@@ -186,6 +221,53 @@
   font-weight: 450;
   line-height: 1.1;
   letter-spacing: -.035em;
+}
+
+.locationDescription {
+  max-width: 48ch;
+  margin: .25rem 0 .5rem;
+  color: #a8b2b8;
+  font-size: clamp(.8rem, .95vw, .95rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.countryList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .45rem;
+  max-width: 38rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.countryList li {
+  padding: .38rem .7rem;
+  border: 1px solid rgba(83, 196, 244, .25);
+  border-radius: 999px;
+  background: rgba(36, 149, 198, .09);
+  color: #d0effc;
+  font-size: .75rem;
+  line-height: 1.3;
+}
+
+.countryLegend {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin-top: .55rem;
+  color: #a8b2b8;
+  font-size: .7rem;
+}
+
+.countryLegend i {
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: #53c4f4;
+  box-shadow: 0 0 .65rem rgba(83, 196, 244, .4);
 }
 
 .status {
@@ -494,7 +576,7 @@
   }
 
   .stats { grid-row: span 2; }
-  .showcaseCard { min-height: 28rem; }
+  .experienceCard { min-height: 28rem; }
   .locationCard { min-height: 30rem; }
 
   .aboutBottom {
@@ -543,7 +625,7 @@
   .statCard strong { font-size: clamp(2rem, 9vw, 3rem); }
   .statCard span { font-size: .62rem; }
 
-  .showcaseCard,
+  .experienceCard,
   .locationCard,
   .profileCard,
   .bioCard,
@@ -587,7 +669,7 @@
   .statCard strong { font-size: clamp(1.85rem, 9vw, 2.4rem); }
   .statCard span { margin-top: .65rem; font-size: .58rem; }
 
-  .showcaseCard,
+  .experienceCard,
   .locationCard,
   .profileCard,
   .bioCard,

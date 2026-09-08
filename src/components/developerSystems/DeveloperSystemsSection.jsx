@@ -16,23 +16,23 @@ import serviceIcon06 from "../../assets/developer-systems/service-icon06.svg";
 import serviceIcon07 from "../../assets/developer-systems/service-icon07.svg";
 
 const marqueeData = [
-  { tag: "POST", number: "201", text: "/api/contact/submit" },
-  { tag: "GET", number: "200", text: "/api/projects/featured" },
-  { tag: "PATCH", number: "204", text: "/api/profile/update" },
-  { tag: "GET", number: "200", text: "/api/github/activity" },
-  { tag: "DELETE", number: "204", text: "/api/cache/revalidate", red: true },
+  { tag: "FRONTEND", number: "UI", text: "React & Next.js interfaces" },
+  { tag: "BACKEND", number: "API", text: "Node.js, Express & Laravel" },
+  { tag: "DATABASE", number: "DATA", text: "MongoDB & PostgreSQL" },
+  { tag: "CMS", number: "WEB", text: "WordPress & Shopify builds" },
+  { tag: "DEPLOY", number: "LIVE", text: "From development to production" },
 ];
 
 const ROW_SPEEDS = [10, 15, 10, 15, 10, 15];
 
 const capabilities = [
-  { icon: serviceIcon01, title: "React Interfaces" },
-  { icon: serviceIcon02, title: "Backend APIs" },
-  { icon: serviceIcon03, title: "WordPress" },
-  { icon: serviceIcon04, title: "WooCommerce" },
+  { icon: serviceIcon01, title: "React & Next.js" },
+  { icon: serviceIcon02, title: "Node.js & Express" },
+  { icon: serviceIcon03, title: "Databases & APIs" },
+  { icon: serviceIcon04, title: "WordPress & Shopify" },
   { icon: serviceIcon05, title: "Integrations" },
   { icon: serviceIcon06, title: "Performance" },
-  { icon: serviceIcon07, title: "Launch Support" },
+  { icon: serviceIcon07, title: "Deployment & Support" },
 ];
 
 function ApiItem({ item, repeatIndex }) {
@@ -109,14 +109,19 @@ export default function DeveloperSystemsSection() {
       <section className={styles.marqueeSection} aria-labelledby="developer-realtime-title">
         <div className={styles.container}>
           <header className={styles.sectionTitle}>
-            <span className={styles.subTitle}>Backend &amp; API development</span>
+            <span className={styles.subTitle}>Full-stack web development</span>
             <h2 id="developer-realtime-title" style={{ fontFamily: "inherit" }}>
-              <span>Reliable systems behind every great interface</span>
+              <span>From polished interfaces to powerful backends</span>
             </h2>
+            <p className={styles.sectionDescription}>
+              I build complete web applications, from responsive React and Next.js
+              interfaces to backend logic, APIs and databases. MERN Stack, Laravel,
+              WordPress and Shopify, brought together from idea to launch.
+            </p>
           </header>
 
           <div className={styles.industryWrapper}>
-            <div className={styles.apiMarquee} aria-label="Animated production API activity">
+            <div className={styles.apiMarquee} aria-label="Full-stack development technologies and capabilities">
               <div className={styles.apiMarqueeInner}>
                 {ROW_SPEEDS.map((speed, index) => (
                   <ApiMarqueeRow key={`${speed}-${index}`} speed={speed} index={index} />

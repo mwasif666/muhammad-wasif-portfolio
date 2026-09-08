@@ -1,16 +1,12 @@
 .stage {
-  position: absolute;
-  right: -2%;
-  bottom: -32%;
-  left: -2%;
+  position: relative;
+  flex: 1 0 18rem;
   z-index: 1;
-  height: 91%;
+  min-height: 18rem;
   overflow: hidden;
   pointer-events: auto;
   touch-action: none;
   cursor: grab;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 100%);
 }
 
 .stage:active {
@@ -71,10 +67,8 @@
 
 @media (max-width: 760px) {
   .stage {
-    right: -12%;
-    bottom: -22%;
-    left: -12%;
-    height: 82%;
+    flex-basis: 17rem;
+    min-height: 17rem;
   }
 
   .hint { display: none; }
