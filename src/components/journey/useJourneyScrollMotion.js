@@ -25,6 +25,7 @@ export default function useJourneyScrollMotion({
     const flipStarts = [0.58, 0.63, 0.68];
     const flipEnds = [0.78, 0.83, 0.88];
     let frame = 0;
+    let active = false;
 
     const applyStaticState = () => {
       section.style.setProperty("--journey-heading-opacity", "1");
@@ -57,9 +58,6 @@ export default function useJourneyScrollMotion({
 
       const rect = section.getBoundingClientRect();
       const viewport = window.innerHeight;
-
-      if (rect.top > viewport * 1.35 || rect.bottom < -viewport * 0.35) return;
-
       const travel = Math.max(section.offsetHeight - viewport, 1);
       const progress = clamp(-rect.top / travel);
 
@@ -102,19 +100,45 @@ export default function useJourneyScrollMotion({
     };
 
     const schedule = () => {
-      if (frame) return;
+      if (!active || frame) return;
       frame = window.requestAnimationFrame(update);
     };
 
-    update();
+    const onResize = () => {
+      if (active) schedule();
+    };
+
+    const visibilityObserver =
+      typeof IntersectionObserver === "undefined"
+        ? null
+        : new IntersectionObserver(
+            ([entry]) => {
+              active = entry.isIntersecting;
+              if (active) schedule();
+              else if (frame) {
+                window.cancelAnimationFrame(frame);
+                frame = 0;
+              }
+            },
+            { rootMargin: "45% 0px 45% 0px", threshold: 0 },
+          );
+
+    if (visibilityObserver) {
+      visibilityObserver.observe(section);
+    } else {
+      active = true;
+      update();
+    }
+
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    window.addEventListener("resize", onResize);
     reducedMotion.addEventListener?.("change", schedule);
 
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
+      visibilityObserver?.disconnect();
       window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
+      window.removeEventListener("resize", onResize);
       reducedMotion.removeEventListener?.("change", schedule);
     };
   }, [cardRefs, onReveal, sectionRef]);

@@ -27,34 +27,51 @@ export default function Header({ ready, onMenu, onContact }) {
   }, [ready]);
 
   useEffect(() => {
-    let frame = 0;
+    const sections = NAV.map((item) => document.getElementById(item.target)).filter(Boolean);
+    if (!sections.length) return undefined;
 
-    const updateActiveSection = () => {
+    // A thin observation band at 30% of the viewport replaces four
+    // getBoundingClientRect calls on every smooth-scroll frame.
+    if (typeof IntersectionObserver !== "undefined") {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entering = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
+
+          if (entering[0]) setActiveTarget(entering[0].target.id);
+        },
+        {
+          root: null,
+          rootMargin: "-30% 0px -69% 0px",
+          threshold: 0,
+        },
+      );
+
+      sections.forEach((section) => observer.observe(section));
+      return () => observer.disconnect();
+    }
+
+    let frame = 0;
+    const update = () => {
       frame = 0;
       const anchor = window.innerHeight * 0.3;
       let current = NAV[0].target;
 
-      for (const item of NAV) {
-        const section = document.getElementById(item.target);
-        if (!section) continue;
-
+      for (const section of sections) {
         const rect = section.getBoundingClientRect();
-        if (rect.top <= anchor) current = item.target;
-        if (rect.top <= anchor && rect.bottom > anchor) {
-          current = item.target;
-          break;
-        }
+        if (rect.top <= anchor) current = section.id;
+        if (rect.top <= anchor && rect.bottom > anchor) break;
       }
 
       setActiveTarget((previous) => (previous === current ? previous : current));
     };
 
     const schedule = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(updateActiveSection);
+      if (!frame) frame = window.requestAnimationFrame(update);
     };
 
-    updateActiveSection();
+    update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
 

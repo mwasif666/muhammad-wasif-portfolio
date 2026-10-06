@@ -16,6 +16,7 @@ export default function useWhyScrollMotion({ sectionRef, cardRefs, layout }) {
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
+    let active = false;
 
     const applyFinalLayout = () => {
       const vw = window.innerWidth / 100;
@@ -44,9 +45,6 @@ export default function useWhyScrollMotion({ sectionRef, cardRefs, layout }) {
 
       const rect = section.getBoundingClientRect();
       const viewport = window.innerHeight;
-
-      if (rect.top > viewport * 1.35 || rect.bottom < -viewport * .35) return;
-
       const travel = Math.max(section.offsetHeight - viewport, 1);
       const rawProgress = clamp(-rect.top / travel);
       const spreadProgress = clamp((rawProgress - 0.04) / 0.72);
@@ -78,19 +76,45 @@ export default function useWhyScrollMotion({ sectionRef, cardRefs, layout }) {
     };
 
     const schedule = () => {
-      if (frame) return;
+      if (!active || frame) return;
       frame = window.requestAnimationFrame(update);
     };
 
-    update();
+    const onResize = () => {
+      if (active) schedule();
+    };
+
+    const visibilityObserver =
+      typeof IntersectionObserver === "undefined"
+        ? null
+        : new IntersectionObserver(
+            ([entry]) => {
+              active = entry.isIntersecting;
+              if (active) schedule();
+              else if (frame) {
+                window.cancelAnimationFrame(frame);
+                frame = 0;
+              }
+            },
+            { rootMargin: "45% 0px 45% 0px", threshold: 0 },
+          );
+
+    if (visibilityObserver) {
+      visibilityObserver.observe(section);
+    } else {
+      active = true;
+      update();
+    }
+
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    window.addEventListener("resize", onResize);
     reducedMotion.addEventListener?.("change", schedule);
 
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
+      visibilityObserver?.disconnect();
       window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
+      window.removeEventListener("resize", onResize);
       reducedMotion.removeEventListener?.("change", schedule);
     };
   }, [cardRefs, layout, sectionRef]);

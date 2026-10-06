@@ -16,6 +16,7 @@ import './about-story.css';
 import './about-story-unified.css';
 import './components/ProjectsPreview.module.css';
 import './responsive-fixes.css';
+import './scroll-performance.css';
 // Last, and unlayered, so the shimmer wins over CSS-module rules. See skeleton.css.
 import './skeleton.css';
 

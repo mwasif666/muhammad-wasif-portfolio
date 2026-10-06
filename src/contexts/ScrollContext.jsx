@@ -2,12 +2,16 @@ import { createContext, useCallback, useContext, useEffect, useRef } from 'react
 
 const ScrollCtx = createContext(null);
 
+// Keep the interpolation close to Lenis' natural feel: enough easing to remove
+// wheel steps, but responsive enough that the page never feels like it is
+// dragging behind the pointer.
 const SMOOTH_OPTIONS = {
   smoothWheel: true,
-  lerp: 0.075,
-  wheelMultiplier: 0.9,
-  touchMultiplier: 1.05,
+  lerp: 0.1,
+  wheelMultiplier: 0.85,
+  touchMultiplier: 1,
   syncTouch: false,
+  overscroll: false,
 };
 
 export function ScrollProvider({ children }) {
@@ -17,7 +21,10 @@ export function ScrollProvider({ children }) {
   useEffect(() => {
     let disposed = false;
     let loco = null;
+    let scrollIdleTimer = 0;
+    let isScrolling = false;
 
+    const root = document.documentElement;
     const previousRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
@@ -32,6 +39,69 @@ export function ScrollProvider({ children }) {
       gsap.ticker.lagSmoothing(0);
     }
 
+    // Autoplay media is one of the biggest sources of dropped frames on the
+    // long animated sections. Only decode it while it is actually on screen,
+    // and pause it for the short period where the user is actively scrolling.
+    const managedVideos = Array.from(document.querySelectorAll('video[autoplay]'));
+    const visibleVideos = new Set();
+
+    const canPlayVideo = (video) =>
+      !disposed &&
+      !isScrolling &&
+      !document.hidden &&
+      !reducedMotion.matches &&
+      visibleVideos.has(video);
+
+    const syncVideo = (video) => {
+      if (canPlayVideo(video)) video.play().catch(() => {});
+      else video.pause();
+    };
+
+    const syncVisibleVideos = () => {
+      managedVideos.forEach(syncVideo);
+    };
+
+    let videoObserver = null;
+    if (typeof IntersectionObserver !== 'undefined' && managedVideos.length) {
+      videoObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const video = entry.target;
+            if (entry.isIntersecting) visibleVideos.add(video);
+            else visibleVideos.delete(video);
+            syncVideo(video);
+          });
+        },
+        { threshold: 0.08, rootMargin: '140px 0px' },
+      );
+
+      managedVideos.forEach((video) => {
+        // React's autoplay attribute may have started decoding before effects
+        // run. Stop it immediately; the observer will resume visible media.
+        video.autoplay = false;
+        video.pause();
+        videoObserver.observe(video);
+      });
+    }
+
+    const markScrolling = () => {
+      if (!isScrolling) {
+        isScrolling = true;
+        root.dataset.scrollActive = 'true';
+        managedVideos.forEach((video) => video.pause());
+      }
+
+      window.clearTimeout(scrollIdleTimer);
+      scrollIdleTimer = window.setTimeout(() => {
+        isScrolling = false;
+        delete root.dataset.scrollActive;
+        syncVisibleVideos();
+      }, 140);
+    };
+
+    const handleVisibility = () => syncVisibleVideos();
+    document.addEventListener('visibilitychange', handleVisibility);
+
     const resetOnPageShow = () => {
       window.scrollTo(0, 0);
       loco?.scrollTo(0, { immediate: true });
@@ -40,17 +110,21 @@ export function ScrollProvider({ children }) {
     window.addEventListener('pageshow', resetOnPageShow);
 
     async function setupLocomotive() {
-      // Keep Locomotive out of the first JS chunk. Native scrolling works while
-      // this small chunk loads, then Locomotive takes over without a layout jump.
       const { default: LocomotiveScroll } = await import('locomotive-scroll');
       if (disposed) return;
 
       loco = new LocomotiveScroll({
+        // Keep continuous Locomotive work close to the viewport instead of the
+        // default two-viewport-wide RAF window.
+        rafRootMargin: '35% 0px 35% 0px',
         lenisOptions: {
           ...SMOOTH_OPTIONS,
           smoothWheel: !reducedMotion.matches,
         },
-        scrollCallback: useGsapTicker ? ScrollTrigger.update : undefined,
+        scrollCallback: () => {
+          markScrolling();
+          if (useGsapTicker) ScrollTrigger.update();
+        },
         initCustomTicker: useGsapTicker ? (render) => gsap.ticker.add(render) : undefined,
         destroyCustomTicker: useGsapTicker ? (render) => gsap.ticker.remove(render) : undefined,
       });
@@ -74,7 +148,12 @@ export function ScrollProvider({ children }) {
 
     return () => {
       disposed = true;
+      window.clearTimeout(scrollIdleTimer);
+      delete root.dataset.scrollActive;
       window.removeEventListener('pageshow', resetOnPageShow);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      videoObserver?.disconnect();
+      managedVideos.forEach((video) => video.pause());
       window.history.scrollRestoration = previousRestoration;
       loco?.destroy();
       locoRef.current = null;
@@ -151,7 +230,7 @@ export function ScrollProvider({ children }) {
     const loco = locoRef.current;
     if (loco) {
       loco.scrollTo(destination, {
-        duration: 1.25,
+        duration: 1.15,
         easing: (t) => 1 - Math.pow(1 - t, 4),
       });
       return;

@@ -1,0 +1,70 @@
+/*
+ * Scroll performance layer.
+ *
+ * The page has several fixed/sticky surfaces that move every frame. Live
+ * backdrop-filter sampling on those layers is much more expensive than the
+ * smooth-scroll interpolation itself, so keep their visual depth with opaque
+ * gradients instead of forcing the browser to re-blur the page while it moves.
+ */
+
+/* Fixed navigation: preserve the glass tone without sampling the page behind it. */
+#header > div {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Hero glass cards sit over an animated grid. A static translucent fill keeps
+   the same look without re-blurring that grid on every compositor frame. */
+#home [aria-label="Professional highlights"],
+#home a[href^="https://github.com/"] {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Services is the heaviest sticky/scrubbed section. Remove moving blur layers
+   while retaining the blue-black glass treatment with ordinary gradients. */
+[data-services-quote] > :first-child {
+  width: 100% !important;
+  filter: none !important;
+  background:
+    radial-gradient(circle at 28% 36%, rgba(72, 194, 242, .18), transparent 42%),
+    radial-gradient(circle at 72% 64%, rgba(37, 99, 235, .22), transparent 44%),
+    radial-gradient(circle at 50% 50%, rgba(0, 152, 241, .08), transparent 66%) !important;
+}
+
+[data-services-quote] > :last-child {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  background: linear-gradient(145deg, rgba(21, 29, 38, .96), rgba(8, 12, 17, .96)) !important;
+}
+
+[data-service-card] {
+  contain: paint;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  background: linear-gradient(180deg, rgba(25, 37, 49, .98), rgba(8, 13, 19, .98)) !important;
+}
+
+[data-service-art] {
+  contain: paint;
+}
+
+[data-service-art] > div::before {
+  filter: none !important;
+  background: radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, .62), transparent 70%) !important;
+}
+
+/* Decorative infinite animations add no information while the viewport itself
+   is moving. Pausing them for the short active-scroll window frees compositor
+   time, then they resume automatically when scrolling settles. */
+html[data-scroll-active="true"] [data-ambient-motion],
+html[data-scroll-active="true"] [aria-label="Everyday tools"] > div,
+html[data-scroll-active="true"] .skeleton-tint {
+  animation-play-state: paused !important;
+}
+
+/* Avoid promoting off-screen smooth-scroll effects indefinitely. Locomotive
+   will still promote an element while it is actively transforming it. */
+[data-scroll-speed] {
+  will-change: auto;
+}

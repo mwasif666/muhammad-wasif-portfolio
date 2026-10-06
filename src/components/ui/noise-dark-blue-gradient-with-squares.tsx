@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import clsx from "clsx";
 import styles from "./noise-dark-blue-gradient-with-squares.module.css";
 
@@ -26,6 +26,22 @@ export default function NoiseDarkBlueGradientWithSquares({
   vignette = true,
   className = "",
 }: LoaderBackgroundProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(true);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || typeof IntersectionObserver === "undefined") return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "120px 0px", threshold: 0 },
+    );
+
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
+
   // Drift is expressed in pixels per second, not as a fixed duration: a 1px
   // grid line creeping along at ~1.5px/s never glides, it smears across a pixel
   // boundary for most of a second and reads as a stutter. Deriving the duration
@@ -35,6 +51,7 @@ export default function NoiseDarkBlueGradientWithSquares({
 
   return (
     <div
+      ref={rootRef}
       aria-hidden="true"
       className={clsx(styles.root, styles[direction], className)}
       style={{
@@ -45,7 +62,13 @@ export default function NoiseDarkBlueGradientWithSquares({
       } as CSSProperties}
     >
       <div className={styles.glow} />
-      {showGrid && <div className={styles.grid} />}
+      {showGrid && (
+        <div
+          className={styles.grid}
+          data-ambient-motion
+          style={{ animationPlayState: inView ? "running" : "paused" }}
+        />
+      )}
       <div className={styles.grain} />
       {vignette && <div className={styles.vignette} />}
     </div>
