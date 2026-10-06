@@ -35,10 +35,11 @@ export default function GitHubActivity({ username }) {
         "transition-[transform,border-color,background] duration-200",
         "hover:-translate-y-1 hover:border-[#8fdeff]/45",
         "hover:bg-[linear-gradient(145deg,rgba(9,62,99,0.68),rgba(3,32,56,0.5))]",
+        "max-[520px]:rounded-[1rem] max-[520px]:px-4 max-[520px]:pt-4 max-[520px]:pb-4",
       )}
     >
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="min-w-0">
           <span className="block text-[0.66rem] font-[650] tracking-[0.15em] text-[#91dcff] uppercase">
             Live from GitHub
           </span>
@@ -54,18 +55,16 @@ export default function GitHubActivity({ username }) {
         </svg>
       </div>
 
-      {/* One column per week, seven rows per day — same shape as GitHub's graph. */}
       <div
         aria-label={`${windowTotal} contributions in the last 26 weeks`}
         className={clsx(
           "mt-4.5 mb-4 grid auto-cols-fr grid-flow-col gap-1",
-          // Until the contributions land the graph is a shimmering block: one
-          // animated element behind the dots rather than 182 animated dots.
+          "max-[520px]:gap-[3px]",
           loading && "skeleton-tint rounded-lg opacity-55",
         )}
       >
         {weeks.map((week) => (
-          <div key={week[0].date} className="grid grid-rows-7 gap-1">
+          <div key={week[0].date} className="grid grid-rows-7 gap-1 max-[520px]:gap-[3px]">
             {week.map((day) => (
               <span
                 key={day.date}
@@ -81,8 +80,8 @@ export default function GitHubActivity({ username }) {
         ))}
       </div>
 
-      <div className="flex items-center justify-between gap-3 text-[0.68rem] tracking-[0.03em] text-[#e6f7ff]/55">
-        <span>
+      <div className="flex items-center justify-between gap-3 text-[0.68rem] tracking-[0.03em] text-[#e6f7ff]/55 max-[520px]:flex-col max-[520px]:items-start max-[520px]:gap-2">
+        <span className="min-w-0">
           {error
             ? "Open GitHub profile"
             : loading

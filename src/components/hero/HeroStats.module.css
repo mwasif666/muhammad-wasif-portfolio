@@ -60,7 +60,7 @@
   .root {
     position: absolute;
     z-index: 7;
-    top: 51.5%;
+    top: 50%;
     right: var(--rail);
     width: min(43vw, 49rem);
   }
@@ -68,5 +68,38 @@
   .item {
     min-height: 7rem;
     padding: 1.125rem 1rem;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .root {
+    width: 47vw;
+  }
+
+  .item {
+    padding-inline: .65rem;
+  }
+
+  .label {
+    font-size: .66rem;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 780px) {
+  .root {
+    top: 49%;
+  }
+
+  .item {
+    min-height: 6.15rem;
+    padding-block: .8rem;
+  }
+
+  .value {
+    font-size: clamp(1.9rem, 2.35vw, 2.75rem);
+  }
+
+  .label {
+    margin-top: .45rem;
   }
 }

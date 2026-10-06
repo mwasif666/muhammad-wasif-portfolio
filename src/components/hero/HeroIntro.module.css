@@ -1,6 +1,7 @@
 .kicker {
   order: 0;
   display: inline-flex;
+  max-width: 100%;
   align-items: center;
   gap: .625rem;
   padding: .375rem .875rem .375rem .375rem;
@@ -31,12 +32,6 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
 }
 
-/*
- * Above the portrait, not under it. From 901px up the portrait is absolutely
- * placed on the left and sized off viewport height, so on laptop widths it
- * grows into the headline column and used to swallow the first word of each
- * line. Layering the copy on top keeps the composition and the sentence.
- */
 .headingWrap {
   position: relative;
   z-index: 7;
@@ -71,24 +66,54 @@
     left: var(--rail);
   }
 
-  /* Same width as the stats card below (HeroStats sets min(43vw, 49rem) off
-     the same rail), so the headline, the numbers and the pitch all hang from
-     one left edge instead of three. */
   .headingWrap {
     width: min(43vw, 49rem);
     margin-left: auto;
-    /* Left inside its own column, not centred: ragged-left display type read
-       as accidental against the flush column edge. Mobile keeps centre, where
-       the whole stack — pill, portrait, stats — is centred too. */
     text-align: left;
   }
 
-  /* Sized to keep the pitch on two lines inside that narrower column. */
   .heading {
     font-size: clamp(3.2rem, 5vw, 6.1rem);
   }
 }
 
+@media (min-width: 901px) and (max-width: 1180px) {
+  .headingWrap {
+    width: 47vw;
+  }
+
+  .heading {
+    font-size: clamp(3rem, 5.1vw, 4.4rem);
+  }
+
+  .kicker {
+    font-size: .6rem;
+    gap: .5rem;
+  }
+}
+
 @media (max-width: 520px) {
-  .heading { font-size: 3.2rem; }
+  .kicker {
+    gap: clamp(.3rem, 1.8vw, .5rem);
+    padding: .3rem .6rem .3rem .3rem;
+    font-size: clamp(.54rem, 2.45vw, .62rem);
+    letter-spacing: .085em;
+  }
+
+  .kickerMark {
+    padding: .32rem .48rem;
+    letter-spacing: .065em;
+  }
+
+  .heading {
+    font-size: clamp(2.65rem, 13vw, 3.2rem);
+    line-height: .92;
+  }
+}
+
+@media (max-width: 360px) {
+  .kicker {
+    font-size: .52rem;
+    letter-spacing: .065em;
+  }
 }

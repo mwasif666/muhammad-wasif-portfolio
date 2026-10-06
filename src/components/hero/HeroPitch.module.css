@@ -75,8 +75,9 @@
   .root {
     position: absolute;
     z-index: 7;
+    top: calc(50% + 8.25rem);
     right: var(--rail);
-    bottom: clamp(6rem, 14vh, 10rem);
+    bottom: auto;
     width: min(40vw, 38rem);
     text-align: right;
   }
@@ -87,6 +88,44 @@
   }
 
   .actions { justify-content: flex-end; }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .root {
+    width: 46vw;
+  }
+
+  .copy {
+    font-size: .93rem;
+    line-height: 1.55;
+  }
+
+  .primary,
+  .secondary {
+    padding-inline: 1.15rem;
+    font-size: .9rem;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 780px) {
+  .root {
+    top: calc(49% + 7.15rem);
+  }
+
+  .copy {
+    font-size: .9rem;
+    line-height: 1.5;
+  }
+
+  .actions {
+    margin-top: .9rem;
+  }
+
+  .primary,
+  .secondary {
+    min-height: 2.9rem;
+    padding-block: .7rem;
+  }
 }
 
 @media (max-width: 520px) {

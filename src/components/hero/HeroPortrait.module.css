@@ -3,7 +3,7 @@
   position: relative;
   order: 2;
   width: 132%;
-  height: 41rem;
+  height: clamp(31rem, 78vw, 41rem);
   margin-top: -1.75rem;
   margin-bottom: -3.5rem;
 }
@@ -50,10 +50,24 @@
   }
 }
 
+@media (min-width: 901px) and (max-width: 1180px) {
+  .wrap {
+    left: clamp(-1.5rem, 5vw, 3rem);
+    height: min(92vh, 46rem);
+  }
+}
+
+@media (min-width: 901px) and (max-height: 780px) {
+  .wrap {
+    bottom: -1.5rem;
+    height: min(92vh, 50rem);
+  }
+}
+
 @media (max-width: 520px) {
   .wrap {
     width: 138%;
-    height: 30rem;
+    height: clamp(25rem, 122vw, 30rem);
     margin-bottom: -2.5rem;
   }
 }
