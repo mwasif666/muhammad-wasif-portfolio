@@ -6,14 +6,14 @@ import styles from "./LocalSeoSection.module.css";
    the homepage is the only thing pointing at those pages, so without a link
    from here they are orphaned and stop getting crawled. */
 const services = [
-  { href: "/front-end-developer-karachi", title: "Front-End Development" },
+  { href: "/front-end-developer-karachi", title: "React & UI Development" },
   { href: "/react-nextjs-developer-karachi", title: "React & Next.js" },
   { href: "/website-design-development-karachi", title: "Website Design" },
   { href: "/wordpress-developer-karachi", title: "WordPress & WooCommerce" },
   { href: "/shopify-developer-karachi", title: "Shopify Development" },
   { href: "/laravel-php-developer-karachi", title: "Laravel & PHP" },
   { href: "/mern-stack-developer-karachi", title: "MERN Stack" },
-  { href: "/full-stack-developer-karachi", title: "Full Stack Delivery" },
+  { href: "/full-stack-developer-karachi", title: "Full-Stack Web Development" },
 ];
 
 /* Numbers already claimed in the copy below, pulled out so the headline column
@@ -32,8 +32,8 @@ const faqs = [
     q: "Who is Muhammad Wasif?",
     a: (
       <>
-        Muhammad Wasif, also known professionally as Wasif Majeed, is a senior
-        front-end developer based in Karachi, Pakistan. He has 4+ years of
+        Muhammad Wasif, also known professionally as Wasif Majeed, is an
+        experienced web developer based in Karachi, Pakistan. He has 4+ years of
         professional experience and 60+ delivered websites, working mainly in
         React, Next.js, TypeScript, HTML, CSS and JavaScript, alongside
         WordPress, WooCommerce and Shopify builds.
@@ -41,7 +41,7 @@ const faqs = [
     ),
   },
   {
-    q: "What does a senior front-end developer actually build?",
+    q: "What kinds of websites can you build?",
     a: (
       <>
         Everything a visitor sees and touches, built to survive real conditions:
@@ -53,11 +53,11 @@ const faqs = [
     ),
   },
   {
-    q: "Do you do backend work as well, or only front end?",
+    q: "Do you also handle backend development?",
     a: (
       <>
-        Both, with an honest split. Front end is where the 4+ years of depth
-        are. On the backend I have shipped production work: Laravel with
+        Yes. My strongest experience is building user interfaces, and I also
+        ship backend work. I have delivered production projects: Laravel with
         MySQL behind Offplan DXB and Hope Plants Dubai, and a Node, Express and
         MongoDB stack behind Inner Beast. I am still building depth
         there, and I would rather tell you that than oversell it. For a
@@ -121,7 +121,7 @@ export default function LocalSeoSection() {
             </p>
 
             <h2 id="local-seo-title" className={styles.title}>
-              Senior front-end developer in <em>Karachi</em>, available for your
+              Experienced web developer in <em>Karachi</em>, available for your
               project
             </h2>
 
@@ -138,7 +138,7 @@ export default function LocalSeoSection() {
           <div className={styles.introBody}>
             <p className={styles.lead}>
               I&apos;m <strong>Muhammad Wasif</strong>, also known as{" "}
-              <strong>Wasif Majeed</strong>. I am a <strong>senior front-end
+              <strong>Wasif Majeed</strong>. I am an <strong>experienced web
               developer</strong> based in Karachi with <strong>4+ years</strong>{" "}
               of professional experience and{" "}
               <strong>60+ delivered websites</strong>. The interface is my craft:
