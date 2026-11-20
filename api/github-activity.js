@@ -135,10 +135,40 @@ export default async function handler(req, res) {
       source: "github.com",
     });
   } catch (error) {
-    console.error("GitHub activity unavailable:", error.message);
-    res.setHeader("Cache-Control", "no-store");
-    return res.status(503).json({
-      error: "Latest GitHub contribution data is temporarily unavailable",
-    });
+    console.warn("GitHub calendar temporarily unavailable:", error.message);
+    // This public community API has a documented one-hour cache. Only use
+    // it when the official calendar cannot be read, and disclose the delay.
+    try {
+      const fallbackYear = new Date().getUTCFullYear();
+      const fallbackResponse = await fetch(
+        "https://github-contributions-api.jogruber.de/v4/" +
+          USERNAME + "?y=" + fallbackYear,
+        { signal: AbortSignal.timeout(10000) },
+      );
+      if (!fallbackResponse.ok) throw new Error("Fallback unavailable");
+      const data = await fallbackResponse.json();
+      if (!Array.isArray(data.contributions) ||
+          !Number.isFinite(data.total?.[fallbackYear])) {
+        throw new Error("Fallback response invalid");
+      }
+      res.setHeader(
+        "Cache-Control",
+        "public, max-age=0, s-maxage=300, stale-while-revalidate=300",
+      );
+      return res.status(200).json({
+        contributions: data.contributions,
+        yearTotal: data.total[fallbackYear],
+        year: fallbackYear,
+        checkedAt: new Date().toISOString(),
+        profile: null,
+        source: "hourly-community-cache",
+        stale: true,
+      });
+    } catch {
+      res.setHeader("Cache-Control", "no-store");
+      return res.status(503).json({
+        error: "Latest GitHub contribution data is temporarily unavailable",
+      });
+    }
   }
 }
