@@ -82,6 +82,38 @@ export default async function handler(req, res) {
     }
 
     const calendar = parseCalendar(await calendarResponse.text(), year);
+
+    // The heatmap covers 26 weeks. In the first half of a new year, some
+    // of those weeks are in the previous calendar year.
+    // Fetch the prior calendar only when it is needed, without letting a
+    // failure of optional older data break today's numbers.
+    let contributions = calendar.contributions;
+    if (new Date().getUTCMonth() < 6) {
+      try {
+        const previousYear = year - 1;
+        const previousResponse = await fetch(
+          "https://github.com/users/" + USERNAME + "/contributions?from=" +
+            previousYear + "-01-01&to=" + previousYear + "-12-31",
+          {
+            headers: {
+              Accept: "text/html",
+              "User-Agent": "wasifmajeed-portfolio/1.0",
+            },
+            signal: AbortSignal.timeout(8000),
+          },
+        );
+        if (previousResponse.ok) {
+          const previous = parseCalendar(
+            await previousResponse.text(),
+            previousYear,
+          );
+          contributions = [...previous.contributions, ...contributions];
+        }
+      } catch {
+        // Current-year data is still valid.
+      }
+    }
+
     const profile = profileResponse?.ok
       ? await profileResponse.json().catch(() => null)
       : null;
@@ -94,6 +126,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       ...calendar,
+      contributions,
       year,
       checkedAt: new Date().toISOString(),
       profile: profile
