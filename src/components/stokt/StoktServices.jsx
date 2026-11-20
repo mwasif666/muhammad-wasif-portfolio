@@ -273,22 +273,42 @@ export default function StoktServices({ onContact }) {
     trackRef,
   });
 
-  const updatePointerEffects = (event) => {
-    const track = trackRef.current;
-    if (track) {
-      for (const card of track.querySelectorAll("[data-service-card]")) {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty("--mouse-x", `${event.clientX - rect.left}px`);
-        card.style.setProperty("--mouse-y", `${event.clientY - rect.top}px`);
-      }
-    }
+  const pointerFrameRef = useRef(0);
+  const pointerPosRef = useRef(null);
 
-    const cursor = cursorRef.current;
-    if (cursor) {
-      cursor.style.setProperty("--cursor-x", `${event.clientX}px`);
-      cursor.style.setProperty("--cursor-y", `${event.clientY}px`);
-      cursor.dataset.visible = "true";
-    }
+  useEffect(() => () => {
+    if (pointerFrameRef.current) cancelAnimationFrame(pointerFrameRef.current);
+  }, []);
+
+  const updatePointerEffects = (event) => {
+    if (event.pointerType === "touch") return;
+    pointerPosRef.current = { x: event.clientX, y: event.clientY };
+    if (pointerFrameRef.current) return;
+
+    // Batch all layout reads before any CSS writes and at most once per frame,
+    // rather than forcing layout on every high-frequency pointer event.
+    pointerFrameRef.current = requestAnimationFrame(() => {
+      pointerFrameRef.current = 0;
+      const pointer = pointerPosRef.current;
+      if (!pointer) return;
+
+      const track = trackRef.current;
+      if (track) {
+        const measurements = Array.from(track.querySelectorAll("[data-service-card]"))
+          .map((card) => ({ card, rect: card.getBoundingClientRect() }));
+        measurements.forEach(({ card, rect }) => {
+          card.style.setProperty("--mouse-x", `${pointer.x - rect.left}px`);
+          card.style.setProperty("--mouse-y", `${pointer.y - rect.top}px`);
+        });
+      }
+
+      const cursor = cursorRef.current;
+      if (cursor) {
+        cursor.style.setProperty("--cursor-x", `${pointer.x}px`);
+        cursor.style.setProperty("--cursor-y", `${pointer.y}px`);
+        cursor.dataset.visible = "true";
+      }
+    });
   };
 
   const hideCursor = () => {
