@@ -162,12 +162,12 @@ export default function StoktAbout() {
             />
             <SkeletonImage
               src={PORTRAIT}
-              alt="Muhammad Wasif (Wasif Majeed), senior front-end developer in Karachi, Pakistan, working in React, Next.js and TypeScript"
+              alt="Muhammad Wasif (Wasif Majeed), experienced web developer in Karachi, Pakistan, working in React, Next.js and TypeScript"
               draggable="false"
             />
             <div className={`${styles.profileMeta} ${themeStyles.blueProfileMeta}`}>
               <strong>Muhammad Wasif</strong>
-              <span>SENIOR FRONT-END DEVELOPER · KARACHI</span>
+              <span>EXPERIENCED WEB DEVELOPER · KARACHI</span>
             </div>
           </article>
 
@@ -177,12 +177,11 @@ export default function StoktAbout() {
             <p className={bioStyles.editorialStatement}>
               I&apos;m <strong>Muhammad Wasif</strong>, also known professionally as{" "}
               <strong>Wasif Majeed</strong>. I am a{" "}
-              <strong>senior front-end developer in Karachi</strong> with{" "}
-              <strong>60+ websites</strong> delivered. Front end is where
-              I&apos;m strongest: React, Next.js and TypeScript interfaces built
-              to stay fast and <strong>maintainable</strong>. I also handle the
-              WordPress, Shopify and backend side, and carry the work all the
-              way to <strong>production.</strong>
+              <strong>experienced web developer in Karachi</strong> with{" "}
+              <strong>60+ websites</strong> delivered. I build React, Next.js and
+              TypeScript interfaces that stay fast and <strong>maintainable</strong>,
+              alongside WordPress, Shopify and full-stack integrations, taking
+              projects all the way to <strong>production.</strong>
             </p>
 
             <div className={bioStyles.editorialAuthor}>
@@ -191,7 +190,7 @@ export default function StoktAbout() {
               </span>
               <span className={bioStyles.editorialAuthorCopy}>
                 <strong>Muhammad Wasif</strong>
-                <small>Senior Front-End Developer · Karachi</small>
+                <small>Experienced Web Developer · Karachi</small>
               </span>
             </div>
           </article>
