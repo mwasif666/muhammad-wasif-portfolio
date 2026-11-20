@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./AboutGlobe.module.css";
 import freelanceMap from "../../assets/freelance-countries.json";
 
+// Land coastline and dotted pattern were pre-generated at build time from
+// Natural Earth's public-domain 110m geometry. No expensive point-in-polygon
+// work or GitHub raw asset fetch should happen inside a visitor's browser.
 const D3_SRC = "https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js";
-const LAND_SRC =
-  "https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json";
+const GLOBE_DATA_SRC = "/globe-precomputed.json";
 
 let d3Loader;
-let landLoader;
-let dotCache;
+let globeDataLoader;
 let globePreparePromise;
 
 function loadD3() {
@@ -25,9 +26,7 @@ function loadD3() {
     };
 
     script.addEventListener("load", handleLoad, { once: true });
-    script.addEventListener("error", () => reject(new Error("D3 failed to load")), {
-      once: true,
-    });
+    script.addEventListener("error", () => reject(new Error("D3 failed to load")), { once: true });
 
     if (!existing) {
       script.src = D3_SRC;
@@ -35,109 +34,49 @@ function loadD3() {
       script.crossOrigin = "anonymous";
       document.head.appendChild(script);
     }
+  }).catch((error) => {
+    d3Loader = null;
+    throw error;
   });
 
   return d3Loader;
 }
 
-function loadLand() {
-  if (!landLoader) {
-    landLoader = fetch(LAND_SRC).then((response) => {
-      if (!response.ok) throw new Error("Failed to load land data");
-      return response.json();
-    });
+function loadGlobeData() {
+  if (!globeDataLoader) {
+    globeDataLoader = fetch(GLOBE_DATA_SRC, { cache: "force-cache" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Globe data unavailable");
+        return response.json();
+      })
+      .then(({ land, dots }) => ({
+        land,
+        // Convert to unit vectors once, then each render uses fast arithmetic
+        // rather than 10,000 expensive D3 projection function calls.
+        dots: dots.map(([lng, lat]) => {
+          const longitude = (lng * Math.PI) / 180;
+          const latitude = (lat * Math.PI) / 180;
+          const cosLat = Math.cos(latitude);
+          return {
+            x: cosLat * Math.cos(longitude),
+            y: cosLat * Math.sin(longitude),
+            z: Math.sin(latitude),
+          };
+        }),
+      }))
+      .catch((error) => {
+        globeDataLoader = null;
+        throw error;
+      });
   }
-  return landLoader;
+  return globeDataLoader;
 }
 
-function pointInPolygon([x, y], polygon) {
-  let inside = false;
-
-  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-    const [xi, yi] = polygon[i];
-    const [xj, yj] = polygon[j];
-    const intersects =
-      yi > y !== yj > y &&
-      x < ((xj - xi) * (y - yi)) / (yj - yi || Number.EPSILON) + xi;
-
-    if (intersects) inside = !inside;
-  }
-
-  return inside;
-}
-
-function pointInFeature(point, feature) {
-  const geometry = feature.geometry;
-  if (!geometry) return false;
-
-  if (geometry.type === "Polygon") {
-    const [outer, ...holes] = geometry.coordinates;
-    return pointInPolygon(point, outer) && !holes.some((hole) => pointInPolygon(point, hole));
-  }
-
-  if (geometry.type === "MultiPolygon") {
-    return geometry.coordinates.some(([outer, ...holes]) =>
-      pointInPolygon(point, outer) && !holes.some((hole) => pointInPolygon(point, hole)),
-    );
-  }
-
-  return false;
-}
-
-async function buildLandDots(d3, land) {
-  if (dotCache) return dotCache;
-
-  const dots = [];
-  const step = 1.45;
-  let lastYield = performance.now();
-
-  for (const feature of land.features) {
-    const [[minLng, minLat], [maxLng, maxLat]] = d3.geoBounds(feature);
-
-    for (let lng = minLng; lng <= maxLng; lng += step) {
-      for (let lat = minLat; lat <= maxLat; lat += step) {
-        if (pointInFeature([lng, lat], feature)) dots.push([lng, lat]);
-        // Yield expensive geography work in small chunks so user input and
-        // Locomotive Scroll keep receiving frames on slower laptops.
-        if (performance.now() - lastYield > 7) {
-          await new Promise((resolve) => {
-            if (typeof requestIdleCallback === "function") {
-              requestIdleCallback(resolve, { timeout: 240 });
-            } else {
-              setTimeout(resolve, 12);
-            }
-          });
-          lastYield = performance.now();
-        }
-      }
-    }
-  }
-
-  // Precompute unit vectors once so every animation frame avoids thousands
-  // of expensive spherical-distance calculations.
-  dotCache = dots.map(([lng, lat]) => {
-    const longitude = (lng * Math.PI) / 180;
-    const latitude = (lat * Math.PI) / 180;
-    const cosLat = Math.cos(latitude);
-    return {
-      point: [lng, lat],
-      x: cosLat * Math.cos(longitude),
-      y: cosLat * Math.sin(longitude),
-      z: Math.sin(latitude),
-    };
-  });
-  return dotCache;
-}
-
-/** Fetch and prepare the globe well before About becomes visible. */
+/** Warm from the homepage after first paint; share the same promise on entry. */
 export function preloadGlobe() {
   if (!globePreparePromise) {
-    globePreparePromise = Promise.all([loadD3(), loadLand()])
-      .then(async ([d3, land]) => ({
-        d3,
-        land,
-        dots: await buildLandDots(d3, land),
-      }))
+    globePreparePromise = Promise.all([loadD3(), loadGlobeData()])
+      .then(([d3, { land, dots }]) => ({ d3, land, dots }))
       .catch((error) => {
         globePreparePromise = null;
         throw error;
@@ -246,17 +185,25 @@ export default function AboutGlobe() {
       const centerY = centerCos * Math.sin(centerLng);
       const centerZ = Math.sin(centerLat);
       const dotRadius = Math.max(0.52, 0.88 * scaleFactor);
+      const eastX = -Math.sin(centerLng);
+      const eastY = Math.cos(centerLng);
+      const northX = -Math.sin(centerLat) * Math.cos(centerLng);
+      const northY = -Math.sin(centerLat) * Math.sin(centerLng);
+      const northZ = Math.cos(centerLat);
       context.fillStyle = "rgba(190,190,190,.72)";
+      context.beginPath();
 
-      dots.forEach((dot) => {
-        if (dot.x * centerX + dot.y * centerY + dot.z * centerZ <= 0) return;
-        const projected = projection(dot.point);
-        if (!projected) return;
-
-        context.beginPath();
-        context.arc(projected[0], projected[1], dotRadius, 0, Math.PI * 2);
-        context.fill();
-      });
+      // Batch all visible circles into ONE canvas fill, instead of 5,000+
+      // beginPath/fill calls per frame. Coordinates use the same orthographic
+      // basis as the D3 globe projection, without per-dot D3 overhead.
+      for (const dot of dots) {
+        if (dot.x * centerX + dot.y * centerY + dot.z * centerZ <= 0) continue;
+        const px = cx + radius * (dot.x * eastX + dot.y * eastY);
+        const py = cy - radius * (dot.x * northX + dot.y * northY + dot.z * northZ);
+        context.moveTo(px + dotRadius, py);
+        context.arc(px, py, dotRadius, 0, Math.PI * 2);
+      }
+      context.fill();
 
       // Local Natural Earth boundaries keep the nine client countries filled
       // as the globe rotates; the projection clips the far side of the sphere.
@@ -363,7 +310,7 @@ export default function AboutGlobe() {
           animationFrame = 0;
         }
       },
-      { rootMargin: "120px", threshold: 0.02 },
+      { rootMargin: "850px 0px", threshold: 0 },
     );
 
     async function init() {
