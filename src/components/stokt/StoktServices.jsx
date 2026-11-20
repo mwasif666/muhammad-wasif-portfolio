@@ -257,7 +257,7 @@ function DeferredServiceVideo({ art, videoIndex }) {
       ref={ref}
       className={styles.mobileVideo}
       src={canLoad ? art.src : undefined}
-      poster={art.poster}
+      poster={canLoad ? art.poster : undefined}
       autoPlay
       muted
       loop
