@@ -136,7 +136,7 @@ export default function StoktAbout() {
 
           <article className={styles.locationCard} aria-labelledby="freelance-worldwide-title">
             <div className={styles.locationCopy}>
-              <h3 id="freelance-worldwide-title">Freelance work across 9 countries</h3>
+              <h3 id="freelance-worldwide-title">Freelance work across {freelanceCountries.length} countries</h3>
               <p className={styles.locationDescription}>
                 I&apos;ve delivered freelance web projects for clients across
                 these countries, building both frontend and backend.
