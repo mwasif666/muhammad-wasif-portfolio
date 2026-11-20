@@ -309,7 +309,7 @@ function ServiceCard({ service, index }) {
   );
 }
 
-const QUOTE = `A successful website is more than a polished screen. It should load fast, guide people clearly and move a real business goal. Across 60+ websites I work backwards from that goal, choose the right stack, whether that is React, Next.js, WordPress or Shopify, and deliver it end to end.`;
+const QUOTE = `Great websites should load fast, answer real questions and help businesses grow. Across 60+ delivered websites, I build with React, Next.js and TypeScript, alongside WordPress and Shopify. For full-stack development, I create APIs and backend systems using Node.js, Express, MongoDB, PHP, Laravel and MySQL. From intuitive interfaces to secure integrations and deployment, my focus is performance, accessibility and practical business goals.`;
 
 export default function StoktServices({ onContact }) {
   const sectionRef = useRef(null);
