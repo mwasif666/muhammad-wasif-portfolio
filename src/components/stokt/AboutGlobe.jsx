@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./AboutGlobe.module.css";
 import freelanceMap from "../../assets/freelance-countries.json";
+import { freelanceCountries } from "../../lib/freelanceCountries";
 
 // Land coastline and dotted pattern were pre-generated at build time from
 // Natural Earth's public-domain 110m geometry. No expensive point-in-polygon
@@ -205,7 +206,7 @@ export default function AboutGlobe() {
       }
       context.fill();
 
-      // Local Natural Earth boundaries keep the nine client countries filled
+      // Local Natural Earth boundaries keep the client countries filled
       // as the globe rotates; the projection clips the far side of the sphere.
       freelanceMap.features.forEach((feature) => {
         context.beginPath();
@@ -358,7 +359,7 @@ export default function AboutGlobe() {
         ref={canvasRef}
         className={styles.canvas}
         role="img"
-        aria-label="Rotating globe highlighting freelance client countries: Pakistan, USA, UK, Australia, Canada, Spain, India, Bangladesh and Turkey."
+        aria-label={`Rotating globe highlighting freelance client countries: ${freelanceCountries.map(({ name }) => name).join(", ")}.`}
       />
       {state === "loading" && <span className={styles.loading}>Loading globe</span>}
       {state === "error" && <span className={styles.error}>Globe unavailable</span>}

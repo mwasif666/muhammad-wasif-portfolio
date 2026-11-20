@@ -1,4 +1,5 @@
 import { CONTACT } from "../../lib/contact";
+import { freelanceCountries } from "../../lib/freelanceCountries";
 import styles from "./LocalSeoSection.module.css";
 
 /* Each entry is a page that exists as static HTML in /public and is listed in
@@ -21,7 +22,7 @@ const services = [
 const facts = [
   { value: "4+", label: "Years professional" },
   { value: "60+", label: "Websites delivered" },
-  { value: "9", label: "Countries worked with" },
+  { value: String(freelanceCountries.length), label: "Countries worked with" },
 ];
 
 /* These answers are also in the homepage JSON-LD in index.html.
@@ -93,8 +94,8 @@ const faqs = [
     a: (
       <>
         Yes. I work remotely from Karachi with clients in Pakistan and
-        overseas, including the UAE, UK and US. I plan communication and
-        project timelines around the work.
+        overseas, including the UAE, UK, US, Germany and Austria. I plan
+        communication and project timelines around the work.
       </>
     ),
   },

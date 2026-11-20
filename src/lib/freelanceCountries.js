@@ -8,4 +8,7 @@ export const freelanceCountries = [
   { code: "IND", name: "India" },
   { code: "BGD", name: "Bangladesh" },
   { code: "TUR", name: "Turkey" },
+  { code: "DEU", name: "Germany" },
+  { code: "ARE", name: "UAE" },
+  { code: "AUT", name: "Austria" },
 ];
