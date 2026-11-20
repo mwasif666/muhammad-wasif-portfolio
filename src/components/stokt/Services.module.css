@@ -53,10 +53,16 @@
 .hero h2 {
   margin: 0;
   color: #faf8f5;
-  font-size: clamp(4rem, 13.7vw, 13rem);
+  /* Longer editorial headline: keep it striking but fully inside the viewport. */
+  font-size: clamp(3.25rem, 8.2vw, 8.7rem);
   font-weight: 500;
-  line-height: 0.83;
-  letter-spacing: -0.065em;
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.hero h2 span {
+  display: block;
 }
 
 .hero p {
@@ -68,7 +74,7 @@
   line-height: 1.42;
 }
 
-/* Sits above the display heading: "What I Do" reads as the brand line, this
+/* Sits above the main display heading and states the service/location; this
    is the line that says which service and which city. */
 .hero p.heroEyebrow {
   max-width: none;
@@ -497,7 +503,7 @@
 }
 
 @media (max-width: 860px) {
-  .hero h2 { font-size: clamp(3.4rem, 18vw, 6rem); }
+  .hero h2 { font-size: clamp(2.55rem, 9.4vw, 5.4rem); }
   .quoteText { font-size: clamp(1.05rem, 4.4vw, 1.5rem); }
   .cardCopy { padding: 11cqw 6cqw 0; }
   .cardCopy h3 {
