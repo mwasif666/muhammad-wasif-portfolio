@@ -5,7 +5,7 @@ import freelanceMap from "../../assets/freelance-countries.json";
 // Land coastline and dotted pattern were pre-generated at build time from
 // Natural Earth's public-domain 110m geometry. No expensive point-in-polygon
 // work or GitHub raw asset fetch should happen inside a visitor's browser.
-const D3_SRC = "https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js";
+const D3_SRC = "/vendor/d3.v7.9.0.min.js";
 const GLOBE_DATA_SRC = "/globe-precomputed.json";
 
 let d3Loader;
