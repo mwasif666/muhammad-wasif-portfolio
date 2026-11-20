@@ -7,9 +7,9 @@ import styles from "./Services.module.css";
 const services = [
   {
     key: "design",
-    title: "Front-End Development",
+    title: "Website Development",
     description:
-      "Front-end development in React, Next.js and TypeScript: responsive, accessible interfaces with reusable components and Core Web Vitals that hold up, as on Hierys and PECO Engineering.",
+      "Custom websites in React, Next.js and TypeScript: responsive, accessible interfaces with reusable components and Core Web Vitals that hold up, as on Hierys and PECO Engineering.",
     art: {
       type: "video",
       src: "https://stokt.b-cdn.net/KEYCAPS-loop-01-.webm",
@@ -43,7 +43,7 @@ const services = [
   },
   {
     key: "fullstack",
-    title: "Full-Stack Systems",
+    title: "Full-Stack Web Development",
     description:
       "Front end, APIs, databases, authentication and deployment as one system: Laravel with MySQL on Hope Plants Dubai, Next.js with Node, Express and MongoDB on Inner Beast.",
     art: {
@@ -312,11 +312,11 @@ export default function StoktServices({ onContact }) {
       <div className={styles.viewport} data-services-viewport>
         <div ref={heroRef} className={styles.hero} data-services-hero>
           <p className={styles.heroEyebrow}>
-            Front-End Development &middot; Karachi &amp; remote worldwide
+            Full-Stack Web Development &middot; Karachi &amp; remote worldwide
           </p>
           <h2 id="outcrowd-services-title">What I Do</h2>
           <p>
-            60+ websites built and shipped: React and Next.js front ends,
+            60+ websites built and shipped: React and Next.js websites,
             WordPress and Shopify stores, plus the APIs and deployment behind
             them, taken from plan to launch.
           </p>
