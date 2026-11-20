@@ -9,6 +9,7 @@ const LAND_SRC =
 let d3Loader;
 let landLoader;
 let dotCache;
+let globePreparePromise;
 
 function loadD3() {
   if (window.d3) return Promise.resolve(window.d3);
@@ -83,11 +84,12 @@ function pointInFeature(point, feature) {
   return false;
 }
 
-function buildLandDots(d3, land) {
+async function buildLandDots(d3, land) {
   if (dotCache) return dotCache;
 
   const dots = [];
   const step = 1.45;
+  let lastYield = performance.now();
 
   land.features.forEach((feature) => {
     const [[minLng, minLat], [maxLng, maxLat]] = d3.geoBounds(feature);
@@ -95,6 +97,18 @@ function buildLandDots(d3, land) {
     for (let lng = minLng; lng <= maxLng; lng += step) {
       for (let lat = minLat; lat <= maxLat; lat += step) {
         if (pointInFeature([lng, lat], feature)) dots.push([lng, lat]);
+        // Yield expensive geography work in small chunks so user input and
+        // Locomotive Scroll keep receiving frames on slower laptops.
+        if (performance.now() - lastYield > 7) {
+          await new Promise((resolve) => {
+            if (typeof requestIdleCallback === "function") {
+              requestIdleCallback(resolve, { timeout: 240 });
+            } else {
+              setTimeout(resolve, 12);
+            }
+          });
+          lastYield = performance.now();
+        }
       }
     }
   });
@@ -113,6 +127,23 @@ function buildLandDots(d3, land) {
     };
   });
   return dotCache;
+}
+
+/** Fetch and prepare the globe well before About becomes visible. */
+export function preloadGlobe() {
+  if (!globePreparePromise) {
+    globePreparePromise = Promise.all([loadD3(), loadLand()])
+      .then(async ([d3, land]) => ({
+        d3,
+        land,
+        dots: await buildLandDots(d3, land),
+      }))
+      .catch((error) => {
+        globePreparePromise = null;
+        throw error;
+      });
+  }
+  return globePreparePromise;
 }
 
 export default function AboutGlobe() {
@@ -339,10 +370,9 @@ export default function AboutGlobe() {
       if (initialized) return;
       initialized = true;
       try {
-        [d3, land] = await Promise.all([loadD3(), loadLand()]);
+        ({ d3, land, dots } = await preloadGlobe());
         if (destroyed) return;
 
-        dots = buildLandDots(d3, land);
         sizeCanvas();
         draw();
         setState("ready");
