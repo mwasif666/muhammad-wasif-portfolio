@@ -92,7 +92,8 @@ function LottieArt({ art, serviceKey }) {
     let observer;
     let playedOnce = false;
 
-    loadLottieRuntime()
+    const mountAnimation = () => {
+      loadLottieRuntime()
       .then((lottie) => {
         if (!lottie || cancelled || !hostRef.current) return;
 
@@ -153,8 +154,27 @@ function LottieArt({ art, serviceKey }) {
         observer.observe(hostRef.current);
       })
       .catch(() => {});
+    };
+
+    // Do not fetch the Lottie player or remote animation JSON at page load.
+    // Initialize each illustration only shortly before it enters the screen.
+    let loadObserver;
+    if (typeof IntersectionObserver === "undefined") {
+      mountAnimation();
+    } else {
+      loadObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          loadObserver.disconnect();
+          mountAnimation();
+        },
+        { rootMargin: "250px 0px", threshold: 0 },
+      );
+      loadObserver.observe(host);
+    }
 
     return () => {
+      loadObserver?.disconnect();
       cancelled = true;
       observer?.disconnect();
       animationRef.current?.destroy();
@@ -202,7 +222,7 @@ function ServiceArt({ service }) {
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
       />
     </div>
   );
