@@ -7,8 +7,8 @@ const ScrollCtx = createContext(null);
 // dragging behind the pointer.
 const SMOOTH_OPTIONS = {
   smoothWheel: true,
-  lerp: 0.1,
-  wheelMultiplier: 0.85,
+  lerp: 0.145,
+  wheelMultiplier: 1,
   touchMultiplier: 1,
   syncTouch: false,
   overscroll: false,
@@ -230,7 +230,7 @@ export function ScrollProvider({ children }) {
     const loco = locoRef.current;
     if (loco) {
       loco.scrollTo(destination, {
-        duration: 1.15,
+        duration: 0.8,
         easing: (t) => 1 - Math.pow(1 - t, 4),
       });
       return;
