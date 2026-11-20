@@ -204,10 +204,9 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
-  filter:
-    saturate(1)
-    brightness(1)
-    drop-shadow(0 .3rem .55rem rgba(0,0,0,.26));
+  /* Keep true brand colors vivid on the charcoal glass dock.
+     Avoid per-icon blurred drop shadows on the continuously moving track. */
+  filter: saturate(1.3) contrast(1.12) brightness(1.17);
   transition:
     transform 220ms cubic-bezier(.22,1,.36,1),
     filter 180ms ease;
@@ -221,10 +220,7 @@
 
 .tool:hover .logo {
   transform: scale(1.02);
-  filter:
-    saturate(1.06)
-    brightness(1.07)
-    drop-shadow(0 .45rem .75rem rgba(0,0,0,.3));
+  filter: saturate(1.36) contrast(1.16) brightness(1.23);
 }
 
 @keyframes toolCarousel {
