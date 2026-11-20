@@ -151,9 +151,9 @@
 
 .quoteText {
   margin: 0;
-  font-size: clamp(1.15rem, 2.1vw, 2.05rem);
+  font-size: clamp(1.05rem, 1.7vw, 1.75rem);
   font-weight: 500;
-  line-height: 1.42;
+  line-height: 1.48;
   letter-spacing: -0.028em;
   text-align: center;
   text-wrap: balance;
@@ -500,7 +500,7 @@
 
 @media (max-width: 860px) {
   .hero h2 { font-size: clamp(1.1rem, 4.7vw, 3.9rem); }
-  .quoteText { font-size: clamp(1.05rem, 4.4vw, 1.5rem); }
+  .quoteText { font-size: clamp(1rem, 3.9vw, 1.3rem); }
   .cardCopy { padding: 11cqw 6cqw 0; }
   .cardCopy h3 {
     font-size: clamp(1.55rem, 7.2cqw, 2.1rem);
