@@ -7,7 +7,7 @@ const services = [
     number: "01",
     title: "Website Design & Development",
     description:
-      "Responsive, production-ready websites built around clear interfaces, maintainable code and a polished experience across every screen.",
+      "Responsive websites with clear layouts, maintainable code and a consistent experience on every screen.",
     tags: ["UI Development", "Responsive Systems", "SEO Setup"],
     image: "/service-art/website-design.svg",
     visual: "website",
@@ -23,7 +23,7 @@ const services = [
   },
   {
     number: "03",
-    title: "Full-Stack Web Applications",
+    title: "Full Stack Web Applications",
     description:
       "Interactive web products that connect thoughtful frontend experiences with dependable backend logic, data and real application workflows.",
     tags: ["React", "Node / APIs", "Databases"],
@@ -34,7 +34,7 @@ const services = [
     number: "04",
     title: "API & Backend Integration",
     description:
-      "Secure integrations that connect interfaces to authentication, payments, third-party services and the backend systems your product depends on.",
+      "Secure integrations that connect interfaces to authentication, payments, external services and the backend systems your product depends on.",
     tags: ["REST APIs", "Authentication", "Payments"],
     image: "/service-art/api-backend.svg",
     visual: "api",
