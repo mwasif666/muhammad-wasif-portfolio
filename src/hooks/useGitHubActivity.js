@@ -93,7 +93,7 @@ export function useGitHubActivity(username) {
             profile: data.profile,
             checkedAt: data.checkedAt,
             loading: false,
-            stale: false,
+            stale: Boolean(data.stale),
             error: false,
           });
         }
