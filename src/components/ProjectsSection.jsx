@@ -135,6 +135,9 @@ const projects = [
 ];
 
 const INITIAL_PROJECT_COUNT = 6;
+export const PROJECT_THUMBNAIL_URLS = projects.slice(0, INITIAL_PROJECT_COUNT)
+  .filter((project) => project.image)
+  .map((project) => portfolioThumbnail(project.image));
 
 /* How many rows each press of the toggle adds. The list pages in rather than
    opening in one jump: sixteen cards at once is a wall of screenshots, and
