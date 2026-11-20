@@ -543,9 +543,12 @@
 }
 
 @supports (animation-timeline: view()) {
+  /* Animate the actual profile/bio cards, not their common parent.
+     Previously both the About row AND toolbox card faded independently,
+     multiplying opacity and washing out all technology logo colors. */
   .aboutTop,
-  .aboutBottom,
-  .toolboxCard {
+  .aboutBottom > .profileCard,
+  .aboutBottom > .bioCard {
     animation: aboutReveal linear both;
     animation-timeline: view();
     animation-range: entry 8% cover 30%;
