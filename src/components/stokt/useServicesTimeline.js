@@ -12,11 +12,11 @@ const FILL_EACH = 0.4;
 const HOLD_AFTER_FILL = 0.45;
 
 // Viewport heights of scroll handed to acts 1-2 (hero + quote panel).
-const FRONT_SCROLL_VH = 3.5;
+const FRONT_SCROLL_VH = 2.35;
 
 // Pixels of scroll each pixel of card movement costs. This is the dial for how
 // fast act three reads: higher is slower.
-const CARD_SLOWDOWN = 0.85;
+const CARD_SLOWDOWN = 0.72;
 
 // How much of a card has to have cleared the top edge before the card two
 // places behind it is released from below.
@@ -137,7 +137,7 @@ export default function useServicesTimeline({
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.8,
+          scrub: 0.32,
           invalidateOnRefresh: true,
         },
       });
