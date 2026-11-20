@@ -17,6 +17,7 @@ export default function useWhyScrollMotion({ sectionRef, cardRefs, layout }) {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
     let active = false;
+    let lastProgress = -1;
 
     const applyFinalLayout = () => {
       const vw = window.innerWidth / 100;
@@ -47,6 +48,10 @@ export default function useWhyScrollMotion({ sectionRef, cardRefs, layout }) {
       const viewport = window.innerHeight;
       const travel = Math.max(section.offsetHeight - viewport, 1);
       const rawProgress = clamp(-rect.top / travel);
+      // Skip imperceptible updates instead of touching five cards and several
+      // full-screen decoration layers for every tiny wheel delta.
+      if (Math.abs(rawProgress - lastProgress) < 0.0025) return;
+      lastProgress = rawProgress;
       const spreadProgress = clamp((rawProgress - 0.04) / 0.72);
       const eased = easeOutCubic(spreadProgress);
       const vw = window.innerWidth / 100;
@@ -72,7 +77,7 @@ export default function useWhyScrollMotion({ sectionRef, cardRefs, layout }) {
       section.style.setProperty("--why-title-y", `${lerp(110, 0, eased)}px`);
       section.style.setProperty("--why-title-scale", String(lerp(0.88, 1, eased)));
       section.style.setProperty("--why-planet-y", `${lerp(190, 0, eased)}px`);
-      section.style.setProperty("--why-stars-y", `${lerp(16, -8, rawProgress)}px`);
+      // Keep the full-screen star field stationary to avoid repaints.
     };
 
     const schedule = () => {
@@ -81,6 +86,7 @@ export default function useWhyScrollMotion({ sectionRef, cardRefs, layout }) {
     };
 
     const onResize = () => {
+      lastProgress = -1;
       if (active) schedule();
     };
 
@@ -90,7 +96,10 @@ export default function useWhyScrollMotion({ sectionRef, cardRefs, layout }) {
         : new IntersectionObserver(
             ([entry]) => {
               active = entry.isIntersecting;
-              if (active) schedule();
+              if (active) {
+                lastProgress = -1;
+                schedule();
+              }
               else if (frame) {
                 window.cancelAnimationFrame(frame);
                 frame = 0;
