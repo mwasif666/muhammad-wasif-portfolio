@@ -47,6 +47,7 @@ export default function PageLoader({ onDone }) {
     let counterFrame;
     let wordTimer;
     let finished = false;
+    let lastProgress = -5;
 
     const finish = () => {
       if (finished) return;
@@ -86,7 +87,13 @@ export default function PageLoader({ onDone }) {
       const updateCounter = (now) => {
         const elapsed = now - startedAt;
         const ratio = Math.min(elapsed / COUNTER_DURATION, 1);
-        setProgress(Math.min(100, Math.floor(easeOutQuart(ratio) * 100)));
+        const nextProgress = Math.min(100, Math.floor(easeOutQuart(ratio) * 100));
+        // A full React render every frame competes with the first page paint.
+        // Keep the visible count-up, but render only every five percentage points.
+        if (nextProgress - lastProgress >= 5) {
+          lastProgress = nextProgress;
+          setProgress(nextProgress);
+        }
 
         if (ratio < 1) {
           counterFrame = requestAnimationFrame(updateCounter);
