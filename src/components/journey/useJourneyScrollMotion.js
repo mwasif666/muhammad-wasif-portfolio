@@ -19,11 +19,11 @@ export default function useJourneyScrollMotion({
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     // Slices drift apart once the photo has been cut, they never cross-fade.
-    const rotations = [-3.4, 0, 3.4];
+    const rotations = [-1.25, 0, 1.25];
     const xOffsets = [-0.5, 0, 0.5];
     const yOffsets = [1.6, -1, 1.6];
-    const flipStarts = [0.58, 0.63, 0.68];
-    const flipEnds = [0.78, 0.83, 0.88];
+    const flipStarts = [0.40, 0.44, 0.48];
+    const flipEnds = [0.60, 0.64, 0.68];
     let frame = 0;
     let active = false;
 
@@ -77,7 +77,8 @@ export default function useJourneyScrollMotion({
       section.style.setProperty("--journey-edge", String(lerp(0, 0.26, split)));
       section.style.setProperty("--journey-shadow", String(lerp(0, 0.42, split)));
       section.style.setProperty("--journey-split", String(split));
-      section.style.setProperty("--journey-grid-y", `${lerp(18, -14, progress)}px`);
+      // Background grid stays still: repainting the full viewport each
+      // scroll frame was costly and introduced visible shimmer.
 
       cardRefs.current.forEach((node, index) => {
         if (!node) return;
@@ -87,7 +88,9 @@ export default function useJourneyScrollMotion({
         const y = yOffsets[index] * drift;
         const scale = lerp(1, index === 1 ? 1.015 : 0.99, drift);
         const flip = smoothstep(flipStarts[index], flipEnds[index], progress);
-        const copy = smoothstep(0.5, 0.88, flip);
+        // Keep content hidden until its back face is nearly front-facing.
+        // This prevents the text/icon scrambling at mid-flip.
+        const copy = smoothstep(0.88, 0.995, flip);
 
         node.style.transform = `translate3d(${x}vw, ${y}vh, 0) rotate(${rotation}deg) scale(${scale})`;
         node.style.setProperty("--card-flip", `${lerp(0, 180, flip)}deg`);

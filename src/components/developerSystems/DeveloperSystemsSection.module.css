@@ -183,7 +183,8 @@
   border-radius: 100px;
   background: #121420;
   box-shadow: 0 4px 24px -1px rgba(28, 9, 61, .2);
-  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .apiItem span {
@@ -379,7 +380,8 @@
   border-radius: 10px;
   background: linear-gradient(209deg, rgba(255, 255, 255, .05) 0%, rgba(255, 255, 255, .05) 100%);
   box-shadow: 0 4px 24px -1px rgba(28, 9, 61, .2);
-  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   text-align: center;
 }
 

@@ -63,6 +63,15 @@ html[data-scroll-active="true"] .skeleton-tint {
   animation-play-state: paused !important;
 }
 
+/* Pause decorative perpetual animations while scroll-driven motion has priority.
+ * The scroll-triggered card/timeline transitions still run normally. */
+html[data-scroll-active="true"] #developer-systems [class*="apiTrack"],
+html[data-scroll-active="true"] #developer-systems [class*="capabilityTrack"],
+html[data-scroll-active="true"] #developer-systems [class*="gradientShapeTwo"],
+html[data-scroll-active="true"] #journey [class*="shine"]::before {
+  animation-play-state: paused !important;
+}
+
 /* Avoid promoting off-screen smooth-scroll effects indefinitely. Locomotive
    will still promote an element while it is actively transforming it. */
 [data-scroll-speed] {

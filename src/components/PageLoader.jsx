@@ -15,11 +15,11 @@ const WORDS = [
 
 // Keep the branded transition, but do not hold the first meaningful paint for
 // several seconds. The whole loader now clears in roughly 1.4 seconds.
-const COUNTER_DURATION = 900;
-const HOLD_DURATION = 50;
-const EXIT_DURATION = 450;
-const WORD_INTERVAL = 650;
-const WORD_TRANSITION = 360;
+const COUNTER_DURATION = 640;
+const HOLD_DURATION = 35;
+const EXIT_DURATION = 320;
+const WORD_INTERVAL = 440;
+const WORD_TRANSITION = 240;
 
 const easeOutQuart = (value) => 1 - Math.pow(1 - value, 4);
 
@@ -47,6 +47,7 @@ export default function PageLoader({ onDone }) {
     let counterFrame;
     let wordTimer;
     let finished = false;
+    let lastProgress = -5;
 
     const finish = () => {
       if (finished) return;
@@ -86,7 +87,13 @@ export default function PageLoader({ onDone }) {
       const updateCounter = (now) => {
         const elapsed = now - startedAt;
         const ratio = Math.min(elapsed / COUNTER_DURATION, 1);
-        setProgress(Math.min(100, Math.floor(easeOutQuart(ratio) * 100)));
+        const nextProgress = Math.min(100, Math.floor(easeOutQuart(ratio) * 100));
+        // A full React render every frame competes with the first page paint.
+        // Keep the visible count-up, but render only every five percentage points.
+        if (nextProgress - lastProgress >= 5) {
+          lastProgress = nextProgress;
+          setProgress(nextProgress);
+        }
 
         if (ratio < 1) {
           counterFrame = requestAnimationFrame(updateCounter);

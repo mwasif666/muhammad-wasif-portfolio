@@ -7,9 +7,9 @@ import styles from "./Services.module.css";
 const services = [
   {
     key: "design",
-    title: "Front-End Development",
+    title: "Website Development",
     description:
-      "Front-end development in React, Next.js and TypeScript: responsive, accessible interfaces with reusable components and Core Web Vitals that hold up, as on Hierys and PECO Engineering.",
+      "Custom websites in React, Next.js and TypeScript: responsive, accessible interfaces with reusable components and Core Web Vitals that hold up, as on Hierys and PECO Engineering.",
     art: {
       type: "video",
       src: "https://stokt.b-cdn.net/KEYCAPS-loop-01-.webm",
@@ -43,7 +43,7 @@ const services = [
   },
   {
     key: "fullstack",
-    title: "Full-Stack Systems",
+    title: "Full-Stack Web Development",
     description:
       "Front end, APIs, databases, authentication and deployment as one system: Laravel with MySQL on Hope Plants Dubai, Next.js with Node, Express and MongoDB on Inner Beast.",
     art: {
@@ -92,7 +92,8 @@ function LottieArt({ art, serviceKey }) {
     let observer;
     let playedOnce = false;
 
-    loadLottieRuntime()
+    const mountAnimation = () => {
+      loadLottieRuntime()
       .then((lottie) => {
         if (!lottie || cancelled || !hostRef.current) return;
 
@@ -153,8 +154,27 @@ function LottieArt({ art, serviceKey }) {
         observer.observe(hostRef.current);
       })
       .catch(() => {});
+    };
+
+    // Do not fetch the Lottie player or remote animation JSON at page load.
+    // Initialize each illustration only shortly before it enters the screen.
+    let loadObserver;
+    if (typeof IntersectionObserver === "undefined") {
+      mountAnimation();
+    } else {
+      loadObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          loadObserver.disconnect();
+          mountAnimation();
+        },
+        { rootMargin: "250px 0px", threshold: 0 },
+      );
+      loadObserver.observe(host);
+    }
 
     return () => {
+      loadObserver?.disconnect();
       cancelled = true;
       observer?.disconnect();
       animationRef.current?.destroy();
@@ -202,7 +222,7 @@ function ServiceArt({ service }) {
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
       />
     </div>
   );
@@ -253,22 +273,42 @@ export default function StoktServices({ onContact }) {
     trackRef,
   });
 
-  const updatePointerEffects = (event) => {
-    const track = trackRef.current;
-    if (track) {
-      for (const card of track.querySelectorAll("[data-service-card]")) {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty("--mouse-x", `${event.clientX - rect.left}px`);
-        card.style.setProperty("--mouse-y", `${event.clientY - rect.top}px`);
-      }
-    }
+  const pointerFrameRef = useRef(0);
+  const pointerPosRef = useRef(null);
 
-    const cursor = cursorRef.current;
-    if (cursor) {
-      cursor.style.setProperty("--cursor-x", `${event.clientX}px`);
-      cursor.style.setProperty("--cursor-y", `${event.clientY}px`);
-      cursor.dataset.visible = "true";
-    }
+  useEffect(() => () => {
+    if (pointerFrameRef.current) cancelAnimationFrame(pointerFrameRef.current);
+  }, []);
+
+  const updatePointerEffects = (event) => {
+    if (event.pointerType === "touch") return;
+    pointerPosRef.current = { x: event.clientX, y: event.clientY };
+    if (pointerFrameRef.current) return;
+
+    // Batch all layout reads before any CSS writes and at most once per frame,
+    // rather than forcing layout on every high-frequency pointer event.
+    pointerFrameRef.current = requestAnimationFrame(() => {
+      pointerFrameRef.current = 0;
+      const pointer = pointerPosRef.current;
+      if (!pointer) return;
+
+      const track = trackRef.current;
+      if (track) {
+        const measurements = Array.from(track.querySelectorAll("[data-service-card]"))
+          .map((card) => ({ card, rect: card.getBoundingClientRect() }));
+        measurements.forEach(({ card, rect }) => {
+          card.style.setProperty("--mouse-x", `${pointer.x - rect.left}px`);
+          card.style.setProperty("--mouse-y", `${pointer.y - rect.top}px`);
+        });
+      }
+
+      const cursor = cursorRef.current;
+      if (cursor) {
+        cursor.style.setProperty("--cursor-x", `${pointer.x}px`);
+        cursor.style.setProperty("--cursor-y", `${pointer.y}px`);
+        cursor.dataset.visible = "true";
+      }
+    });
   };
 
   const hideCursor = () => {
@@ -292,11 +332,11 @@ export default function StoktServices({ onContact }) {
       <div className={styles.viewport} data-services-viewport>
         <div ref={heroRef} className={styles.hero} data-services-hero>
           <p className={styles.heroEyebrow}>
-            Front-End Development &middot; Karachi &amp; remote worldwide
+            Full-Stack Web Development &middot; Karachi &amp; remote worldwide
           </p>
           <h2 id="outcrowd-services-title">What I Do</h2>
           <p>
-            60+ websites built and shipped: React and Next.js front ends,
+            60+ websites built and shipped: React and Next.js websites,
             WordPress and Shopify stores, plus the APIs and deployment behind
             them, taken from plan to launch.
           </p>

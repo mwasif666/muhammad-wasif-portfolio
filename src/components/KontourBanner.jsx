@@ -74,7 +74,7 @@ export default function KontourBanner({
 
       {isBlue && (
         <div className={styles.signatureBand} aria-label="Muhammad Wasif">
-          <span className={styles.signatureName}>Muhammad Wasif</span>
+          <span className={styles.signatureName} data-scroll data-scroll-speed="0.06">Muhammad Wasif</span>
         </div>
       )}
     </section>

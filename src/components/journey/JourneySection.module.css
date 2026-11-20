@@ -13,7 +13,7 @@
   --journey-edge: 0;
   --journey-shadow: 0;
   --journey-split: 0;
-  --journey-grid-y: 18px;
+  --journey-grid-y: 0px;
   /* One heading line plus the stage chrome, so the panels only ever claim the
      height that is genuinely left over — the cards can never run past the
      bottom of the sticky viewport. The last term is slack for the drift and
@@ -23,7 +23,7 @@
       var(--journey-heading-gap) + var(--journey-heading-size) * 1.06 + 2.5rem
   );
   position: relative;
-  height: 315svh;
+  height: 235svh;
   overflow: clip;
   background: #010507;
   color: #edfaff;
@@ -54,7 +54,7 @@
   position: absolute;
   z-index: 0;
   inset: -5%;
-  transform: translate3d(0, var(--journey-grid-y), 0);
+  transform: none;
   opacity: 0.52;
   pointer-events: none;
   background-image: radial-gradient(
@@ -84,7 +84,7 @@
   font-family: "Argesta Display", Georgia, "Times New Roman", serif;
   font-size: var(--journey-heading-size);
   font-weight: 400;
-  line-height: 0.98;
+  line-height: 1.06;
   letter-spacing: -0.045em;
   text-align: center;
   /* A second line would eat into the panels and overlap the cards. */
@@ -161,7 +161,7 @@
     rgba(255, 255, 255, 0) 100%
   );
   filter: blur(6px);
-  animation: journey-sweep 5.5s linear 1.2s infinite;
+  animation: journey-sweep 3s ease-out 1.2s 1 both;
 }
 
 .shine::after {
@@ -282,6 +282,11 @@
 }
 .cardBack {
   transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  /* Fixed vertical zones avoid icons overlapping headings during the flip. */
+  padding: clamp(1.25rem, 2vw, 1.9rem);
+  box-sizing: border-box;
 }
 
 .panelImage {
@@ -357,10 +362,13 @@
 }
 
 .icon {
-  position: absolute;
+  position: relative;
+  flex: 0 0 auto;
+  align-self: flex-start;
   z-index: 3;
-  top: clamp(1.25rem, 2.1vw, 2rem);
-  left: clamp(1.25rem, 2.1vw, 2rem);
+  top: auto;
+  left: auto;
+  margin-bottom: auto;
   /* Lordicon draws inside a padded 500×500 artboard, so the box runs larger
      than the inline icons it replaced to land on the same optical size. */
   width: clamp(2.6rem, 3.6vw, 4rem);
@@ -390,19 +398,21 @@
 }
 
 .copy {
-  position: absolute;
+  position: relative;
   z-index: 4;
-  inset: auto clamp(1.4rem, 2.2vw, 2.2rem) clamp(1.5rem, 2.45vw, 2.55rem);
+  flex: 0 0 auto;
+  inset: auto;
+  margin-top: auto;
   opacity: var(--card-copy-opacity);
   transform: translateY(var(--card-copy-y));
-  will-change: transform, opacity;
+  will-change: auto;
 }
 
 .copy h3 {
   max-width: 15ch;
   margin: 0;
   color: #effcff;
-  font-size: clamp(1.65rem, 2.35vw, 3rem);
+  font-size: clamp(1.55rem, 2.05vw, 2.65rem);
   font-weight: 520;
   line-height: 0.98;
   letter-spacing: -0.045em;
@@ -410,7 +420,7 @@
 
 .copy p {
   max-width: 30ch;
-  margin: clamp(2.2rem, 7vh, 5.5rem) 0 0;
+  margin: clamp(0.8rem, 2.4vh, 1.8rem) 0 0;
   color: rgba(211, 237, 247, 0.7);
   font-size: clamp(0.82rem, 0.92vw, 1.02rem);
   line-height: 1.45;
@@ -429,7 +439,7 @@
     font-size: clamp(1.5rem, 2.5vw, 2.6rem);
   }
   .copy p {
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
 }
 
@@ -515,7 +525,7 @@
     font-size: clamp(2rem, 8vw, 3rem);
   }
   .copy p {
-    margin-top: clamp(2.75rem, 10vw, 4rem);
+    margin-top: clamp(1rem, 3vw, 1.8rem);
     font-size: 0.95rem;
   }
 }

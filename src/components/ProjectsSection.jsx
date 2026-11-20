@@ -207,7 +207,7 @@ function ProjectVideo({ project }) {
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="none"
       tabIndex={-1}
       aria-label={buildPreviewAlt(project)}
     >

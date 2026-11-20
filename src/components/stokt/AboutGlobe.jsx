@@ -99,8 +99,20 @@ function buildLandDots(d3, land) {
     }
   });
 
-  dotCache = dots;
-  return dots;
+  // Precompute unit vectors once so every animation frame avoids thousands
+  // of expensive spherical-distance calculations.
+  dotCache = dots.map(([lng, lat]) => {
+    const longitude = (lng * Math.PI) / 180;
+    const latitude = (lat * Math.PI) / 180;
+    const cosLat = Math.cos(latitude);
+    return {
+      point: [lng, lat],
+      x: cosLat * Math.cos(longitude),
+      y: cosLat * Math.sin(longitude),
+      z: Math.sin(latitude),
+    };
+  });
+  return dotCache;
 }
 
 export default function AboutGlobe() {
@@ -120,8 +132,9 @@ export default function AboutGlobe() {
     let pointerStart = null;
     let rotationStart = null;
     let autoRotate = true;
-    let inView = true;
-    let lastFrame = performance.now();
+    let inView = false;
+    let initialized = false;
+    let lastFrame = 0;
     let d3;
     let land;
     let dots = [];
@@ -140,7 +153,7 @@ export default function AboutGlobe() {
       const rect = stage.getBoundingClientRect();
       width = Math.max(1, rect.width);
       height = Math.max(1, rect.height);
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
@@ -195,13 +208,18 @@ export default function AboutGlobe() {
       context.lineWidth = Math.max(0.65, 0.92 * scaleFactor);
       context.stroke();
 
-      const center = [-rotation[0], -rotation[1]];
+      const centerLng = (-rotation[0] * Math.PI) / 180;
+      const centerLat = (-rotation[1] * Math.PI) / 180;
+      const centerCos = Math.cos(centerLat);
+      const centerX = centerCos * Math.cos(centerLng);
+      const centerY = centerCos * Math.sin(centerLng);
+      const centerZ = Math.sin(centerLat);
       const dotRadius = Math.max(0.52, 0.88 * scaleFactor);
       context.fillStyle = "rgba(190,190,190,.72)";
 
-      dots.forEach(([lng, lat]) => {
-        if (d3.geoDistance([lng, lat], center) > Math.PI / 2) return;
-        const projected = projection([lng, lat]);
+      dots.forEach((dot) => {
+        if (dot.x * centerX + dot.y * centerY + dot.z * centerZ <= 0) return;
+        const projected = projection(dot.point);
         if (!projected) return;
 
         context.beginPath();
@@ -224,18 +242,31 @@ export default function AboutGlobe() {
       context.restore();
     };
 
+    // Only keep a frame loop while the globe is actually near the viewport.
+    // Expensive canvas rendering is capped at 30fps and paused while scrolling.
     const animate = (now) => {
-      if (destroyed) return;
-
-      const delta = Math.min(40, now - lastFrame);
-      lastFrame = now;
-
-      if (inView && autoRotate && !dragging && !reduceMotion) {
-        rotation[0] += delta * 0.0065;
-        projection?.rotate(rotation);
-        draw();
+      if (destroyed || !inView) {
+        animationFrame = 0;
+        return;
       }
 
+      animationFrame = requestAnimationFrame(animate);
+      if (
+        !projection || document.hidden || !autoRotate || dragging ||
+        document.documentElement.dataset.scrollActive === "true" ||
+        now - lastFrame < 33
+      ) return;
+
+      const delta = Math.min(66, now - lastFrame);
+      lastFrame = now;
+      rotation[0] += delta * 0.0065;
+      projection.rotate(rotation);
+      draw();
+    };
+
+    const startAnimation = () => {
+      if (animationFrame || destroyed || !inView || reduceMotion) return;
+      lastFrame = performance.now();
       animationFrame = requestAnimationFrame(animate);
     };
 
@@ -270,7 +301,9 @@ export default function AboutGlobe() {
     };
 
     const onWheel = (event) => {
-      if (!projection) return;
+      // Normal wheel movement should scroll the PAGE, not get trapped here.
+      // Hold Ctrl while wheeling for deliberate globe zoom.
+      if (!projection || !event.ctrlKey) return;
       event.preventDefault();
       zoom = Math.max(0.78, Math.min(1.65, zoom * (event.deltaY > 0 ? 0.94 : 1.06)));
       projection.scale(baseRadius * zoom);
@@ -288,12 +321,23 @@ export default function AboutGlobe() {
     const visibilityObserver = new IntersectionObserver(
       ([entry]) => {
         inView = entry.isIntersecting;
-        if (inView) draw();
+        if (inView) {
+          if (!initialized) void init();
+          else {
+            draw();
+            startAnimation();
+          }
+        } else {
+          cancelAnimationFrame(animationFrame);
+          animationFrame = 0;
+        }
       },
       { rootMargin: "120px", threshold: 0.02 },
     );
 
     async function init() {
+      if (initialized) return;
+      initialized = true;
       try {
         [d3, land] = await Promise.all([loadD3(), loadLand()]);
         if (destroyed) return;
@@ -302,7 +346,7 @@ export default function AboutGlobe() {
         sizeCanvas();
         draw();
         setState("ready");
-        animationFrame = requestAnimationFrame(animate);
+        startAnimation();
       } catch {
         if (!destroyed) setState("error");
       }
@@ -314,8 +358,8 @@ export default function AboutGlobe() {
     canvas.addEventListener("pointercancel", endPointer);
     canvas.addEventListener("wheel", onWheel, { passive: false });
     resizeObserver.observe(stage);
+    // The observer starts the globe assets only when visitors approach it.
     visibilityObserver.observe(stage);
-    init();
 
     return () => {
       destroyed = true;
@@ -341,7 +385,7 @@ export default function AboutGlobe() {
       />
       {state === "loading" && <span className={styles.loading}>Loading globe</span>}
       {state === "error" && <span className={styles.error}>Globe unavailable</span>}
-      {state === "ready" && <span className={styles.hint}>Drag to rotate · Scroll to zoom</span>}
+      {state === "ready" && <span className={styles.hint}>Drag to rotate · Ctrl+scroll to zoom</span>}
     </div>
   );
 }
