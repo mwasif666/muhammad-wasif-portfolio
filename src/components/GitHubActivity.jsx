@@ -47,7 +47,7 @@ export default function GitHubActivity({ username }) {
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <span className="block text-[0.66rem] font-[650] tracking-[0.15em] text-[#91dcff] uppercase">
-            Live from GitHub
+            {stale ? "GITHUB · CACHED ACTIVITY" : "Live from GitHub"}
           </span>
           <strong className="mt-1 block text-[1.02rem] font-semibold tracking-[-0.01em]">
             Contribution activity
@@ -99,7 +99,7 @@ export default function GitHubActivity({ username }) {
               className="block mt-1 text-[0.58rem] tracking-normal text-[#e6f7ff]/50"
               title="Automatically checks GitHub every five minutes while this page is open"
             >
-              {stale ? "Showing last verified data" : `Checked ${checkedTime} · Refreshes every 5 min`}
+              {stale ? "Cached data may be delayed" : `Checked ${checkedTime} · Refreshes every 5 min`}
             </small>
           )}
         </span>
