@@ -21,7 +21,7 @@ const caseStudies = [
     focus: [
       "Clear navigation around services",
       "Responsive motion and section choreography",
-      "Reusable component-driven frontend",
+      "Reusable frontend components",
       "Fast loading media and thoughtful interactions",
     ],
     stack: ["React", "Vite", "Tailwind CSS", "GSAP ScrollTrigger", "React Router"],
