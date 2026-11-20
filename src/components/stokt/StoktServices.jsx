@@ -160,8 +160,8 @@ function LottieArt({ art, serviceKey }) {
         onScrollStart = () => animation.pause();
         onScrollIdle = () => {
           if (!isVisible) return;
-          if (art.loop) playVisible();
-          else if (playedOnce && !document.hidden) animation.play();
+          if (art.loop || !playedOnce) playVisible();
+          else if (!document.hidden) animation.play();
         };
         window.addEventListener("portfolio:scroll-start", onScrollStart);
         window.addEventListener("portfolio:scroll-idle", onScrollIdle);
