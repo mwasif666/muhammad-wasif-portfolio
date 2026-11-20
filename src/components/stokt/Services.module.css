@@ -53,23 +53,19 @@
 .hero h2 {
   margin: 0;
   color: #faf8f5;
-  /* Longer editorial headline: keep it striking but fully inside the viewport. */
-  font-size: clamp(3.25rem, 8.2vw, 8.7rem);
+  /* Fit the full title on one line without overflowing smaller laptops. */
+  font-size: clamp(1.1rem, 4.7vw, 4.5rem);
   font-weight: 500;
-  line-height: 0.94;
+  line-height: 1.08;
   letter-spacing: -0.055em;
-  text-wrap: balance;
-}
-
-.hero h2 span {
-  display: block;
+  white-space: nowrap;
 }
 
 .hero p {
-  max-width: 38ch;
-  margin: clamp(1.6rem, 3.4vw, 3rem) 0 0;
-  color: rgba(240, 238, 235, 0.56);
-  font-size: clamp(1rem, 1.5vw, 1.45rem);
+  max-width: 57ch;
+  margin: clamp(1.25rem, 2.5vw, 2rem) 0 0;
+  color: rgba(240, 238, 235, 0.68);
+  font-size: clamp(.92rem, 1.2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.42;
 }
@@ -503,7 +499,7 @@
 }
 
 @media (max-width: 860px) {
-  .hero h2 { font-size: clamp(2.55rem, 9.4vw, 5.4rem); }
+  .hero h2 { font-size: clamp(1.1rem, 4.7vw, 3.9rem); }
   .quoteText { font-size: clamp(1.05rem, 4.4vw, 1.5rem); }
   .cardCopy { padding: 11cqw 6cqw 0; }
   .cardCopy h3 {
