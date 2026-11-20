@@ -15,11 +15,11 @@ const WORDS = [
 
 // Keep the branded transition, but do not hold the first meaningful paint for
 // several seconds. The whole loader now clears in roughly 1.4 seconds.
-const COUNTER_DURATION = 900;
-const HOLD_DURATION = 50;
-const EXIT_DURATION = 450;
-const WORD_INTERVAL = 650;
-const WORD_TRANSITION = 360;
+const COUNTER_DURATION = 640;
+const HOLD_DURATION = 35;
+const EXIT_DURATION = 320;
+const WORD_INTERVAL = 440;
+const WORD_TRANSITION = 240;
 
 const easeOutQuart = (value) => 1 - Math.pow(1 - value, 4);
 
