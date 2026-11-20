@@ -21,22 +21,21 @@ const services = [
 const facts = [
   { value: "4+", label: "Years professional" },
   { value: "60+", label: "Websites delivered" },
-  { value: "4", label: "Countries served" },
+  { value: "9", label: "Countries worked with" },
 ];
 
-/* These answers are duplicated in the FAQPage JSON-LD in index.html. If you
-   edit one, edit the other — Google drops FAQ markup that does not match the
-   text a visitor can read on the page. */
+/* These answers are also in the homepage JSON-LD in index.html.
+   Keep the visible FAQ and structured data in sync. */
 const faqs = [
   {
     q: "Who is Muhammad Wasif?",
     a: (
       <>
-        Muhammad Wasif, also known professionally as Wasif Majeed, is an
-        experienced web developer based in Karachi, Pakistan. He has 4+ years of
-        professional experience and 60+ delivered websites, working mainly in
-        React, Next.js, TypeScript, HTML, CSS and JavaScript, alongside
-        WordPress, WooCommerce and Shopify builds.
+        Muhammad Wasif, also known as Wasif Majeed, is a web developer based in
+        Karachi, Pakistan. He has over four years of professional experience
+        and has delivered more than 60 websites. His work includes React,
+        Next.js, TypeScript, WordPress, WooCommerce, Shopify and backend
+        integrations.
       </>
     ),
   },
@@ -44,11 +43,10 @@ const faqs = [
     q: "What kinds of websites can you build?",
     a: (
       <>
-        Everything a visitor sees and touches, built to survive real conditions:
-        responsive layouts in semantic HTML and modern CSS, React and Next.js
-        components that stay readable a year later, TypeScript where the data
-        earns it, keyboard and screen reader access, and the Core Web Vitals
-        work that decides whether the page feels fast on an everyday phone.
+        I build responsive business websites, online stores and web
+        applications. I use React, Next.js and TypeScript for custom
+        interfaces, and WordPress, WooCommerce and Shopify for content and
+        ecommerce. I also work on APIs, accessibility and performance.
       </>
     ),
   },
@@ -56,12 +54,10 @@ const faqs = [
     q: "Do you also handle backend development?",
     a: (
       <>
-        Yes. My strongest experience is building user interfaces, and I also
-        ship backend work. I have delivered production projects: Laravel with
-        MySQL behind Offplan DXB and Hope Plants Dubai, and a Node, Express and
-        MongoDB stack behind Inner Beast. I am still building depth
-        there, and I would rather tell you that than oversell it. For a
-        demanding backend I will say so and we bring in a specialist.
+        Yes. I develop and integrate backend features using Node.js, Express,
+        MongoDB, PHP, Laravel and MySQL. Frontend development is my main
+        specialty, and I review each project's backend requirements before
+        recommending an approach.
       </>
     ),
   },
@@ -69,10 +65,10 @@ const faqs = [
     q: "Do you build WordPress and Shopify sites?",
     a: (
       <>
-        Yes, and this is proven work rather than a line on a list. WordPress and
-        WooCommerce on Bridge Precision Tools, Vampire Tools and Econetix;
-        Shopify on Frontineers and Hunza Dry Fruits Basket, across customised
-        Horizon and Dawn themes. All five are live and you can open them.
+        Yes. I build and customize WordPress and WooCommerce websites, as well
+        as Shopify stores. My work includes themes, product pages, store
+        functionality and integrations. You can explore examples in my
+        portfolio.
       </>
     ),
   },
@@ -80,15 +76,15 @@ const faqs = [
     q: "How much does a website cost in Karachi?",
     a: (
       <>
-        It depends on scope. A polished marketing site is a different budget
-        from a WooCommerce store or an app with logins and dashboards. Share the
-        pages, features and deadline over WhatsApp at{" "}
+        Pricing depends on the design, number of pages and features you need.
+        A business website, online store and custom application all have
+        different requirements. Send your project details on WhatsApp at{" "}
         <a href={CONTACT.whatsappUrl} target="_blank" rel="noreferrer noopener">
           {CONTACT.phoneDisplay}
         </a>{" "}
-        or by email at{" "}
-        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> and you get a
-        fixed written quote before anything starts.
+        or email{" "}
+        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>{" "}
+        for a quote based on the scope.
       </>
     ),
   },
@@ -96,14 +92,13 @@ const faqs = [
     q: "Do you work with clients outside Pakistan?",
     a: (
       <>
-        Yes, remote work is the norm here. Delivered projects include clients in
-        Dubai and the UAE, the United Kingdom and the United States, working
-        across their time zones with progress shared as the build goes.
+        Yes. I work remotely from Karachi with clients in Pakistan and
+        overseas, including the UAE, UK and US. I plan communication and
+        project timelines around the work.
       </>
     ),
   },
 ];
-
 
 export default function LocalSeoSection() {
   return (
@@ -121,8 +116,7 @@ export default function LocalSeoSection() {
             </p>
 
             <h2 id="local-seo-title" className={styles.title}>
-              Experienced web developer in <em>Karachi</em>, available for your
-              project
+              Experienced Web Developer in <em>Karachi</em>
             </h2>
 
             <ul className={styles.facts}>
@@ -138,33 +132,29 @@ export default function LocalSeoSection() {
           <div className={styles.introBody}>
             <p className={styles.lead}>
               I&apos;m <strong>Muhammad Wasif</strong>, also known as{" "}
-              <strong>Wasif Majeed</strong>. I am an <strong>experienced web
-              developer</strong> based in Karachi with <strong>4+ years</strong>{" "}
-              of professional experience and{" "}
-              <strong>60+ delivered websites</strong>. The interface is my craft:
-              semantic HTML, modern CSS, JavaScript and TypeScript, built into
-              React and Next.js components that stay fast on an everyday phone
-              and readable a year after launch.
+              <strong>Wasif Majeed</strong>, a web developer based in Karachi,
+              Pakistan. I have <strong>4+ years of experience</strong> and have
+              delivered <strong>60+ websites</strong>. I build responsive
+              websites and web apps with React, Next.js, JavaScript and
+              TypeScript, with a focus on speed, accessibility and usability.
             </p>
 
             <p className={styles.lead}>
-              That extends past the browser. I build and ship WordPress,
-              WooCommerce and Shopify stores, wire up APIs, analytics and
-              payments, and handle deployment. I have also shipped backends in
-              Laravel with MySQL, and Node with MongoDB, though that is the
-              side I am still growing into, and I will tell you plainly when a
-              project needs a backend specialist rather than take it on
-              regardless.
+              I also build WordPress, WooCommerce and Shopify websites. For
+              backend features, I work with Node.js, Express, MongoDB, PHP,
+              Laravel and MySQL. That includes APIs, databases, integrations
+              and deployment, depending on what the project needs.
             </p>
 
             <p className={styles.lead}>
-              Clients so far are in Karachi and across Pakistan, plus Dubai, the
-              UK and the US. Every project starts with a fixed written quote and
-              a real answer about what will actually move the needle for you.
+              I work remotely with businesses in Pakistan and abroad. If you
+              need a new website, improvements to an existing store or a custom
+              web app, tell me what you&apos;re building and I&apos;ll
+              recommend a practical approach.
             </p>
 
             <p className={styles.services}>
-              <span>Service pages</span>
+              <span>Explore services</span>
               {services.map((service) => (
                 <a key={service.href} href={service.href}>
                   {service.title}
@@ -187,7 +177,7 @@ export default function LocalSeoSection() {
                 {CONTACT.phoneDisplay}
               </a>{" "}
               or email <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
-              Every project starts with a fixed written quote.
+              I&apos;ll help you work out the scope and next steps.
             </p>
           </div>
 
