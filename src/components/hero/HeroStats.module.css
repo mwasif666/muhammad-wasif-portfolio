@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem .75rem;
-  border-top: 1px solid rgba(255,255,255,.12);
+  /* Keep the glass container border but remove internal dividers. */
   text-align: center;
 }
 
@@ -49,11 +49,7 @@
 
   .item {
     min-height: 7.25rem;
-    border-top: 0;
-    border-left: 1px solid rgba(255,255,255,.12);
   }
-
-  .item:first-child { border-left: 0; }
 }
 
 @media (min-width: 901px) {

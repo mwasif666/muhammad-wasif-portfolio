@@ -390,11 +390,11 @@ export default function StoktServices({ onContact }) {
           <p className={styles.heroEyebrow}>
             Full-Stack Web Development &middot; Karachi &amp; remote worldwide
           </p>
-          <h2 id="outcrowd-services-title">Turning Ideas <span>Into Reality</span></h2>
+          <h2 id="outcrowd-services-title">Turning Ideas Into Reality</h2>
           <p>
-            60+ websites built and shipped: React and Next.js websites,
-            WordPress and Shopify stores, plus the APIs and deployment behind
-            them, taken from plan to launch.
+            I turn ideas into fast, reliable digital experiences—from React
+            and Next.js websites to WordPress, Shopify and full-stack web apps.
+            60+ websites delivered, from concept to launch.
           </p>
           <FlowButton
             text="Discuss your project"
