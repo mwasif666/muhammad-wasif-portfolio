@@ -18,8 +18,14 @@ function labelFor({ date, count, future }) {
 }
 
 export default function GitHubActivity({ username }) {
-  const { weeks, windowTotal, yearTotal, profile, loading, error } =
+  const { weeks, windowTotal, yearTotal, year, profile, checkedAt, loading, stale, error } =
     useGitHubActivity(username);
+  const checkedTime = checkedAt
+    ? new Date(checkedAt).toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+      })
+    : null;
 
   return (
     <a
@@ -41,7 +47,7 @@ export default function GitHubActivity({ username }) {
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <span className="block text-[0.66rem] font-[650] tracking-[0.15em] text-[#91dcff] uppercase">
-            Live from GitHub
+            {stale ? "GITHUB · CACHED ACTIVITY" : "Live from GitHub"}
           </span>
           <strong className="mt-1 block text-[1.02rem] font-semibold tracking-[-0.01em]">
             Contribution activity
@@ -83,11 +89,19 @@ export default function GitHubActivity({ username }) {
       <div className="flex items-center justify-between gap-3 text-[0.68rem] tracking-[0.03em] text-[#e6f7ff]/55 max-[520px]:flex-col max-[520px]:items-start max-[520px]:gap-2">
         <span className="min-w-0">
           {error
-            ? "Open GitHub profile"
+            ? "GitHub activity temporarily unavailable"
             : loading
-              ? "Syncing contributions…"
-              : `${yearTotal} contributions this year`}
-          {profile ? ` · ${profile.public_repos} public repos` : ""}
+              ? "Checking GitHub…"
+              : `${yearTotal.toLocaleString()} contributions in ${year}`}
+          {profile?.public_repos != null ? ` · ${profile.public_repos} public repos` : ""}
+          {checkedTime && (
+            <small
+              className="block mt-1 text-[0.58rem] tracking-normal text-[#e6f7ff]/50"
+              title="Automatically checks GitHub every five minutes while this page is open"
+            >
+              {stale ? "Cached data may be delayed" : `Checked ${checkedTime} · Refreshes every 5 min`}
+            </small>
+          )}
         </span>
 
         <span className="inline-flex shrink-0 items-center gap-1 text-[#e6f7ff]/45" aria-hidden="true">
