@@ -1,145 +1,95 @@
 import { useEffect } from "react";
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
-const lerp = (from, to, progress) => from + (to - from) * progress;
-
 const smoothstep = (from, to, value) => {
   const progress = clamp((value - from) / Math.max(to - from, 0.0001));
   return progress * progress * (3 - 2 * progress);
 };
 
-export default function useJourneyScrollMotion({
-  sectionRef,
-  cardRefs,
-  onReveal,
-}) {
+// All cards remain flat and legible; the original 3D flip rasterized type
+// during the scroll, which was the source of the screenshot's warped text.
+export default function useJourneyScrollMotion({ sectionRef, cardRefs, onReveal }) {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    // Slices drift apart once the photo has been cut, they never cross-fade.
-    const rotations = [-3.4, 0, 3.4];
-    const xOffsets = [-0.5, 0, 0.5];
-    const yOffsets = [1.6, -1, 1.6];
-    const flipStarts = [0.58, 0.63, 0.68];
-    const flipEnds = [0.78, 0.83, 0.88];
     let frame = 0;
     let active = false;
+    let lastProgress = -1;
+    const revealed = cardRefs.current.map(() => false);
 
-    const applyStaticState = () => {
-      section.style.setProperty("--journey-heading-opacity", "1");
-      section.style.setProperty("--journey-heading-y", "0px");
-      section.style.setProperty("--journey-visual-scale", "1");
-      section.style.setProperty("--journey-gap", "1.55vw");
-      section.style.setProperty("--journey-seam", "20px");
-      section.style.setProperty("--journey-edge", "0.26");
-      section.style.setProperty("--journey-shadow", "0.42");
-      section.style.setProperty("--journey-split", "1");
-      section.style.setProperty("--journey-grid-y", "0px");
+    const apply = (progress) => {
+      const p = clamp(progress);
+      const heading = smoothstep(0.01, 0.12, p);
+      const split = smoothstep(0.14, 0.4, p);
+
+      section.style.setProperty("--journey-heading-opacity", String(heading));
+      section.style.setProperty("--journey-heading-y", `${Math.round((1 - heading) * 16)}px`);
+      section.style.setProperty("--journey-gap", `${(split * 1.55).toFixed(2)}vw`);
+      section.style.setProperty("--journey-seam", `${Math.round(split * 20)}px`);
+      section.style.setProperty("--journey-edge", (split * 0.26).toFixed(3));
+      section.style.setProperty("--journey-shadow", (split * 0.42).toFixed(3));
+      section.style.setProperty("--journey-split", split.toFixed(3));
 
       cardRefs.current.forEach((node, index) => {
-        onReveal?.(index, true);
         if (!node) return;
-        node.style.transform = "none";
-        node.style.setProperty("--card-flip", "180deg");
-        node.style.setProperty("--card-copy-opacity", "1");
-        node.style.setProperty("--card-copy-y", "0px");
+        const face = smoothstep(0.42 + index * 0.035, 0.64 + index * 0.035, p);
+        const show = face > 0.96;
+        node.style.setProperty("--card-face-progress", face.toFixed(3));
+        if (revealed[index] !== show) {
+          revealed[index] = show;
+          onReveal?.(index, show);
+        }
       });
     };
 
     const update = () => {
       frame = 0;
-
+      if (!active) return;
       if (window.innerWidth <= 820 || reducedMotion.matches) {
-        applyStaticState();
+        apply(1);
         return;
       }
-
       const rect = section.getBoundingClientRect();
       const viewport = window.innerHeight;
-      const travel = Math.max(section.offsetHeight - viewport, 1);
-      const progress = clamp(-rect.top / travel);
-
-      const heading = smoothstep(0.04, 0.18, progress);
-      const settle = smoothstep(0, 0.16, progress);
-      const split = smoothstep(0.26, 0.52, progress);
-      const drift = smoothstep(0.34, 0.62, progress);
-
-      section.style.setProperty("--journey-heading-opacity", String(heading));
-      section.style.setProperty("--journey-heading-y", `${lerp(26, 0, heading)}px`);
-      section.style.setProperty(
-        "--journey-visual-scale",
-        String(lerp(1.02, 1, settle) * lerp(1, 0.985, split)),
-      );
-      section.style.setProperty("--journey-gap", `${lerp(0, 1.55, split)}vw`);
-      section.style.setProperty("--journey-seam", `${lerp(0, 20, split)}px`);
-      section.style.setProperty("--journey-edge", String(lerp(0, 0.26, split)));
-      section.style.setProperty("--journey-shadow", String(lerp(0, 0.42, split)));
-      section.style.setProperty("--journey-split", String(split));
-      section.style.setProperty("--journey-grid-y", `${lerp(18, -14, progress)}px`);
-
-      cardRefs.current.forEach((node, index) => {
-        if (!node) return;
-
-        const rotation = rotations[index] * drift;
-        const x = xOffsets[index] * drift;
-        const y = yOffsets[index] * drift;
-        const scale = lerp(1, index === 1 ? 1.015 : 0.99, drift);
-        const flip = smoothstep(flipStarts[index], flipEnds[index], progress);
-        const copy = smoothstep(0.5, 0.88, flip);
-
-        node.style.transform = `translate3d(${x}vw, ${y}vh, 0) rotate(${rotation}deg) scale(${scale})`;
-        node.style.setProperty("--card-flip", `${lerp(0, 180, flip)}deg`);
-        node.style.setProperty("--card-copy-opacity", String(copy));
-        node.style.setProperty("--card-copy-y", `${lerp(24, 0, copy)}px`);
-
-        // The icon animation starts once the back face is actually readable.
-        onReveal?.(index, copy > 0.55);
-      });
+      const distance = Math.max(section.offsetHeight - viewport, 1);
+      const progress = clamp(-rect.top / distance);
+      // A tiny progress delta is visually imperceptible, but can trigger
+      // unnecessary layout/compositing writes at 60+ wheel events per second.
+      if (Math.abs(progress - lastProgress) < 0.002) return;
+      lastProgress = progress;
+      apply(progress);
     };
 
     const schedule = () => {
-      if (!active || frame) return;
-      frame = window.requestAnimationFrame(update);
+      if (active && !frame) frame = requestAnimationFrame(update);
     };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        active = entry.isIntersecting;
+        if (active) {
+          lastProgress = -1;
+          schedule();
+        } else if (frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      },
+      { rootMargin: "20% 0px 20% 0px", threshold: 0 },
+    );
 
-    const onResize = () => {
-      if (active) schedule();
-    };
-
-    const visibilityObserver =
-      typeof IntersectionObserver === "undefined"
-        ? null
-        : new IntersectionObserver(
-            ([entry]) => {
-              active = entry.isIntersecting;
-              if (active) schedule();
-              else if (frame) {
-                window.cancelAnimationFrame(frame);
-                frame = 0;
-              }
-            },
-            { rootMargin: "45% 0px 45% 0px", threshold: 0 },
-          );
-
-    if (visibilityObserver) {
-      visibilityObserver.observe(section);
-    } else {
-      active = true;
-      update();
-    }
-
+    observer.observe(section);
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", onResize);
+    window.addEventListener("resize", schedule);
     reducedMotion.addEventListener?.("change", schedule);
 
     return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      visibilityObserver?.disconnect();
+      cancelAnimationFrame(frame);
+      observer.disconnect();
       window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", schedule);
       reducedMotion.removeEventListener?.("change", schedule);
     };
-  }, [cardRefs, onReveal, sectionRef]);
+  }, [sectionRef, cardRefs, onReveal]);
 }
