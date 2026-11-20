@@ -7,7 +7,7 @@ import PageLoader from "./components/PageLoader";
 import Header from "./components/Header";
 import KontourBanner from "./components/KontourBanner";
 import StoktSections from "./components/stokt/StoktSections";
-import ProjectsSection from "./components/ProjectsSection";
+import ProjectsSection, { PROJECT_THUMBNAIL_URLS } from "./components/ProjectsSection";
 // import CaseStudiesSection from "./components/CaseStudiesSection"; // hidden for now
 import WhySection from "./components/why/WhySection";
 import JourneySection from "./components/journey/JourneySection";
@@ -31,10 +31,21 @@ export default function App() {
       return undefined;
     }
 
+    const warmImage = (src) => new Promise((resolve) => {
+      const picture = new Image();
+      picture.fetchPriority = "low";
+      picture.decoding = "async";
+      picture.onload = resolve;
+      picture.onerror = resolve;
+      picture.src = src;
+      if (picture.complete) resolve();
+    });
+
     const tasks = [
       () => preloadGlobe(),
       () => loadLottieRuntime(),
       ...SERVICE_LOTTIE_URLS.map((url) => () => loadLottieAnimationData(url)),
+      ...PROJECT_THUMBNAIL_URLS.map((src) => () => warmImage(src)),
     ];
     let cancelled = false;
     let index = 0;
