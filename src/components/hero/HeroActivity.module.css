@@ -12,3 +12,75 @@
     width: min(40vw, 31rem);
   }
 }
+
+/*
+ * Compact desktop/laptop layout: the original 31rem-wide GitHub card reads
+ * well on large monitors, but covers too much of the portrait on 13–15 inch
+ * laptops and on shorter desktop windows.
+ */
+@media (min-width: 901px) and (max-width: 1600px),
+       (min-width: 901px) and (max-height: 850px) {
+  .root {
+    left: clamp(.8rem, 2vw, 2rem);
+    bottom: clamp(.85rem, 2vh, 1.5rem);
+    width: clamp(17rem, 25vw, 21rem);
+  }
+
+  .root > a {
+    padding: .85rem 1rem .8rem;
+    border-radius: 1rem;
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+  }
+
+  .root > a > div:first-child {
+    gap: .6rem;
+  }
+
+  .root > a > div:first-child span {
+    font-size: .57rem;
+    letter-spacing: .1em;
+  }
+
+  .root > a > div:first-child strong {
+    font-size: .85rem;
+    line-height: 1.2;
+  }
+
+  .root > a > div:first-child svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .root > a > div:nth-child(2) {
+    gap: 2px;
+    margin-top: .75rem;
+    margin-bottom: .75rem;
+  }
+
+  .root > a > div:nth-child(2) > div {
+    gap: 2px;
+  }
+
+  .root > a > div:last-child {
+    flex-wrap: wrap;
+    gap: .4rem;
+    font-size: .55rem;
+    line-height: 1.3;
+  }
+
+  .root > a > div:last-child span:last-child {
+    gap: .2rem;
+  }
+
+  .root > a > div:last-child i {
+    width: .38rem;
+    height: .38rem;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1150px) {
+  .root {
+    width: clamp(16rem, 27vw, 18rem);
+  }
+}
