@@ -109,7 +109,7 @@ export default function DeveloperSystemsSection() {
       <section className={styles.marqueeSection} aria-labelledby="developer-realtime-title">
         <div className={styles.container}>
           <header className={styles.sectionTitle}>
-            <span className={styles.subTitle}>Full-stack web development</span>
+            <span className={styles.subTitle}>Full stack web development</span>
             <h2 id="developer-realtime-title" style={{ fontFamily: "inherit" }}>
               <span>From polished interfaces to powerful backends</span>
             </h2>
@@ -121,7 +121,7 @@ export default function DeveloperSystemsSection() {
           </header>
 
           <div className={styles.industryWrapper}>
-            <div className={styles.apiMarquee} aria-label="Full-stack development technologies and capabilities">
+            <div className={styles.apiMarquee} aria-label="Full stack development technologies and capabilities">
               <div className={styles.apiMarqueeInner}>
                 {ROW_SPEEDS.map((speed, index) => (
                   <ApiMarqueeRow key={`${speed}-${index}`} speed={speed} index={index} />
@@ -158,7 +158,7 @@ export default function DeveloperSystemsSection() {
       >
         <div className={styles.container}>
           <header className={styles.sectionTitle}>
-            <span className={styles.subTitle}>End-to-end capabilities</span>
+            <span className={styles.subTitle}>Capabilities from planning to launch</span>
             <h2 id="developer-capabilities-title" style={{ fontFamily: "inherit" }}>
               <span>Everything needed to move from idea to launch</span>
             </h2>

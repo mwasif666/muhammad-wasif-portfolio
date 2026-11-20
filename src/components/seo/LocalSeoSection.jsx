@@ -13,7 +13,7 @@ const services = [
   { href: "/shopify-developer-karachi", title: "Shopify Development" },
   { href: "/laravel-php-developer-karachi", title: "Laravel & PHP" },
   { href: "/mern-stack-developer-karachi", title: "MERN Stack" },
-  { href: "/full-stack-developer-karachi", title: "Full-Stack Web Development" },
+  { href: "/full-stack-developer-karachi", title: "Full Stack Web Development" },
 ];
 
 /* Numbers already claimed in the copy below, pulled out so the headline column
@@ -47,8 +47,8 @@ const faqs = [
         Everything a visitor sees and touches, built to survive real conditions:
         responsive layouts in semantic HTML and modern CSS, React and Next.js
         components that stay readable a year later, TypeScript where the data
-        earns it, keyboard and screen-reader access, and the Core Web Vitals
-        work that decides whether the page feels fast on a mid-range phone.
+        earns it, keyboard and screen reader access, and the Core Web Vitals
+        work that decides whether the page feels fast on an everyday phone.
       </>
     ),
   },
@@ -143,7 +143,7 @@ export default function LocalSeoSection() {
               of professional experience and{" "}
               <strong>60+ delivered websites</strong>. The interface is my craft:
               semantic HTML, modern CSS, JavaScript and TypeScript, built into
-              React and Next.js components that stay fast on a mid-range phone
+              React and Next.js components that stay fast on an everyday phone
               and readable a year after launch.
             </p>
 

@@ -32,9 +32,9 @@ const services = [
   },
   {
     key: "mobile",
-    title: "Mobile-First Builds",
+    title: "Mobile Friendly Websites",
     description:
-      "Responsive websites planned for a mid-range phone first: accessible touch targets, sensible loading states and fast pages at every breakpoint, as on the Hunza Dry Fruits Basket store.",
+      "I start with the mobile experience and build up. Clear navigation, comfortable touch targets and fast loading matter on every screen, including stores such as Hunza Dry Fruits Basket.",
     art: {
       type: "video",
       src: "https://res.cloudinary.com/agymx2xx/video/upload/v1787151950/taxi-app-transparent-browser.webm",
@@ -43,7 +43,7 @@ const services = [
   },
   {
     key: "fullstack",
-    title: "Full-Stack Web Development",
+    title: "Full Stack Web Development",
     description:
       "Front end, APIs, databases, authentication and deployment as one system: Laravel with MySQL on Hope Plants Dubai, Next.js with Node, Express and MongoDB on Inner Beast.",
     art: {
@@ -70,7 +70,7 @@ const services = [
     key: "integrations",
     title: "APIs & Integrations",
     description:
-      "Payments, analytics and third-party services wired in cleanly: Google Tag Manager, Judge.me reviews and WhatsApp ordering, with error handling that keeps live sites dependable.",
+      "I connect websites to payments, analytics and external services such as Google Tag Manager, Judge.me reviews and WhatsApp ordering, with proper error handling.",
     art: {
       type: "lottie",
       src: "https://cdn.prod.website-files.com/667a7576e7e7ef3ba89b3f2a/66ab8b10eaf1ec4297b4c7e2_Developmnt22.json",
@@ -309,7 +309,7 @@ function ServiceCard({ service, index }) {
   );
 }
 
-const QUOTE = `Great websites should load fast, answer real questions and help businesses grow. Across 60+ delivered websites, I build with React, Next.js and TypeScript, alongside WordPress and Shopify. For full-stack development, I create APIs and backend systems using Node.js, Express, MongoDB, PHP, Laravel and MySQL. From intuitive interfaces to secure integrations and deployment, my focus is performance, accessibility and practical business goals.`;
+const QUOTE = `A good website should be easy to use, quick to load and simple to manage. I build with React, Next.js and TypeScript, and handle APIs and databases using Node.js, Express, MongoDB, Laravel, PHP and MySQL. I also work with WordPress and Shopify. After more than 60 website projects, I know the right solution depends on the people who will use it.`;
 
 export default function StoktServices({ onContact }) {
   const sectionRef = useRef(null);
@@ -388,13 +388,14 @@ export default function StoktServices({ onContact }) {
       <div className={styles.viewport} data-services-viewport>
         <div ref={heroRef} className={styles.hero} data-services-hero>
           <p className={styles.heroEyebrow}>
-            Full-Stack Web Development &middot; Karachi &amp; remote worldwide
+            Full Stack Web Development &middot; Karachi &amp; remote worldwide
           </p>
           <h2 id="outcrowd-services-title">Turning Ideas Into Reality</h2>
           <p>
-            I turn ideas into fast, reliable digital experiences—from React
-            and Next.js websites to WordPress, Shopify and full-stack web apps.
-            60+ websites delivered, from concept to launch.
+            I build websites and web apps that are quick to load, easy to use
+            and simple to manage. My work covers React, Next.js, WordPress,
+            Shopify and backend development. I have delivered more than 60
+            websites, from the first plan through to launch.
           </p>
           <FlowButton
             text="Discuss your project"

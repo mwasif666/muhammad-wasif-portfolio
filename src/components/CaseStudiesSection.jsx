@@ -17,12 +17,12 @@ const caseStudies = [
     intro:
       "Hierys brings website, design, SEO, social media and support under one team. The website experience needed to make that range feel focused rather than fragmented.",
     challenge:
-      "Create a confident service-led journey that communicates breadth quickly, preserves the brand personality and keeps visitors moving toward a conversation.",
+      "Give visitors a clear path through the services while keeping the brand personality and making it easy to get in touch.",
     focus: [
-      "Service-led information architecture",
+      "Clear navigation around services",
       "Responsive motion and section choreography",
-      "Reusable component-driven frontend",
-      "Performance-conscious media and interactions",
+      "Reusable frontend components",
+      "Fast loading media and thoughtful interactions",
     ],
     stack: ["React", "Vite", "Tailwind CSS", "GSAP ScrollTrigger", "React Router"],
   },
@@ -35,9 +35,9 @@ const caseStudies = [
       type: "image",
       src: cldUrl("projects/vampire-tools"),
     },
-    headline: "A product-first commerce experience for specialist tools.",
+    headline: "A shopping experience built around specialist tools.",
     intro:
-      "Vampire Tools sells professional screw-extraction tools where product understanding and trust are central to the buying decision.",
+      "Vampire Tools sells professional tools for extracting damaged screws where product understanding and trust are central to the buying decision.",
     challenge:
       "Make a specialist catalogue easier to explore while keeping product detail, related purchases and the path to checkout clear across desktop and mobile.",
     focus: [
@@ -62,9 +62,9 @@ const caseStudies = [
       type: "image",
       src: cldUrl("projects/abet-global"),
     },
-    headline: "Structuring a high-information trading experience around clarity.",
+    headline: "Making complex trading information easier to understand.",
     intro:
-      "ABET Global combines markets, platform information and account journeys in a content-heavy financial website where hierarchy and confidence matter.",
+      "ABET Global combines markets, platform information and account journeys on a financial website with a lot of content where hierarchy and confidence matter.",
     challenge:
       "Organize dense trading information so users can understand the offering, move between key areas and reach the right conversion touchpoints without losing context.",
     focus: [

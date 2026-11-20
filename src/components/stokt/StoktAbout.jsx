@@ -49,24 +49,24 @@ const tools = [
 
 const experience = [
   {
-    role: "Senior Web Developer — MERN Stack & CMS",
+    role: "Senior Web Developer, MERN Stack and CMS",
     company: "Roots BMD Pvt. Ltd.",
-    dates: "Mar 2023 – Present",
+    dates: "Mar 2023 to Present",
   },
   {
     role: "Frontend & WordPress Developer",
     company: "S&J Global Services",
-    dates: "Aug 2022 – Oct 2025",
+    dates: "Aug 2022 to Oct 2025",
   },
   {
     role: "Frontend Developer",
     company: "Renexus Resource Group",
-    dates: "Dec 2022 – Jul 2023",
+    dates: "Dec 2022 to Jul 2023",
   },
   {
     role: "Frontend Developer & Instructor",
     company: "Techzone",
-    dates: "Oct 2022 – Dec 2022",
+    dates: "Oct 2022 to Dec 2022",
   },
 ];
 
@@ -180,7 +180,7 @@ export default function StoktAbout() {
               <strong>experienced web developer in Karachi</strong> with{" "}
               <strong>60+ websites</strong> delivered. I build React, Next.js and
               TypeScript interfaces that stay fast and <strong>maintainable</strong>,
-              alongside WordPress, Shopify and full-stack integrations, taking
+              alongside WordPress, Shopify and backend integrations, taking
               projects all the way to <strong>production.</strong>
             </p>
 
