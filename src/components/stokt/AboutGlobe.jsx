@@ -91,7 +91,7 @@ async function buildLandDots(d3, land) {
   const step = 1.45;
   let lastYield = performance.now();
 
-  land.features.forEach((feature) => {
+  for (const feature of land.features) {
     const [[minLng, minLat], [maxLng, maxLat]] = d3.geoBounds(feature);
 
     for (let lng = minLng; lng <= maxLng; lng += step) {
@@ -111,7 +111,7 @@ async function buildLandDots(d3, land) {
         }
       }
     }
-  });
+  }
 
   // Precompute unit vectors once so every animation frame avoids thousands
   // of expensive spherical-distance calculations.
