@@ -1,6 +1,6 @@
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { FlowButton } from "@/components/ui/flow-button";
-import loadLottieRuntime from "@/lib/lottie";
+import loadLottieRuntime, { loadLottieAnimationData } from "@/lib/lottie";
 import useServicesTimeline from "./useServicesTimeline";
 import styles from "./Services.module.css";
 
@@ -80,6 +80,8 @@ const services = [
   },
 ];
 
+export const SERVICE_LOTTIE_URLS = services.filter((service) => service.art.type === "lottie").map((service) => service.art.src);
+
 function LottieArt({ art, serviceKey }) {
   const hostRef = useRef(null);
   const animationRef = useRef(null);
@@ -91,10 +93,13 @@ function LottieArt({ art, serviceKey }) {
     let cancelled = false;
     let observer;
     let playedOnce = false;
+    let isVisible = false;
+    let onScrollStart;
+    let onScrollIdle;
 
     const mountAnimation = () => {
-      loadLottieRuntime()
-      .then((lottie) => {
+      Promise.all([loadLottieRuntime(), loadLottieAnimationData(art.src)])
+      .then(([lottie, animationData]) => {
         if (!lottie || cancelled || !hostRef.current) return;
 
         const animation = lottie.loadAnimation({
@@ -102,7 +107,7 @@ function LottieArt({ art, serviceKey }) {
           renderer: "svg",
           loop: Boolean(art.loop),
           autoplay: false,
-          path: art.src,
+          animationData: typeof structuredClone === "function" ? structuredClone(animationData) : JSON.parse(JSON.stringify(animationData)),
           rendererSettings: {
             progressiveLoad: true,
             preserveAspectRatio: "xMidYMid meet",
@@ -126,6 +131,7 @@ function LottieArt({ art, serviceKey }) {
         }
 
         const playVisible = () => {
+          if (document.hidden || document.documentElement.dataset.scrollActive === "true") return;
           if (art.loop) {
             animation.play();
             return;
@@ -143,15 +149,22 @@ function LottieArt({ art, serviceKey }) {
 
         observer = new IntersectionObserver(
           ([entry]) => {
-            if (entry.isIntersecting) {
-              playVisible();
-            } else if (art.loop) {
-              animation.pause();
-            }
+            isVisible = entry.isIntersecting;
+            if (isVisible) playVisible();
+            else animation.pause();
           },
           { threshold: 0.26, rootMargin: "5% 0px 5% 0px" },
         );
         observer.observe(hostRef.current);
+
+        onScrollStart = () => animation.pause();
+        onScrollIdle = () => {
+          if (!isVisible) return;
+          if (art.loop || !playedOnce) playVisible();
+          else if (!document.hidden) animation.play();
+        };
+        window.addEventListener("portfolio:scroll-start", onScrollStart);
+        window.addEventListener("portfolio:scroll-idle", onScrollIdle);
       })
       .catch(() => {});
     };
@@ -168,7 +181,7 @@ function LottieArt({ art, serviceKey }) {
           loadObserver.disconnect();
           mountAnimation();
         },
-        { rootMargin: "250px 0px", threshold: 0 },
+        { rootMargin: "1000px 0px", threshold: 0 },
       );
       loadObserver.observe(host);
     }
@@ -177,6 +190,8 @@ function LottieArt({ art, serviceKey }) {
       loadObserver?.disconnect();
       cancelled = true;
       observer?.disconnect();
+      if (onScrollStart) window.removeEventListener("portfolio:scroll-start", onScrollStart);
+      if (onScrollIdle) window.removeEventListener("portfolio:scroll-idle", onScrollIdle);
       animationRef.current?.destroy();
       animationRef.current = null;
     };
@@ -201,9 +216,59 @@ function LottieArt({ art, serviceKey }) {
   );
 }
 
-function ServiceArt({ service }) {
-  const { art } = service;
+function DeferredServiceVideo({ art, videoIndex }) {
+  const ref = useRef(null);
+  const [canLoad, setCanLoad] = useState(false);
 
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return undefined;
+    const section = video.closest("section") || video;
+    let timer;
+    const start = () => {
+      timer = window.setTimeout(() => setCanLoad(true), videoIndex * 450);
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      start();
+      return () => window.clearTimeout(timer);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        start();
+      },
+      {
+        rootMargin: navigator.connection?.saveData ? "150px 0px" : "1100px 0px",
+        threshold: 0,
+      },
+    );
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, [art.src, videoIndex]);
+
+  return (
+    <video
+      ref={ref}
+      className={styles.mobileVideo}
+      src={canLoad ? art.src : undefined}
+      poster={canLoad ? art.poster : undefined}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload={canLoad ? "metadata" : "none"}
+    />
+  );
+}
+
+function ServiceArt({ service, index }) {
+  const { art } = service;
   if (art.type === "lottie") {
     return <LottieArt art={art} serviceKey={service.key} />;
   }
@@ -214,16 +279,7 @@ function ServiceArt({ service }) {
       data-fit={art.fit ?? "bottom"}
       aria-hidden="true"
     >
-      <video
-        className={styles.mobileVideo}
-        src={art.src}
-        poster={art.poster}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="none"
-      />
+      <DeferredServiceVideo art={art} videoIndex={index} />
     </div>
   );
 }
@@ -247,7 +303,7 @@ function ServiceCard({ service, index }) {
       </div>
 
       <div className={styles.artStage} data-service-art>
-        <ServiceArt service={service} />
+        <ServiceArt service={service} index={index} />
       </div>
     </article>
   );

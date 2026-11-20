@@ -2,7 +2,7 @@ import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FlowButton } from "@/components/ui/flow-button";
 import { SkeletonImage, SkeletonVideo } from "./ui/SkeletonMedia";
 import { useScroll } from "../contexts/ScrollContext";
-import { cldRootUrl, cldUrl, cldVideoSources } from "../lib/cloudinary";
+import { cldRootUrl, cldUrl, cldVideoSources, portfolioThumbnail } from "../lib/cloudinary";
 import styles from "./ProjectsShowcase.module.css";
 
 // Screen recordings play at this rate — the capture is a slow scroll-through
@@ -135,6 +135,9 @@ const projects = [
 ];
 
 const INITIAL_PROJECT_COUNT = 6;
+export const PROJECT_THUMBNAIL_URLS = projects.slice(0, INITIAL_PROJECT_COUNT)
+  .filter((project) => project.image)
+  .map((project) => portfolioThumbnail(project.image));
 
 /* How many rows each press of the toggle adds. The list pages in rather than
    opening in one jump: sixteen cards at once is a wall of screenshots, and
@@ -168,7 +171,7 @@ function ProjectVideo({ project }) {
     };
 
     const syncPlayback = () => {
-      if (!cardVisible || document.hidden) {
+      if (!cardVisible || document.hidden || document.documentElement.dataset.scrollActive === "true") {
         video.pause();
         return;
       }
@@ -186,17 +189,36 @@ function ProjectVideo({ project }) {
       { threshold: [0, 0.3] },
     );
 
+    // Read only the small video metadata well BEFORE the card becomes visible.
+    // The full file remains deferred until playback is actually needed.
+    const warmObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        warmObserver.disconnect();
+        if (navigator.connection?.saveData) return;
+        video.preload = "metadata";
+        video.load();
+      },
+      { rootMargin: "1400px 0px", threshold: 0 },
+    );
+
     applyRate();
     video.pause();
     video.addEventListener("loadedmetadata", applyRate);
     document.addEventListener("visibilitychange", syncPlayback);
+    window.addEventListener("portfolio:scroll-start", syncPlayback);
+    window.addEventListener("portfolio:scroll-idle", syncPlayback);
     observer.observe(card);
+    warmObserver.observe(card);
 
     return () => {
       observer.disconnect();
+      warmObserver.disconnect();
       video.pause();
       video.removeEventListener("loadedmetadata", applyRate);
       document.removeEventListener("visibilitychange", syncPlayback);
+      window.removeEventListener("portfolio:scroll-start", syncPlayback);
+      window.removeEventListener("portfolio:scroll-idle", syncPlayback);
     };
   }, []);
 
@@ -227,7 +249,7 @@ function LiveProjectPreview({ project }) {
     return (
       <SkeletonImage
         className={styles.previewImage}
-        src={project.image}
+        src={portfolioThumbnail(project.image)}
         alt={buildPreviewAlt(project)}
         loading="lazy"
         decoding="async"

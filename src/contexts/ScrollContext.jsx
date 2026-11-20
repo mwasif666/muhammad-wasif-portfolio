@@ -89,6 +89,7 @@ export function ScrollProvider({ children }) {
         isScrolling = true;
         root.dataset.scrollActive = 'true';
         managedVideos.forEach((video) => video.pause());
+        window.dispatchEvent(new Event('portfolio:scroll-start'));
       }
 
       window.clearTimeout(scrollIdleTimer);
@@ -96,6 +97,7 @@ export function ScrollProvider({ children }) {
         isScrolling = false;
         delete root.dataset.scrollActive;
         syncVisibleVideos();
+        window.dispatchEvent(new Event('portfolio:scroll-idle'));
       }, 140);
     };
 
