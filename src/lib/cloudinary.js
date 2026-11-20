@@ -109,3 +109,28 @@ export function cldRootUrl(id, { width = 1000, version } = {}) {
 
   return `${base}/f_auto,q_auto,w_${width}/${version ? `${version}/` : ""}${id}`;
 }
+
+
+/**
+ * Existing project screenshots sometimes use bare /image/upload/v... URLs.
+ * Those skip Cloudinary's auto format, compression and resizing entirely.
+ * Normalize only thumbnail delivery; never change original asset IDs.
+ */
+export function portfolioThumbnail(url, width = 960) {
+  if (!url || !/^https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\//.test(url)) {
+    return url;
+  }
+  return url.replace(
+    /^(https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\/)([^/]+\/)?/,
+    (_match, base, possibleTransform = "") => {
+      const hasTransform = /^(?:f_|q_|w_|c_|g_)/.test(possibleTransform);
+      const transform = hasTransform ? possibleTransform.replace(/\/$/, "") : "";
+      const remaining = hasTransform ? "" : possibleTransform;
+      const options = transform ? transform.split(",").filter(Boolean) : [];
+      if (!options.some((value) => value.startsWith("f_"))) options.unshift("f_auto");
+      if (!options.some((value) => value.startsWith("q_"))) options.push("q_auto");
+      if (!options.some((value) => value.startsWith("w_"))) options.push(`w_${width}`);
+      return `${base}${options.join(",")}/${remaining}`;
+    },
+  );
+}
