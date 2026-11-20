@@ -67,6 +67,10 @@ export default function App() {
 
       const run = async (deadline) => {
         if (cancelled) return;
+        if (document.hidden || document.documentElement.dataset.scrollActive === "true") {
+          schedule(650);
+          return;
+        }
         if (deadline && !deadline.didTimeout && deadline.timeRemaining() < 4) {
           schedule(300);
           return;
