@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 
 const WEEK_COUNT = 26;
-const CONTRIBUTIONS_API = "https://github-contributions-api.jogruber.de/v4";
+const REFRESH_INTERVAL = 5 * 60 * 1000;
 
 function toKey(date) {
-  const month = `${date.getMonth() + 1}`.padStart(2, "0");
-  const day = `${date.getDate()}`.padStart(2, "0");
-  return `${date.getFullYear()}-${month}-${day}`;
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return date.getFullYear() + "-" + month + "-" + day;
 }
 
 function startOfDay(value) {
@@ -15,30 +15,7 @@ function startOfDay(value) {
   return date;
 }
 
-function levelFor(count) {
-  if (count >= 10) return 4;
-  if (count >= 6) return 3;
-  if (count >= 3) return 2;
-  if (count >= 1) return 1;
-  return 0;
-}
-
-/** Public events are the fallback when the contributions endpoint is unreachable. */
-function contributionsFromEvents(events = []) {
-  const counts = events.reduce((map, event) => {
-    const key = toKey(startOfDay(event.created_at));
-    map.set(key, (map.get(key) || 0) + 1);
-    return map;
-  }, new Map());
-
-  return Array.from(counts, ([date, count]) => ({
-    date,
-    count,
-    level: levelFor(count),
-  }));
-}
-
-/** GitHub renders one column per week (Sunday → Saturday); mirror that grid. */
+/** GitHub heatmap layout: Sunday through Saturday, 26 weeks. */
 function buildWeeks(contributions) {
   const byDate = new Map(contributions.map((entry) => [entry.date, entry]));
   const today = startOfDay(new Date());
@@ -52,11 +29,10 @@ function buildWeeks(contributions) {
       date.setDate(start.getDate() + week * 7 + day);
       const key = toKey(date);
       const entry = byDate.get(key);
-
       return {
         date: key,
-        count: entry ? entry.count : 0,
-        level: entry ? entry.level : 0,
+        count: entry?.count ?? 0,
+        level: entry?.level ?? 0,
         future: date > today,
       };
     }),
@@ -66,69 +42,98 @@ function buildWeeks(contributions) {
 export function useGitHubActivity(username) {
   const [state, setState] = useState({
     contributions: [],
-    yearTotal: 0,
+    yearTotal: null,
+    year: null,
     profile: null,
+    checkedAt: null,
     loading: true,
+    stale: false,
     error: false,
   });
 
   useEffect(() => {
-    const controller = new AbortController();
-    const options = {
-      signal: controller.signal,
-      headers: { Accept: "application/json" },
+    // This endpoint is deliberately restricted server-side to the site's
+    // actual GitHub account; it requires no exposed token in the browser.
+    if (username !== "mwasif666") {
+      setState((old) => ({ ...old, loading: false, error: true }));
+      return undefined;
+    }
+
+    let active = true;
+    let inFlight = false;
+    let lastAttempt = 0;
+    let controller;
+
+    const refresh = async () => {
+      if (!active || document.hidden || inFlight) return;
+      if (Date.now() - lastAttempt < REFRESH_INTERVAL) return;
+      lastAttempt = Date.now();
+      inFlight = true;
+      controller = new AbortController();
+
+      try {
+        const response = await fetch("/api/github-activity", {
+          signal: controller.signal,
+          cache: "no-store",
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error("Latest GitHub data unavailable");
+        const data = await response.json();
+        if (!Array.isArray(data.contributions) ||
+            !Number.isFinite(data.yearTotal) ||
+            !Number.isFinite(data.year)) {
+          throw new Error("Invalid GitHub response");
+        }
+
+        if (active) {
+          setState({
+            contributions: data.contributions,
+            yearTotal: data.yearTotal,
+            year: data.year,
+            profile: data.profile,
+            checkedAt: data.checkedAt,
+            loading: false,
+            stale: false,
+            error: false,
+          });
+        }
+      } catch (error) {
+        if (active && error.name !== "AbortError") {
+          // Preserve previously verified data instead of replacing real
+          // contributions with made-up public event counts or zeroes.
+          setState((old) => ({
+            ...old,
+            loading: false,
+            stale: Boolean(old.checkedAt),
+            error: !old.checkedAt,
+          }));
+        }
+      } finally {
+        inFlight = false;
+        controller = null;
+      }
     };
 
-    const loadProfile = fetch(
-      `https://api.github.com/users/${username}`,
-      options,
-    )
-      .then((response) => (response.ok ? response.json() : null))
-      .catch(() => null);
+    const onFocus = () => void refresh();
+    const onVisibility = () => {
+      if (!document.hidden) void refresh();
+    };
+    const onOnline = () => void refresh();
 
-    const loadContributions = fetch(
-      `${CONTRIBUTIONS_API}/${username}?y=last`,
-      options,
-    )
-      .then((response) => {
-        if (!response.ok) throw new Error("contributions unavailable");
-        return response.json();
-      })
-      .then((data) => ({
-        contributions: data.contributions || [],
-        yearTotal: data.total?.lastYear ?? 0,
-      }))
-      .catch(() =>
-        fetch(
-          `https://api.github.com/users/${username}/events/public?per_page=100`,
-          options,
-        )
-          .then((response) => {
-            if (!response.ok) throw new Error("events unavailable");
-            return response.json();
-          })
-          .then((events) => {
-            const contributions = contributionsFromEvents(events);
-            return {
-              contributions,
-              yearTotal: contributions.reduce(
-                (total, entry) => total + entry.count,
-                0,
-              ),
-            };
-          }),
-      );
+    void refresh();
+    const timer = window.setInterval(refresh, REFRESH_INTERVAL);
+    window.addEventListener("focus", onFocus);
+    window.addEventListener("online", onOnline);
+    document.addEventListener("visibilitychange", onVisibility);
 
-    Promise.all([loadProfile, loadContributions])
-      .then(([profile, activity]) => {
-        setState({ ...activity, profile, loading: false, error: false });
-      })
-      .catch((error) => {
-        if (error.name === "AbortError") return;
-        setState((current) => ({ ...current, loading: false, error: true }));
-      });
-
-    return () => controller.abort();
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      controller?.abort();
+      window.removeEventListener("focus", onFocus);
+      window.removeEventListener("online", onOnline);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, [username]);
 
   const weeks = useMemo(
